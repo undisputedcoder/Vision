@@ -8,8 +8,35 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
-      home: Home(),
+      home: Main(),
     );
+  }
+}
+
+class Main extends StatefulWidget {
+  const Main({Key? key}) : super(key: key);
+
+  @override
+  _MainState createState() => _MainState();
+}
+
+class _MainState extends State<Main> {
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoTabScaffold(
+            tabBar: CupertinoTabBar(
+              items: [
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.home_sharp), label: 'Data'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.add_circle_sharp), label: 'extra'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.account_circle_outlined), label: 'Profile')
+              ],
+            ),
+            tabBuilder: (BuildContext context, index) {
+              return TabOptions[index];
+            });
   }
 }
 
@@ -135,13 +162,14 @@ class _HomeState extends State<Home> {
 
                 ),
               ),
-            )
+            ),
           ],
         ),
       )
-    );
+      );
   }
 }
+
 
 class Earnings {
   final String year;
@@ -282,4 +310,39 @@ List<charts.Series<LinearSales, int>> sales = [
   )
 ];
 
+List<Widget> TabOptions = [
+  Home(),
+  ExtraTab(),
+  ProfileTab(),
+];
+
+class ExtraTab extends StatefulWidget {
+
+  @override
+  _ExtraTabState createState() => _ExtraTabState();
+}
+
+class _ExtraTabState extends State<ExtraTab> {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Text('Extra page')
+    );
+  }
+}
+
+class ProfileTab extends StatefulWidget {
+
+  @override
+  _ProfileTabState createState() => _ProfileTabState();
+}
+
+class _ProfileTabState extends State<ProfileTab> {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Text('Profile page')
+    );
+  }
+}
 
