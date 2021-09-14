@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:settings_ui/settings_ui.dart';
+
+void main() {
+  runApp(CupertinoApp(
+    home: Settings(),
+  ));
+}
 
 class Settings extends StatefulWidget {
   @override
@@ -13,65 +20,42 @@ class _SettingsState extends State<Settings> {
       navigationBar: CupertinoNavigationBar(
         middle: Text('Settings'),
       ),
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 110.0, 30.0, 0.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Appearance',
-              style: TextStyle(),
-            ),
-            Divider(
-              height: 22.5,
+      child: SettingsList(
+        backgroundColor: Colors.white,
+        sections: [
+          SettingsSection(
+            titlePadding: EdgeInsets.all(20),
+            title: 'Appearance',
+            titleTextStyle: TextStyle(
               color: Colors.black,
+              fontWeight: FontWeight.bold,
             ),
-            Text(
-              'Theme',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+            tiles: [
+              SettingsTile.switchTile(
+                title: 'Use System Theme',
+                leading: Icon(CupertinoIcons.device_phone_portrait),
+                onToggle: (value) {},
+                switchValue: true,
+                switchActiveColor: Colors.green,
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Dark'),
-                Transform.scale(
-                  scale: 0.7,
-                  child: CupertinoButton(
-                    child: CupertinoSwitch(
-                      value: false,
-                      onChanged: (bool value) {},
-                      activeColor: CupertinoColors.activeBlue,
-                    ),
-                    onPressed: () {},
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Text(
-              'About Vision',
-              style: TextStyle(),
-            ),
-            Divider(
-              height: 22.5,
+            ],
+          ),
+          SettingsSection(
+            titlePadding: EdgeInsets.all(20),
+            title: 'About Vision',
+            titleTextStyle: TextStyle(
               color: Colors.black,
+              fontWeight: FontWeight.bold,
             ),
-            Text(
-              'Version',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+            tiles: [
+              SettingsTile(
+                title: 'Version',
+                subtitle: '0.0.0',
+                leading: Icon(CupertinoIcons.clock),
               ),
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Text('0.0.0'),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }
