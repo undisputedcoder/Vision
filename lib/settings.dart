@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-void main() {
-  runApp(CupertinoApp(
-    home: Settings(),
-  ));
-}
-
 class Settings extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
@@ -21,13 +15,13 @@ class _SettingsState extends State<Settings> {
         middle: Text('Settings'),
       ),
       child: SettingsList(
-        backgroundColor: Colors.white,
+        backgroundColor: CupertinoColors.white,
         sections: [
           SettingsSection(
             titlePadding: EdgeInsets.all(20),
             title: 'Appearance',
             titleTextStyle: TextStyle(
-              color: Colors.black,
+              color: CupertinoColors.black,
               fontWeight: FontWeight.bold,
             ),
             tiles: [
@@ -36,7 +30,7 @@ class _SettingsState extends State<Settings> {
                 leading: Icon(CupertinoIcons.device_phone_portrait),
                 onToggle: (value) {},
                 switchValue: true,
-                switchActiveColor: Colors.green,
+                switchActiveColor: CupertinoColors.activeBlue,
               ),
             ],
           ),
@@ -44,7 +38,7 @@ class _SettingsState extends State<Settings> {
             titlePadding: EdgeInsets.all(20),
             title: 'About Vision',
             titleTextStyle: TextStyle(
-              color: Colors.black,
+              color: CupertinoColors.black,
               fontWeight: FontWeight.bold,
             ),
             tiles: [
