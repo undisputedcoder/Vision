@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   charts_flutter: ^0.11.0
-  flutter_inner_drawer: ^1.0.0+1
+  settings_ui: ^1.0.0
   syncfusion_flutter_charts: ^19.2.59
 
 
