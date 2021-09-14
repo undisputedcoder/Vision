@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
-void main() => runApp(CupertinoApp(
-      home: Profile(),
-    ));
+import 'login.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -25,8 +22,8 @@ class _ProfileState extends State<Profile> {
             Center(
               child: CircleAvatar(
                 // Change to AssetImage later.
-                backgroundImage: NetworkImage(
-                    'https://scontent.fper7-1.fna.fbcdn.net/v/t1.6435-9/37364114_1856065468033083_4052767939785392128_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_ohc=8eqdxKmTNCgAX_U8UMO&_nc_ht=scontent.fper7-1.fna&oh=0dc92e4603ca9a7b80be1737addbb5cf&oe=615E31F2'),
+                backgroundImage: AssetImage(
+                    'Assets/default-user.png'),
                 radius: 50.0,
               ),
             ),
@@ -44,7 +41,7 @@ class _ProfileState extends State<Profile> {
               height: 5.0,
             ),
             Text(
-              'Kevin Schmidlin',
+              'User 1',
             ),
             SizedBox(
               height: 20.0,
@@ -59,13 +56,13 @@ class _ProfileState extends State<Profile> {
               height: 5.0,
             ),
             Text(
-              'kevin.schmidlin@hotmail.com',
+              'user1@hotmail.com',
             ),
             SizedBox(
               height: 20.0,
             ),
             Text(
-              'Job',
+              'Role',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
@@ -74,18 +71,35 @@ class _ProfileState extends State<Profile> {
               height: 5.0,
             ),
             Text(
-              'Student',
+              'Operator',
             ),
             SizedBox(
               height: 40.0,
             ),
-            CupertinoButton.filled(
-			  // Change to Cupertino icon.
-              child: Icon(
-                Icons.logout,
+            Center(
+              child: Container(
+                width: 100.0,
+                child: CupertinoButton.filled(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget> [
+                      Icon(
+                        CupertinoIcons.square_arrow_right,
+                      ),
+                      Text(" Logout",)
+                    ]
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                        CupertinoPageRoute(builder: (context) {
+                          return MyApp();
+                        }),
+                    );
+                  },
+                  padding: EdgeInsets.zero,
+                ),
               ),
-              onPressed: () {},
-              padding: EdgeInsets.zero,
             ),
           ],
         ),

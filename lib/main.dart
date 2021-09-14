@@ -1,21 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'profile.dart';
+import 'settings.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(App());
 
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
       home: Main(),
+      theme: CupertinoThemeData(),
     );
   }
 }
 
 class Main extends StatefulWidget {
-  const Main({Key? key}) : super(key: key);
-
   @override
   _MainState createState() => _MainState();
 }
@@ -27,15 +28,33 @@ class _MainState extends State<Main> {
             tabBar: CupertinoTabBar(
               items: [
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.home_sharp), label: 'Data'),
+                    icon: Icon(
+                        CupertinoIcons.home
+                    ),
+                    label: 'Home'
+                ),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.add_circle_sharp), label: 'extra'),
+                    icon: Icon(
+                        CupertinoIcons.news
+                    ),
+                    label: 'News'
+                ),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.account_circle_outlined), label: 'Profile')
+                    icon: Icon(
+                        Icons.account_circle_outlined
+                    ),
+                    label: 'Profile'
+                ),
+                BottomNavigationBarItem(
+                    icon: Icon(
+                        CupertinoIcons.settings
+                    ),
+                    label: 'Settings'
+                )
               ],
             ),
             tabBuilder: (BuildContext context, index) {
-              return TabOptions[index];
+              return tabOptions[index];
             });
   }
 }
@@ -50,120 +69,135 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor: Colors.grey.shade100,
-        navigationBar: const CupertinoNavigationBar(
+        navigationBar: CupertinoNavigationBar(
           padding: EdgeInsetsDirectional.all(2.0),
-          middle: CupertinoSearchTextField(),
-          trailing: Icon(
-            CupertinoIcons.settings,
+          middle: Text(
+            "Analytics"
           ),
-          backgroundColor: CupertinoColors.extraLightBackgroundGray,
         ),
-      child: CupertinoScrollbar(
-        thickness: 4,
-        child: ListView (
-          padding: const EdgeInsets.all(8.0),
-          children: <Widget>[
-            Card(
-              child: Container(
-                height: 400,
-                child: Center(
-                  child: charts.BarChart(
-                    timeline,
-                    animate: true,
-                    vertical: false,
-                    behaviors: [
-                      new charts.ChartTitle("Top title",
-                        subTitle: "Top sub-title",
-                        behaviorPosition: charts.BehaviorPosition.top,
-                        titleOutsideJustification: charts.OutsideJustification.middle,
-                        innerPadding: 18,
-                      ),
-                      new charts.ChartTitle('Bottom title',
-                          behaviorPosition: charts.BehaviorPosition.bottom,
-                          titleOutsideJustification: charts.OutsideJustification.middleDrawArea
-                      ),
-                      new charts.ChartTitle('Start title',
-                          behaviorPosition: charts.BehaviorPosition.start,
-                          titleOutsideJustification: charts.OutsideJustification.middleDrawArea
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-                height: 50.0
-            ),
-            Card(
-              child: Container(
-                height: 400,
-                child: Center(
-                  child: charts.BarChart(
-                    series,
-                    animate: true,
-                    barGroupingType: charts.BarGroupingType.grouped,
-                    behaviors: [
-                      new charts.SeriesLegend(
-                        position: charts.BehaviorPosition.bottom
-                      ),
-                      new charts.ChartTitle("Top title",
-                        subTitle: "Top sub-title",
-                        behaviorPosition: charts.BehaviorPosition.top,
-                        titleOutsideJustification: charts.OutsideJustification.middle,
-                        innerPadding: 18,
-                      ),
-                      new charts.ChartTitle('Bottom title',
-                          behaviorPosition: charts.BehaviorPosition.bottom,
-                          titleOutsideJustification: charts.OutsideJustification.middleDrawArea
-                      ),
-                      new charts.ChartTitle('Start title',
-                          behaviorPosition: charts.BehaviorPosition.start,
-                          titleOutsideJustification: charts.OutsideJustification.middleDrawArea
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-                height: 50.0
-            ),
-            Card(
-              child: Container(
-                height: 400,
-                child: Center(
-                  child: charts.ScatterPlotChart(
-                    sales,
-                    animate: true,
-                    behaviors: [
-                      new charts.ChartTitle("Top title",
-                        subTitle: "Top sub-title",
-                        behaviorPosition: charts.BehaviorPosition.top,
-                        titleOutsideJustification: charts.OutsideJustification.middle,
-                        innerPadding: 18,
-                      ),
-                      new charts.ChartTitle('Bottom title',
-                          behaviorPosition: charts.BehaviorPosition.bottom,
-                          titleOutsideJustification: charts.OutsideJustification.middleDrawArea
-                      ),
-                      new charts.ChartTitle('Start title',
-                          behaviorPosition: charts.BehaviorPosition.start,
-                          titleOutsideJustification: charts.OutsideJustification.middleDrawArea
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              child: Center(
+      child: SafeArea(
+        child: CupertinoScrollbar(
+          thickness: 4,
+          child: ListView (
+            padding: const EdgeInsets.all(8.0),
+            children: <Widget>[
+              Card(
                 child: Container(
-
+                  child: ListTile(
+                    leading: CupertinoButton(
+                      child: Icon(
+                          CupertinoIcons.calendar
+                      ),
+                      onPressed: () {},
+                    ),
+                    title: Text("13 Sep - 11 Oct"),
+                  ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(
+                  height: 20.0
+              ),
+              Card(
+                child: Container(
+                  height: 400,
+                  child: Center(
+                    child: charts.BarChart(
+                      timeline,
+                      animate: true,
+                      vertical: false,
+                      behaviors: [
+                        new charts.ChartTitle("Top title",
+                          subTitle: "Top sub-title",
+                          behaviorPosition: charts.BehaviorPosition.top,
+                          titleOutsideJustification: charts.OutsideJustification.middle,
+                          innerPadding: 18,
+                        ),
+                        new charts.ChartTitle('Bottom title',
+                            behaviorPosition: charts.BehaviorPosition.bottom,
+                            titleOutsideJustification: charts.OutsideJustification.middleDrawArea
+                        ),
+                        new charts.ChartTitle('Start title',
+                            behaviorPosition: charts.BehaviorPosition.start,
+                            titleOutsideJustification: charts.OutsideJustification.middleDrawArea
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                  height: 50.0
+              ),
+              Card(
+                child: Container(
+                  height: 400,
+                  child: Center(
+                    child: charts.BarChart(
+                      series,
+                      animate: true,
+                      barGroupingType: charts.BarGroupingType.grouped,
+                      behaviors: [
+                        new charts.SeriesLegend(
+                          position: charts.BehaviorPosition.bottom
+                        ),
+                        new charts.ChartTitle("Top title",
+                          subTitle: "Top sub-title",
+                          behaviorPosition: charts.BehaviorPosition.top,
+                          titleOutsideJustification: charts.OutsideJustification.middle,
+                          innerPadding: 18,
+                        ),
+                        new charts.ChartTitle('Bottom title',
+                            behaviorPosition: charts.BehaviorPosition.bottom,
+                            titleOutsideJustification: charts.OutsideJustification.middleDrawArea
+                        ),
+                        new charts.ChartTitle('Start title',
+                            behaviorPosition: charts.BehaviorPosition.start,
+                            titleOutsideJustification: charts.OutsideJustification.middleDrawArea
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                  height: 50.0
+              ),
+              Card(
+                child: Container(
+                  height: 400,
+                  child: Center(
+                    child: charts.ScatterPlotChart(
+                      sales,
+                      animate: true,
+                      behaviors: [
+                        new charts.ChartTitle("Top title",
+                          subTitle: "Top sub-title",
+                          behaviorPosition: charts.BehaviorPosition.top,
+                          titleOutsideJustification: charts.OutsideJustification.middle,
+                          innerPadding: 18,
+                        ),
+                        new charts.ChartTitle('Bottom title',
+                            behaviorPosition: charts.BehaviorPosition.bottom,
+                            titleOutsideJustification: charts.OutsideJustification.middleDrawArea
+                        ),
+                        new charts.ChartTitle('Start title',
+                            behaviorPosition: charts.BehaviorPosition.start,
+                            titleOutsideJustification: charts.OutsideJustification.middleDrawArea
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Card(
+                child: Center(
+                  child: Container(
+
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       )
       );
@@ -310,10 +344,11 @@ List<charts.Series<LinearSales, int>> sales = [
   )
 ];
 
-List<Widget> TabOptions = [
+List<Widget> tabOptions = [
   Home(),
   ExtraTab(),
-  ProfileTab(),
+  Profile(),
+  Settings(),
 ];
 
 class ExtraTab extends StatefulWidget {
@@ -327,21 +362,6 @@ class _ExtraTabState extends State<ExtraTab> {
   Widget build(BuildContext context) {
     return Center(
         child: Text('Extra page')
-    );
-  }
-}
-
-class ProfileTab extends StatefulWidget {
-
-  @override
-  _ProfileTabState createState() => _ProfileTabState();
-}
-
-class _ProfileTabState extends State<ProfileTab> {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-        child: Text('Profile page')
     );
   }
 }

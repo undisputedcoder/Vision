@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-void main() {
-  runApp(CupertinoApp(
-    home: Settings(),
-  ));
-}
-
 class Settings extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
@@ -18,9 +12,6 @@ class _SettingsState extends State<Settings> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('Settings'),
-        leading: Icon(
-          CupertinoIcons.chevron_back,
-        ),
       ),
       child: Padding(
         padding: EdgeInsets.fromLTRB(30.0, 110.0, 30.0, 0.0),
@@ -47,9 +38,13 @@ class _SettingsState extends State<Settings> {
                 Text('Dark'),
                 Transform.scale(
                   scale: 0.7,
-                  child: CupertinoSwitch(
-                    value: false,
-                    onChanged: (bool value) {},
+                  child: CupertinoButton(
+                    child: CupertinoSwitch(
+                      value: false,
+                      onChanged: (bool value) {},
+                      activeColor: CupertinoColors.activeBlue,
+                    ),
+                    onPressed: () {},
                   ),
                 ),
               ],
