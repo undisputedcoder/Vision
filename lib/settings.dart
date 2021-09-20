@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:settings_ui/settings_ui.dart';
+import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
+import 'licenses.dart';
+import 'version.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -8,49 +10,68 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  bool switchState = false;
+  int current = 0;
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('Settings'),
       ),
-      child: SettingsList(
-        backgroundColor: CupertinoColors.white,
-        sections: [
-          SettingsSection(
-            titlePadding: EdgeInsets.all(20),
-            title: 'Appearance',
-            titleTextStyle: TextStyle(
-              color: CupertinoColors.black,
-              fontWeight: FontWeight.bold,
-            ),
-            tiles: [
-              SettingsTile.switchTile(
-                title: 'Use System Theme',
-                leading: Icon(CupertinoIcons.device_phone_portrait),
-                onToggle: (value) {},
-                switchValue: true,
-                switchActiveColor: CupertinoColors.activeBlue,
+      child: CupertinoSettings(
+          items: <Widget>[
+            const CSHeader('Theme'),
+            CSControl(
+              nameWidget: Text('Dark mode'),
+              contentWidget: CupertinoSwitch(
+                value: switchState,
+                activeColor: CupertinoColors.activeBlue,
+                onChanged: (bool value) {
+                  setState(() {
+                    switchState = value;
+                  });
+                },
               ),
-            ],
-          ),
-          SettingsSection(
-            titlePadding: EdgeInsets.all(20),
-            title: 'About Vision',
-            titleTextStyle: TextStyle(
-              color: CupertinoColors.black,
-              fontWeight: FontWeight.bold,
             ),
-            tiles: [
-              SettingsTile(
-                title: 'Version',
-                subtitle: '0.0.0',
-                leading: Icon(CupertinoIcons.clock),
-              ),
-            ],
-          ),
-        ],
+            CSHeader('Theme'),
+            CSSelection<int>(
+              items: const <CSSelectionItem<int>>[
+                CSSelectionItem<int>(
+                    text: 'Light mode (default)',
+                    value: 0
+                ),
+                CSSelectionItem<int>(
+                    text: 'Dark mode',
+                    value: 1
+                ),
+              ],
+              onSelected: (index) {
+                setState(() {
+                  current = index;
+                });
+              },
+              currentSelection: current,
+            ),
+            CSDescription('Using Night mode extends battery life on devices with OLED display',),
+            const CSHeader('About Vision'),
+            CSButton(CSButtonType.DEFAULT, "Version", (){
+              Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (context) => Version())
+              );
+            }),
+            CSButton(CSButtonType.DEFAULT, "View Licenses", () {
+              Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (context) => Licenses())
+              );
+            }),
+          ]
       ),
     );
   }
 }
+
+
+

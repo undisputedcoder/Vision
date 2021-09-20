@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "387948359876",
+    "firebase_url": "https://bgb2021-cb2ac-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "bgb2021-cb2ac",
+    "storage_bucket": "bgb2021-cb2ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387948359876:android:39eaa62c20ede1608a5991",
+        "android_client_info": {
+          "package_name": "com.example.apple"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "387948359876-bttsmo5g0df82upo83grpfgna1cotulq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUaWnGozuCYnWiaZsSQ90Cz4KOMCZEVLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "387948359876-bttsmo5g0df82upo83grpfgna1cotulq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "387948359876-bm1ee0vpqu5h7dgpp0et77mm67rn51rh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "vision"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

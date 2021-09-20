@@ -35,12 +35,6 @@ class _MainState extends State<Main> {
                 ),
                 BottomNavigationBarItem(
                     icon: Icon(
-                        CupertinoIcons.news
-                    ),
-                    label: 'News'
-                ),
-                BottomNavigationBarItem(
-                    icon: Icon(
                         Icons.account_circle_outlined
                     ),
                     label: 'Profile'
@@ -192,7 +186,6 @@ class _HomeState extends State<Home> {
               Card(
                 child: Center(
                   child: Container(
-
                   ),
                 ),
               ),
@@ -346,7 +339,6 @@ List<charts.Series<LinearSales, int>> sales = [
 
 List<Widget> tabOptions = [
   Home(),
-  ExtraTab(),
   Profile(),
   Settings(),
 ];
