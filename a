@@ -1,0 +1,95 @@
+[33mcommit 501ad54acd1f11f2bfb34be576cff6127c93e432[m[33m ([m[1;36mHEAD -> [m[1;32mline-chart[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mmaster[m[33m)[m
+Merge: 474ae17 7544965
+Author: Riaz <52372624+undisputedcoder@users.noreply.github.com>
+Date:   Mon Sep 20 22:22:33 2021 +0800
+
+    Merge pull request #5 from undisputedcoder/master
+    
+    Update Settings Page Layout
+
+[33mcommit 7544965359e105347c3043ce3a7011d516552eb9[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Riaz <riaz_amin@iinet.net.au>
+Date:   Mon Sep 20 22:13:59 2021 +0800
+
+    Update Settings Page Layout
+
+[33mcommit 474ae17c63bef66d7c31f5b166593cf0a346c683[m
+Merge: 8610cc8 4895476
+Author: Riaz <52372624+undisputedcoder@users.noreply.github.com>
+Date:   Tue Sep 14 18:35:18 2021 +0800
+
+    Merge pull request #4 from undisputedcoder/undisputedcoder-patch-1
+    
+    Update pubspec.yaml
+
+[33mcommit 489547636e29af78d7fdb16119a104d1c6a9d261[m
+Author: Riaz <52372624+undisputedcoder@users.noreply.github.com>
+Date:   Tue Sep 14 18:35:08 2021 +0800
+
+    Update pubspec.yaml
+
+[33mcommit 8610cc86ef0c8afc44759e52566733e7dbcc668b[m
+Merge: b3ee1ff dd2a8e4
+Author: Riaz <52372624+undisputedcoder@users.noreply.github.com>
+Date:   Tue Sep 14 18:13:10 2021 +0800
+
+    Merge pull request #3 from undisputedcoder/Settings
+    
+    Update settings.dart
+
+[33mcommit dd2a8e45a57220df26da70a17be741c1626badd3[m
+Author: Trykelvinator <87376656+Trykelvinator@users.noreply.github.com>
+Date:   Tue Sep 14 17:30:18 2021 +0800
+
+    Update settings.dart
+
+[33mcommit 68b45766a2a4bc552011c8987f2cffec7208954e[m[33m ([m[1;31mupstream/Settings[m[33m)[m
+Author: Trykelvinator <87376656+Trykelvinator@users.noreply.github.com>
+Date:   Tue Sep 14 16:38:39 2021 +0800
+
+    Update settings.dart
+    
+    Update for Settings to feel more like an iOS app.
+
+[33mcommit b3ee1ff758faa8e49ff14863aa83be36e7685c4f[m[33m ([m[1;31mupstream/main[m[33m)[m
+Merge: 9f02a3b 9413592
+Author: Riaz <52372624+undisputedcoder@users.noreply.github.com>
+Date:   Tue Sep 14 13:48:16 2021 +0800
+
+    Merge pull request #1 from undisputedcoder/master
+    
+    Master
+
+[33mcommit 9413592a443f8d578ecf749e531e986d699a3c9e[m
+Author: Riaz <riaz_amin@iinet.net.au>
+Date:   Tue Sep 14 11:51:11 2021 +0800
+
+    Commit new changes
+
+[33mcommit 091425a6d86e55da0666c5a710fb18dc25776de4[m
+Author: Trykelvinator <87376656+Trykelvinator@users.noreply.github.com>
+Date:   Sun Sep 12 13:12:54 2021 +0800
+
+    Create settings.dart
+    
+    Setting page for Vision.
+
+[33mcommit 34a6296ea3c8d41f9c81105be9222fc0b861da6c[m
+Author: Trykelvinator <87376656+Trykelvinator@users.noreply.github.com>
+Date:   Fri Sep 10 15:27:41 2021 +0800
+
+    Create profile.dart
+    
+    Profile section for Vision.
+
+[33mcommit c9de8eb5e66f53fa5bd6c1a8ecd4b0701d9c9d95[m
+Author: victorkpimen <victorkpimen@gmail.com>
+Date:   Fri Sep 10 00:31:30 2021 +0800
+
+    added vision (Victor)
+
+[33mcommit 9f02a3b8a5440e83b864e6547671d330aee953e1[m
+Author: Riaz <riaz_amin@iinet.net.au>
+Date:   Tue Sep 7 15:29:09 2021 +0800
+
+    Initial commit
