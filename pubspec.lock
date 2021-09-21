@@ -76,13 +76,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_inner_drawer:
+  flutter_cupertino_settings:
     dependency: "direct main"
     description:
-      name: flutter_inner_drawer
+      name: flutter_cupertino_settings
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0+1"
+    version: "0.5.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -123,6 +123,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+  settings_ui:
+    dependency: "direct main"
+    description:
+      name: settings_ui
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -156,20 +163,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  syncfusion_flutter_charts:
-    dependency: "direct main"
-    description:
-      name: syncfusion_flutter_charts
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "19.2.59"
-  syncfusion_flutter_core:
-    dependency: transitive
-    description:
-      name: syncfusion_flutter_core
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "19.2.59"
   term_glyph:
     dependency: transitive
     description:

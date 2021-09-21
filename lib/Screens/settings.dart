@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
-import 'licenses.dart';
-import 'version.dart';
+import 'package:apple/Screens/licenses.dart';
+import 'package:apple/Screens/version.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -11,7 +11,15 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   bool switchState = false;
+  bool safeModeSwitch = false;
   int current = 0;
+
+  CSWidgetStyle safeModeStyle = const CSWidgetStyle(
+    icon: const Icon(
+      Icons.health_and_safety,
+      color: CupertinoColors.systemGreen,
+    )
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +29,21 @@ class _SettingsState extends State<Settings> {
       ),
       child: CupertinoSettings(
           items: <Widget>[
+            const CSHeader('Safety'),
+            CSControl(
+              nameWidget: Text('User Safe mode'),
+              contentWidget: CupertinoSwitch(
+                value: safeModeSwitch,
+                activeColor: CupertinoColors.activeBlue,
+                onChanged: (bool value) {
+                  setState(() {
+                    safeModeSwitch = value;
+                  });
+                },
+              ),
+              style: safeModeStyle,
+            ),
+            CSDescription('If you are operating with machinery then enable this mode. Enabling safe mode will ensure the app does not become a distraction.',),
             const CSHeader('Theme'),
             CSControl(
               nameWidget: Text('Dark mode'),
@@ -38,13 +61,18 @@ class _SettingsState extends State<Settings> {
             CSSelection<int>(
               items: const <CSSelectionItem<int>>[
                 CSSelectionItem<int>(
-                    text: 'Light mode (default)',
+                    text: 'System (Default)',
                     value: 0
                 ),
                 CSSelectionItem<int>(
-                    text: 'Dark mode',
+                    text: 'Light mode',
                     value: 1
                 ),
+                CSSelectionItem<int>(
+                    text: 'Dark mode',
+                    value: 2
+                ),
+
               ],
               onSelected: (index) {
                 setState(() {
@@ -53,7 +81,6 @@ class _SettingsState extends State<Settings> {
               },
               currentSelection: current,
             ),
-            CSDescription('Using Night mode extends battery life on devices with OLED display',),
             const CSHeader('About Vision'),
             CSButton(CSButtonType.DEFAULT, "Version", (){
               Navigator.push(
