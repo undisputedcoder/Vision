@@ -2,18 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:apple/Screens/home.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LoginPage(),
-    );
-  }
-}
-
 class LoginPage extends StatefulWidget {
 
   @override
@@ -40,13 +28,13 @@ class _LoginPageState extends State<LoginPage> {
           child: TextField(
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
-                fontFamily: 'OpenSans',
+              fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.account_circle
+                  Icons.account_circle
               ),
               hintText: 'Enter your ID',
               //hintStyle: ????????????
@@ -62,10 +50,10 @@ class _LoginPageState extends State<LoginPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget> [
         Text(
-          'Password',
-          style: TextStyle(
-            fontFamily: 'OpenSans',
-          )
+            'Password',
+            style: TextStyle(
+              fontFamily: 'OpenSans',
+            )
         ),
         SizedBox(height: 10.0),
         Container(alignment: Alignment.centerLeft,
@@ -104,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildRememberMeCheckBox(){
     return Container(
-      height: 20.0,
+        height: 20.0,
         child: Row(
             children: <Widget>[
               Theme(
@@ -142,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
               Navigator.push(
                 context,
                 CupertinoPageRoute(builder: (context) {
-                  return App();
+                  return HomePage();
                 }),
               );
             },
@@ -165,46 +153,43 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-            ),
           Container(
             height: double.infinity,
-              child: SingleChildScrollView(
+            width: double.infinity,
+          ),
+          Container(
+            height: double.infinity,
+            child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 120.0,
-                  ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 40.0,
+                  vertical: 120.0,
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Sign In',
-                        style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  children: <Widget>[
+                    Text(
+                      'Sign In',
+                      style: TextStyle(
+                        fontFamily: 'OpenSans',
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
                       ),
-                      SizedBox(height: 30.0),
-                      _buildEmailTF(),
-                      SizedBox(height: 30.0),
-                      _buildPasswordTF(),
-                      _buildForgotPasswordBtn(),
-                      _buildRememberMeCheckBox(),
-                      _buildLoginBtn(),
+                    ),
+                    SizedBox(height: 30.0),
+                    _buildEmailTF(),
+                    SizedBox(height: 30.0),
+                    _buildPasswordTF(),
+                    _buildForgotPasswordBtn(),
+                    _buildRememberMeCheckBox(),
+                    _buildLoginBtn(),
 
-                    ],
+                  ],
                 )
-              ),
+            ),
           )
-
         ],
       ),
     );
   }
 }
-
-
