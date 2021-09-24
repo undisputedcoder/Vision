@@ -17,10 +17,10 @@ class _MyPageState extends State<MyPage> {
   @override
   void initState() {
     super.initState();
-    checkUserAccelerometer();
+    checkGeolocator();
   }
 
-  checkUserAccelerometer() async {
+  checkGeolocator() async {
     double kilometersPerHour = 0.0;
     bool isPassenger = false;
     const double averageRunningSpeed = 9.4;
