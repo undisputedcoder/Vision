@@ -1,12 +1,12 @@
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:apple/Samples/BarSample.dart';
+import 'package:apple/Samples/SalesData.dart';
+import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:apple/Screens/profile.dart';
 import 'package:apple/Screens/settings.dart';
-import 'package:apple/Samples/Time-Series.dart';
-import 'package:apple/Samples/Ordinal-Timeline.dart';
-import 'package:apple/Samples/LinearSales-List.dart';
 import 'package:apple/Templates/gradientIcon.dart';
 
 class HomePage extends StatelessWidget {
@@ -15,6 +15,7 @@ class HomePage extends StatelessWidget {
     return CupertinoApp(
       home: Main(),
       theme: CupertinoThemeData(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -161,29 +162,20 @@ class _HomeState extends State<Home> {
                         ),
                         Container(
                           height: 400,
-                          child: charts.TimeSeriesChart(
-                            timeSeries,
-                            dateTimeFactory: const charts.LocalDateTimeFactory(),
-                            behaviors: [
-                              new charts.SeriesLegend(
-                                  position: charts.BehaviorPosition.bottom),
-                              new charts.ChartTitle(
-                                "Top title",
-                                subTitle: "Top sub-title",
-                                behaviorPosition: charts.BehaviorPosition.top,
-                                titleOutsideJustification:
-                                charts.OutsideJustification.middle,
-                                innerPadding: 18,
-                              ),
-                              new charts.ChartTitle('Bottom title',
-                                  behaviorPosition: charts.BehaviorPosition.bottom,
-                                  titleOutsideJustification:
-                                  charts.OutsideJustification.middleDrawArea),
-                              new charts.ChartTitle('Start title',
-                                  behaviorPosition: charts.BehaviorPosition.start,
-                                  titleOutsideJustification:
-                                  charts.OutsideJustification.middleDrawArea)
-                            ],
+                          child: Center(
+                              child: SfCartesianChart(
+                                plotAreaBorderWidth: 0,
+                                title: ChartTitle(text: 'Tourism - Number of arrivals'),
+                                //legend: Legend(isVisible: !isCardView),
+                                primaryXAxis: CategoryAxis(
+                                  majorGridLines: const MajorGridLines(width: 0),
+                                ),
+                                primaryYAxis: NumericAxis(
+                                    majorGridLines: const MajorGridLines(width: 0),
+                                    numberFormat: NumberFormat.compact()),
+                                series: getDefaultBarSeries(),
+                                tooltipBehavior: TooltipBehavior(enable: true),
+                              )
                           ),
                         ),
                       ]
@@ -191,65 +183,51 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 SizedBox(height: 50.0),
-                Card(
-                  child: Container(
-                    height: 400,
-                    child: Center(
-                      child: charts.BarChart(
-                        series,
-                        animate: true,
-                        barGroupingType: charts.BarGroupingType.grouped,
-                        behaviors: [
-                          new charts.SeriesLegend(
-                              position: charts.BehaviorPosition.bottom),
-                          new charts.ChartTitle(
-                            "Top title",
-                            subTitle: "Top sub-title",
-                            behaviorPosition: charts.BehaviorPosition.top,
-                            titleOutsideJustification:
-                                charts.OutsideJustification.middle,
-                            innerPadding: 18,
+                Center(
+                  child: Card(
+                    child: Column(
+                        children: <Widget> [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 15, 0, 0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text("Overview",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
                           ),
-                          new charts.ChartTitle('Bottom title',
-                              behaviorPosition: charts.BehaviorPosition.bottom,
-                              titleOutsideJustification:
-                                  charts.OutsideJustification.middleDrawArea),
-                          new charts.ChartTitle('Start title',
-                              behaviorPosition: charts.BehaviorPosition.start,
-                              titleOutsideJustification:
-                                  charts.OutsideJustification.middleDrawArea)
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 50.0),
-                Card(
-                  child: Container(
-                    height: 400,
-                    child: Center(
-                      child: charts.ScatterPlotChart(
-                        sales,
-                        animate: true,
-                        behaviors: [
-                          new charts.ChartTitle(
-                            "Top title",
-                            subTitle: "Top sub-title",
-                            behaviorPosition: charts.BehaviorPosition.top,
-                            titleOutsideJustification:
-                                charts.OutsideJustification.middle,
-                            innerPadding: 18,
+                          Divider(
+                            height: 15.0,
+                            color: CupertinoColors.systemGrey,
                           ),
-                          new charts.ChartTitle('Bottom title',
-                              behaviorPosition: charts.BehaviorPosition.bottom,
-                              titleOutsideJustification:
-                                  charts.OutsideJustification.middleDrawArea),
-                          new charts.ChartTitle('Start title',
-                              behaviorPosition: charts.BehaviorPosition.start,
-                              titleOutsideJustification:
-                                  charts.OutsideJustification.middleDrawArea)
-                        ],
-                      ),
+                          Container(
+                            height: 400,
+                            child: Center(
+                                child: SfCartesianChart(
+                                  plotAreaBorderWidth: 0,
+                                  title: ChartTitle(text: 'Inflation - Consumer price'),
+                                  legend: Legend(
+                                      isVisible: true,
+                                      overflowMode: LegendItemOverflowMode.wrap),
+                                  primaryXAxis: NumericAxis(
+                                      edgeLabelPlacement: EdgeLabelPlacement.shift,
+                                      interval: 2,
+                                      majorGridLines: const MajorGridLines(width: 0)),
+                                  primaryYAxis: NumericAxis(
+                                      labelFormat: '{value}%',
+                                      axisLine: const AxisLine(width: 0),
+                                      majorTickLines: const MajorTickLines(color: Colors.transparent)),
+                                  series: getDefaultLineSeries(),
+                                  tooltipBehavior: TooltipBehavior(
+                                    enable: true,
+                                  ),
+                                )
+                            ),
+                          ),
+                        ]
                     ),
                   ),
                 ),
