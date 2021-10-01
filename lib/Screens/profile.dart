@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'login.dart';
+import 'package:apple/Screens/login.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -104,7 +104,7 @@ class _ProfileState extends State<Profile> {
                         Navigator.push(
                           context,
                             CupertinoPageRoute(builder: (context) {
-                              return MyApp();
+                              return LoginPage();
                             }),
                         );
                       },
