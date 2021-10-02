@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:apple/Screens/home.dart';
 
 class LoginPage extends StatefulWidget {
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -11,9 +10,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool? _rememberme = false;
 
-
-
-  Widget _buildEmailTF(){
+  Widget _buildEmailTF() {
     return Localizations(
         locale: const Locale('en', 'US'),
         delegates: <LocalizationsDelegate<dynamic>>[
@@ -22,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
         ],
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget> [
+          children: <Widget>[
             Text(
               'ID',
               style: TextStyle(
@@ -30,7 +27,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             SizedBox(height: 10.0),
-            Container(alignment: Alignment.centerLeft,
+            Container(
+              alignment: Alignment.centerLeft,
               //decoration: ????
               height: 60.0,
               child: TextField(
@@ -41,20 +39,17 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(
-                      Icons.account_circle
-                  ),
+                  prefixIcon: Icon(Icons.account_circle),
                   hintText: 'Enter your ID',
                   //hintStyle: ????????????
                 ),
-              )
-              ,)
+              ),
+            )
           ],
-        )
-    );
+        ));
   }
 
-  Widget _buildPasswordTF(){
+  Widget _buildPasswordTF() {
     return Localizations(
         locale: const Locale('en', 'US'),
         delegates: <LocalizationsDelegate<dynamic>>[
@@ -63,15 +58,14 @@ class _LoginPageState extends State<LoginPage> {
         ],
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget> [
-            Text(
-                'Password',
+          children: <Widget>[
+            Text('Password',
                 style: TextStyle(
                   fontFamily: 'OpenSans',
-                )
-            ),
+                )),
             SizedBox(height: 10.0),
-            Container(alignment: Alignment.centerLeft,
+            Container(
+              alignment: Alignment.centerLeft,
               //decoration: ????
               height: 60.0,
               child: TextField(
@@ -87,16 +81,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   hintText: 'Enter your Password',
                   //hintStyle: ????????????
-
                 ),
-              )
-              ,)
+              ),
+            )
           ],
-        )
-    );
+        ));
   }
 
-  Widget _buildForgotPasswordBtn(){
+  Widget _buildForgotPasswordBtn() {
     return Localizations(
         locale: const Locale('en', 'US'),
         delegates: <LocalizationsDelegate<dynamic>>[
@@ -105,14 +97,14 @@ class _LoginPageState extends State<LoginPage> {
         ],
         child: Container(
           alignment: Alignment.centerRight,
-          child: TextButton(onPressed: ()=> print('Forgot Password button pressed'),
+          child: TextButton(
+            onPressed: () => print('Forgot Password button pressed'),
             child: Text('Forgot Password?'), //style????
           ),
-        )
-    );
+        ));
   }
 
-  Widget _buildRememberMeCheckBox(){
+  Widget _buildRememberMeCheckBox() {
     return Localizations(
         locale: const Locale('en', 'US'),
         delegates: <LocalizationsDelegate<dynamic>>[
@@ -121,36 +113,26 @@ class _LoginPageState extends State<LoginPage> {
         ],
         child: Container(
             height: 20.0,
-            child: Row(
-                children: <Widget>[
-                  Theme(
-                      data: ThemeData(
-
-                      ),
-                      child: Checkbox(
-                        value:_rememberme,
-                        checkColor: Colors.green,
-                        onChanged: (value){
-                          setState(() {
-                            _rememberme = value;
-                          });
-                        },
-
-                      )
-                  ),
-                  Text(
-                      'Remember me',
-                      style: TextStyle(
-                        fontFamily: 'OpenSans',
-                      )
-                  )
-                ]
-            )
-        )
-    );
+            child: Row(children: <Widget>[
+              Theme(
+                  data: ThemeData(),
+                  child: Checkbox(
+                    value: _rememberme,
+                    checkColor: Colors.green,
+                    onChanged: (value) {
+                      setState(() {
+                        _rememberme = value;
+                      });
+                    },
+                  )),
+              Text('Remember me',
+                  style: TextStyle(
+                    fontFamily: 'OpenSans',
+                  ))
+            ])));
   }
 
-  Widget _buildLoginBtn(){
+  Widget _buildLoginBtn() {
     return Localizations(
         locale: const Locale('en', 'US'),
         delegates: <LocalizationsDelegate<dynamic>>[
@@ -170,18 +152,13 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 },
                 padding: EdgeInsets.all(15.0),
-                child: Text(
-                    'LOGIN',
+                child: Text('LOGIN',
                     style: TextStyle(
                       letterSpacing: 1.5,
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'OpenSans',
-                    )
-                )
-            )
-        )
-    );
+                    )))));
   }
 
   @override
@@ -219,10 +196,8 @@ class _LoginPageState extends State<LoginPage> {
                     _buildForgotPasswordBtn(),
                     _buildRememberMeCheckBox(),
                     _buildLoginBtn(),
-
                   ],
-                )
-            ),
+                )),
           )
         ],
       ),
