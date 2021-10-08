@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:apple/Screens/home.dart';
+import 'package:apple/Screens/biometrics.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -147,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.push(
                     context,
                     CupertinoPageRoute(builder: (context) {
-                      return HomePage();
+                      return BiometricsPage();
                     }),
                   );
                 },
