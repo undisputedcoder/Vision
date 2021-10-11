@@ -43,20 +43,7 @@ class _SettingsState extends State<Settings> {
               ),
               style: safeModeStyle,
             ),
-            CSDescription('If you are operating with machinery then enable this mode. Enabling safe mode will ensure the app does not become a distraction.',),
-            const CSHeader('Theme'),
-            CSControl(
-              nameWidget: Text('Dark mode'),
-              contentWidget: CupertinoSwitch(
-                value: switchState,
-                activeColor: CupertinoColors.activeBlue,
-                onChanged: (bool value) {
-                  setState(() {
-                    switchState = value;
-                  });
-                },
-              ),
-            ),
+            CSDescription('If you are operating with machinery then enable this mode. Enabling safe mode will ensure the app does not become a distraction.'),
             CSHeader('Theme'),
             CSSelection<int>(
               items: const <CSSelectionItem<int>>[
@@ -86,12 +73,6 @@ class _SettingsState extends State<Settings> {
               Navigator.push(
                   context,
                   CupertinoPageRoute(builder: (context) => Version())
-              );
-            }),
-            CSButton(CSButtonType.DEFAULT, "View Licenses", () {
-              Navigator.push(
-                  context,
-                  CupertinoPageRoute(builder: (context) => Licenses())
               );
             }),
           ]
