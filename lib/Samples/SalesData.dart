@@ -1,37 +1,61 @@
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class _ChartData {
-  _ChartData(this.x, this.y, this.y2);
-  final double x;
+  _ChartData(this.date, this.y, this.y2);
+  final DateTime date;
   final double y;
   final double y2;
 }
 
-List<LineSeries<_ChartData, num>> getDefaultLineSeries() {
+List<LineSeries<_ChartData, DateTime>> getDefaultLineSeries() {
   final List<_ChartData> chartData = <_ChartData>[
-    _ChartData(2005, 21, 28),
-    _ChartData(2006, 24, 44),
-    _ChartData(2007, 36, 48),
-    _ChartData(2008, 38, 50),
-    _ChartData(2009, 54, 66),
-    _ChartData(2010, 57, 78),
-    _ChartData(2011, 70, 84)
+    _ChartData(DateTime.parse("2021-01-01"), 1939.3, 3930.2),
+    _ChartData(DateTime.parse("2021-01-02"), 5281.5, 5281.5),
+    _ChartData(DateTime.parse("2021-01-03"), 6393.7, 6393.7),
+    _ChartData(DateTime.parse("2021-01-04"), 4861.1, 4861.1),
+    _ChartData(DateTime.parse("2021-01-05"), 5668.35, 5668.35),
+    _ChartData(DateTime.parse("2021-01-06"), 3670.2, 3670.2),
+    _ChartData(DateTime.parse("2021-01-07"), 3051.3, 3241),
+    _ChartData(DateTime.parse("2021-01-08"), 2336.7, 4310),
+    _ChartData(DateTime.parse("2021-01-09"), 2823.5, 2972.9),
+    _ChartData(DateTime.parse("2021-01-10"), 2932.65, 2932.65),
+    _ChartData(DateTime.parse("2021-01-11"), 4685.05, 4685.05),
+    _ChartData(DateTime.parse("2021-01-12"), 2397.15, 2397.15),
+    _ChartData(DateTime.parse("2021-01-13"), 2680.9, 2680.9),
+    _ChartData(DateTime.parse("2021-01-14"), 2784.45, 2784.45),
+    _ChartData(DateTime.parse("2021-01-15"), 2828.3, 3916.8),
+    _ChartData(DateTime.parse("2021-01-16"), 2578.95, 3390.4),
+    _ChartData(DateTime.parse("2021-01-17"), 3904.7, 3904.7),
+    _ChartData(DateTime.parse("2021-01-18"), 3846.2, 3846.2),
+    _ChartData(DateTime.parse("2021-01-19"), 5090.5, 5090.5),
+    _ChartData(DateTime.parse("2021-01-20"), 4532.6, 4532.6),
+    _ChartData(DateTime.parse("2021-01-21"), 2629.9, 2629.9),
+    _ChartData(DateTime.parse("2021-01-22"), 2290.5, 2290.5),
+    _ChartData(DateTime.parse("2021-01-23"), 3447.1, 3447.1),
+    _ChartData(DateTime.parse("2021-01-24"), 4116.5, 4116.5),
+    _ChartData(DateTime.parse("2021-01-25"), 4501.4, 4501.4),
+    _ChartData(DateTime.parse("2021-01-26"), 3994.7, 3994.7),
+    _ChartData(DateTime.parse("2021-01-27"), 4088.7, 4088.7),
+    _ChartData(DateTime.parse("2021-01-28"), 4932.25, 4932.25),
+    _ChartData(DateTime.parse("2021-01-29"), 3104.55, 3104.55),
+    _ChartData(DateTime.parse("2021-01-30"), 1987.8, 1987.8),
+    _ChartData(DateTime.parse("2021-01-31"), 3199, 3199),
   ];
-  return <LineSeries<_ChartData, num>>[
-    LineSeries<_ChartData, num>(
+  return <LineSeries<_ChartData, DateTime>>[
+    LineSeries<_ChartData, DateTime>(
         animationDuration: 2500,
         dataSource: chartData,
-        xValueMapper: (_ChartData sales, _) => sales.x,
+        xValueMapper: (_ChartData sales, _) => sales.date,
         yValueMapper: (_ChartData sales, _) => sales.y,
         width: 2,
-        name: 'Germany',
+        name: 'Production',
         markerSettings: const MarkerSettings(isVisible: true)),
-    LineSeries<_ChartData, num>(
+    LineSeries<_ChartData, DateTime>(
         animationDuration: 2500,
         dataSource: chartData,
         width: 2,
-        name: 'England',
-        xValueMapper: (_ChartData sales, _) => sales.x,
+        name: 'Tender',
+        xValueMapper: (_ChartData sales, _) => sales.date,
         yValueMapper: (_ChartData sales, _) => sales.y2,
         markerSettings: const MarkerSettings(isVisible: true))
   ];

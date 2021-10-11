@@ -1,3 +1,4 @@
+import 'package:apple/api/local_auth_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:apple/Screens/home.dart';
@@ -8,7 +9,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool? _rememberme = false;
 
   Widget _buildEmailTF() {
     return Localizations(
@@ -88,50 +88,6 @@ class _LoginPageState extends State<LoginPage> {
         ));
   }
 
-  Widget _buildForgotPasswordBtn() {
-    return Localizations(
-        locale: const Locale('en', 'US'),
-        delegates: <LocalizationsDelegate<dynamic>>[
-          DefaultWidgetsLocalizations.delegate,
-          DefaultMaterialLocalizations.delegate,
-        ],
-        child: Container(
-          alignment: Alignment.centerRight,
-          child: TextButton(
-            onPressed: () => print('Forgot Password button pressed'),
-            child: Text('Forgot Password?'), //style????
-          ),
-        ));
-  }
-
-  Widget _buildRememberMeCheckBox() {
-    return Localizations(
-        locale: const Locale('en', 'US'),
-        delegates: <LocalizationsDelegate<dynamic>>[
-          DefaultWidgetsLocalizations.delegate,
-          DefaultMaterialLocalizations.delegate,
-        ],
-        child: Container(
-            height: 20.0,
-            child: Row(children: <Widget>[
-              Theme(
-                  data: ThemeData(),
-                  child: Checkbox(
-                    value: _rememberme,
-                    checkColor: Colors.green,
-                    onChanged: (value) {
-                      setState(() {
-                        _rememberme = value;
-                      });
-                    },
-                  )),
-              Text('Remember me',
-                  style: TextStyle(
-                    fontFamily: 'OpenSans',
-                  ))
-            ])));
-  }
-
   Widget _buildLoginBtn() {
     return Localizations(
         locale: const Locale('en', 'US'),
@@ -143,13 +99,14 @@ class _LoginPageState extends State<LoginPage> {
             padding: EdgeInsets.symmetric(vertical: 25.0),
             width: double.infinity,
             child: CupertinoButton.filled(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(builder: (context) {
-                      return HomePage();
-                    }),
-                  );
+                onPressed: () async {
+                  final isAuthenticated = await LocalAuthApi.authenticate();
+
+                  if (isAuthenticated) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  }
                 },
                 padding: EdgeInsets.all(15.0),
                 child: Text('LOGIN',
@@ -158,7 +115,11 @@ class _LoginPageState extends State<LoginPage> {
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'OpenSans',
-                    )))));
+                    )
+                )
+            )
+        )
+    );
   }
 
   @override
@@ -193,8 +154,6 @@ class _LoginPageState extends State<LoginPage> {
                     _buildEmailTF(),
                     SizedBox(height: 30.0),
                     _buildPasswordTF(),
-                    _buildForgotPasswordBtn(),
-                    _buildRememberMeCheckBox(),
                     _buildLoginBtn(),
                   ],
                 )),
