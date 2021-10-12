@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:apple/api/local_auth_api.dart';
+import 'package:apple/Api/local_auth_api.dart';
 import 'package:apple/Screens/home.dart';
+import 'package:apple/Screens/login.dart';
 
 class ButtonWidget extends StatelessWidget {
   final String title;
@@ -31,11 +32,25 @@ class ButtonWidget extends StatelessWidget {
           child: Container(
             height: 60.0,
             child: Center(
-              child: MaterialButton(
+              child: TextButton(
                 onPressed: () async {
-                  final isAuthenticated = await LocalAuthApi.authenticate();
+                  final localAuthIsAvail =
+                      await LocalAuthApi.localAuthIsAvail();
 
-                  if (isAuthenticated) {
+                  if (localAuthIsAvail) {
+                    final authenticationSuccessful =
+                        await LocalAuthApi.authenticate();
+
+                    if (authenticationSuccessful) {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                    } else {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    }
+                  } else {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => HomePage()),
                     );
