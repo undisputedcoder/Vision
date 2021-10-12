@@ -1,164 +1,89 @@
-import 'package:apple/api/local_auth_api.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:apple/Screens/home.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:apple/Widgets/text_field.dart';
+import 'package:apple/Widgets/button.dart';
+import 'package:apple/Widgets/wave.dart';
 
 class LoginPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-
-  Widget _buildEmailTF() {
-    return Localizations(
-        locale: const Locale('en', 'US'),
-        delegates: <LocalizationsDelegate<dynamic>>[
-          DefaultWidgetsLocalizations.delegate,
-          DefaultMaterialLocalizations.delegate,
-        ],
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'ID',
-              style: TextStyle(
-                fontFamily: 'OpenSans',
-              ),
-            ),
-            SizedBox(height: 10.0),
-            Container(
-              alignment: Alignment.centerLeft,
-              //decoration: ????
-              height: 60.0,
-              child: TextField(
-                keyboardType: TextInputType.emailAddress,
-                style: TextStyle(
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(Icons.account_circle),
-                  hintText: 'Enter your ID',
-                  //hintStyle: ????????????
-                ),
-              ),
-            )
-          ],
-        ));
-  }
-
-  Widget _buildPasswordTF() {
-    return Localizations(
-        locale: const Locale('en', 'US'),
-        delegates: <LocalizationsDelegate<dynamic>>[
-          DefaultWidgetsLocalizations.delegate,
-          DefaultMaterialLocalizations.delegate,
-        ],
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text('Password',
-                style: TextStyle(
-                  fontFamily: 'OpenSans',
-                )),
-            SizedBox(height: 10.0),
-            Container(
-              alignment: Alignment.centerLeft,
-              //decoration: ????
-              height: 60.0,
-              child: TextField(
-                obscureText: true,
-                style: TextStyle(
-                  fontFamily: 'OpenSans',
-                ),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(
-                    CupertinoIcons.lock,
-                  ),
-                  hintText: 'Enter your Password',
-                  //hintStyle: ????????????
-                ),
-              ),
-            )
-          ],
-        ));
-  }
-
-  Widget _buildLoginBtn() {
-    return Localizations(
-        locale: const Locale('en', 'US'),
-        delegates: <LocalizationsDelegate<dynamic>>[
-          DefaultWidgetsLocalizations.delegate,
-          DefaultMaterialLocalizations.delegate,
-        ],
-        child: Container(
-            padding: EdgeInsets.symmetric(vertical: 25.0),
-            width: double.infinity,
-            child: CupertinoButton.filled(
-                onPressed: () async {
-                  final isAuthenticated = await LocalAuthApi.authenticate();
-
-                  if (isAuthenticated) {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
-                  }
-                },
-                padding: EdgeInsets.all(15.0),
-                child: Text('LOGIN',
-                    style: TextStyle(
-                      letterSpacing: 1.5,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'OpenSans',
-                    )
-                )
-            )
-        )
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-          ),
-          Container(
-            height: double.infinity,
-            child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 40.0,
-                  vertical: 120.0,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Sign In',
-                      style: TextStyle(
-                        fontFamily: 'OpenSans',
-                        fontSize: 30.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 30.0),
-                    _buildEmailTF(),
-                    SizedBox(height: 30.0),
-                    _buildPasswordTF(),
-                    _buildLoginBtn(),
-                  ],
-                )),
-          )
+      backgroundColor: CupertinoColors.white,
+      body: Localizations(
+        locale: const Locale('en', 'US'),
+        delegates: <LocalizationsDelegate<dynamic>>[
+          DefaultWidgetsLocalizations.delegate,
+          DefaultMaterialLocalizations.delegate,
         ],
+        child: Stack(
+          children: [
+            /*
+            Container(
+              height: size.height - 200.0,
+              color: CupertinoColors.activeBlue,
+            ),
+            AnimatedPositioned(
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeOutQuad,
+              top: keyboardOpen ? -size.height / 3.7 : 0.0,
+              child: WaveWidget(
+                size: size,
+                yOffset: size.height / 3.0,
+                color: CupertinoColors.white,
+              ),
+            ),
+             */
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 100.0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Login',
+                    style: TextStyle(
+                      color: CupertinoColors.activeBlue,
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextFieldWidget(
+                    hintText: 'Email',
+                    prefixIconData: CupertinoIcons.mail,
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  TextFieldWidget(
+                    hintText: 'Password',
+                    prefixIconData: Icons.lock_outline,
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  ButtonWidget(title: 'Login', hasBorder: false),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
