@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
         scale: 0.4,
         child: const Image(
           image: AssetImage(
-            'Assets/splash-screen.png',
+            'Assets/splash.png',
           ),
         ),
       ),
