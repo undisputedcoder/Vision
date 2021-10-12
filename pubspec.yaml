@@ -35,6 +35,7 @@ dependencies:
   syncfusion_flutter_charts: ^19.2.62
   intl: ^0.17.0
   local_auth: ^1.1.8
+  provider: ^6.0.1
 
 dev_dependencies:
   flutter_test:
