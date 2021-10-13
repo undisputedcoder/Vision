@@ -25,10 +25,9 @@ class _LoginPageState extends State<LoginPage> {
         ],
         child: Stack(
           children: [
-            /*
             Container(
               height: size.height - 200.0,
-              color: CupertinoColors.activeBlue,
+              color: Color(0xff00b09b),
             ),
             AnimatedPositioned(
               duration: Duration(milliseconds: 500),
@@ -40,7 +39,6 @@ class _LoginPageState extends State<LoginPage> {
                 color: CupertinoColors.white,
               ),
             ),
-             */
             Padding(
               padding: const EdgeInsets.only(
                 top: 100.0,
@@ -51,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                   Text(
                     'Login',
                     style: TextStyle(
-                      color: CupertinoColors.activeBlue,
+                      color: keyboardOpen ? Color(0xff00b09b) : CupertinoColors.white,
                       fontSize: 40.0,
                       fontWeight: FontWeight.w900,
                     ),
@@ -65,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextFieldWidget(
+                    obscureText: false,
                     hintText: 'Email',
                     prefixIconData: CupertinoIcons.mail,
                   ),
@@ -72,6 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 10.0,
                   ),
                   TextFieldWidget(
+                    obscureText: true,
                     hintText: 'Password',
                     prefixIconData: Icons.lock_outline,
                   ),
