@@ -25,13 +25,12 @@ class _LoginPageState extends State<LoginPage> {
         ],
         child: Stack(
           children: [
-            /*
             Container(
               height: size.height - 200.0,
-              color: CupertinoColors.activeBlue,
+              color: Color(0xff00b09b),
             ),
             AnimatedPositioned(
-              duration: Duration(milliseconds: 500),
+              duration: Duration(milliseconds: 1000),
               curve: Curves.easeOutQuad,
               top: keyboardOpen ? -size.height / 3.7 : 0.0,
               child: WaveWidget(
@@ -40,7 +39,6 @@ class _LoginPageState extends State<LoginPage> {
                 color: CupertinoColors.white,
               ),
             ),
-             */
             Padding(
               padding: const EdgeInsets.only(
                 top: 100.0,
@@ -49,9 +47,9 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Login',
+                    'Welcome',
                     style: TextStyle(
-                      color: CupertinoColors.activeBlue,
+                      color: keyboardOpen ? Color(0xff00b09b) : CupertinoColors.white,
                       fontSize: 40.0,
                       fontWeight: FontWeight.w900,
                     ),
@@ -60,11 +58,30 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Padding(
+              padding: const EdgeInsets.only(
+                top: 170,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Log in to access your account.',
+                    style: TextStyle(
+                      color: keyboardOpen ? CupertinoColors.white : CupertinoColors.white,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.all(30.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Padding(padding: const EdgeInsets.only(top: 50)),
                   TextFieldWidget(
+                    obscureText: false,
                     hintText: 'Email',
                     prefixIconData: CupertinoIcons.mail,
                   ),
@@ -72,6 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 10.0,
                   ),
                   TextFieldWidget(
+                    obscureText: true,
                     hintText: 'Password',
                     prefixIconData: Icons.lock_outline,
                   ),
@@ -82,6 +100,19 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
             ),
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15.0),
+                    child: Center(
+                        child: Text("\u{00A9} Vision 2021")
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),

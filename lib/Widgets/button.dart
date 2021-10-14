@@ -18,11 +18,11 @@ class ButtonWidget extends StatelessWidget {
     return Material(
       child: Ink(
         decoration: BoxDecoration(
-          color: hasBorder ? CupertinoColors.white : CupertinoColors.activeBlue,
+          color: hasBorder ? CupertinoColors.white : Color(0xff00b09b),
           borderRadius: BorderRadius.circular(10.0),
           border: hasBorder
               ? Border.all(
-                  color: CupertinoColors.activeBlue,
+                  color: Color(0xff00b09b),
                   width: 1.0,
                 )
               : Border.fromBorderSide(BorderSide.none),
@@ -60,7 +60,7 @@ class ButtonWidget extends StatelessWidget {
                   title,
                   style: TextStyle(
                     color: hasBorder
-                        ? CupertinoColors.activeBlue
+                        ? Color(0xff00b09b)
                         : CupertinoColors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: 16.0,

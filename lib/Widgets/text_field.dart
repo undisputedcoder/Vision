@@ -4,27 +4,30 @@ import 'package:flutter/cupertino.dart';
 class TextFieldWidget extends StatelessWidget {
   final String hintText;
   final IconData prefixIconData;
+  final bool obscureText;
 
   TextFieldWidget({
     required this.hintText,
     required this.prefixIconData,
+    required this.obscureText,
   });
 
   @override
   Widget build(BuildContext context) {
 
     return TextField(
+      obscureText: obscureText,
       style: TextStyle(
-        color: CupertinoColors.activeBlue,
+        color: Color(0xff00b09b),
         fontSize: 14.0,
       ),
-      cursorColor: CupertinoColors.activeBlue,
+      cursorColor: Color(0xff00b09b),
       decoration: InputDecoration(
         labelText: hintText,
         prefixIcon: Icon(
           prefixIconData,
           size: 18.0,
-          color: CupertinoColors.activeBlue,
+          color: Color(0xff00b09b),
         ),
         filled: true,
         enabledBorder: UnderlineInputBorder(
@@ -34,13 +37,13 @@ class TextFieldWidget extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(
-            color: CupertinoColors.activeBlue,
+            color: Color(0xff00b09b),
           ),
         ),
         labelStyle: TextStyle(
-          color: CupertinoColors.activeBlue,
+          color: Color(0xff00b09b),
         ),
-        focusColor: CupertinoColors.activeBlue,
+        focusColor: Color(0xff00b09b),
       ),
     );
   }
