@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
               color: Color(0xff00b09b),
             ),
             AnimatedPositioned(
-              duration: Duration(milliseconds: 500),
+              duration: Duration(milliseconds: 1000),
               curve: Curves.easeOutQuad,
               top: keyboardOpen ? -size.height / 3.7 : 0.0,
               child: WaveWidget(
@@ -77,8 +77,9 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Padding(padding: const EdgeInsets.only(top: 50)),
                   TextFieldWidget(
                     obscureText: false,
                     hintText: 'Email',
@@ -99,6 +100,19 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
             ),
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15.0),
+                    child: Center(
+                        child: Text("\u{00A9} Vision 2021")
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
