@@ -75,9 +75,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(30.0),
+              //padding: const EdgeInsets.all(30.0),
+              padding: const EdgeInsets.fromLTRB(30, 30, 30, 10),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(padding: const EdgeInsets.only(top: 50)),
                   TextFieldWidget(
@@ -97,22 +98,13 @@ class _LoginPageState extends State<LoginPage> {
                     height: 20.0,
                   ),
                   ButtonWidget(title: 'Login', hasBorder: false),
+                  SizedBox(
+                    height: 7.5,
+                  ),
+                  Text("\u{00A9} Vision 2021"),
                 ],
               ),
             ),
-            Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15.0),
-                    child: Center(
-                        child: Text("\u{00A9} Vision 2021")
-                    ),
-                  ),
-                ],
-              ),
-            )
           ],
         ),
       ),
