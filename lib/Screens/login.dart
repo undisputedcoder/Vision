@@ -47,11 +47,28 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Login',
+                    'Welcome',
                     style: TextStyle(
                       color: keyboardOpen ? Color(0xff00b09b) : CupertinoColors.white,
                       fontSize: 40.0,
                       fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 170,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Log in to access your account.',
+                    style: TextStyle(
+                      color: keyboardOpen ? CupertinoColors.white : CupertinoColors.white,
+                      fontSize: 15.0,
                     ),
                   ),
                 ],
