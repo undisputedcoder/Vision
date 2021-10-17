@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:apple/Api/local_auth_api.dart';
 import 'package:apple/Screens/home.dart';
-import 'package:apple/Screens/login.dart';
 
 class ButtonWidget extends StatelessWidget {
   final String title;
@@ -45,10 +44,6 @@ class ButtonWidget extends StatelessWidget {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (context) => HomePage()),
                       );
-                    } else {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                      );
                     }
                   } else {
                     Navigator.of(context).pushReplacement(
@@ -59,9 +54,8 @@ class ButtonWidget extends StatelessWidget {
                 child: Text(
                   title,
                   style: TextStyle(
-                    color: hasBorder
-                        ? Color(0xff00b09b)
-                        : CupertinoColors.white,
+                    color:
+                        hasBorder ? Color(0xff00b09b) : CupertinoColors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: 16.0,
                   ),
