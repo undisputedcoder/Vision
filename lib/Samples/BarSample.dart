@@ -1,61 +1,21 @@
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartSampleData {
-  ChartSampleData({required this.x, this.y, this.secondSeriesYValue, this.thirdSeriesYValue});
+  ChartSampleData( this.x, this.y, this.y2, this.y3);
   final String x;
-  final int? y;
-  final int? secondSeriesYValue;
-  final int? thirdSeriesYValue;
+  final double y; //production
+  final double y2; //presplit
+  final double y3; //tender
 }
 
-List<BarSeries<ChartSampleData, String>> getDefaultBarSeries() {
-  final List<ChartSampleData> chartData = <ChartSampleData>[
-    ChartSampleData(
-        x: 'France',
-        y: 84452000,
-        secondSeriesYValue: 82682000,
-        thirdSeriesYValue: 86861000),
-    ChartSampleData(
-        x: 'Spain',
-        y: 68175000,
-        secondSeriesYValue: 75315000,
-        thirdSeriesYValue: 81786000),
-    ChartSampleData(
-        x: 'US',
-        y: 77774000,
-        secondSeriesYValue: 76407000,
-        thirdSeriesYValue: 76941000),
-    ChartSampleData(
-        x: 'Italy',
-        y: 50732000,
-        secondSeriesYValue: 52372000,
-        thirdSeriesYValue: 58253000),
-    ChartSampleData(
-        x: 'Mexico',
-        y: 32093000,
-        secondSeriesYValue: 35079000,
-        thirdSeriesYValue: 39291000),
-    ChartSampleData(
-        x: 'UK',
-        y: 34436000,
-        secondSeriesYValue: 35814000,
-        thirdSeriesYValue: 37651000),
+List<ChartSampleData> getDefaultBarSeries() {
+  final List<ChartSampleData> chartData1 = <ChartSampleData>[
+    ChartSampleData("Jan", 112579.5, 6203.25, 118782.8),
+    ChartSampleData("Feb", 118858.3, 1454.7, 120313),
+    ChartSampleData("Mar", 107372.3, 8806, 116178.3),
+    ChartSampleData("Apr", 120488.4, 11291.5, 130876.6),
+    ChartSampleData("May", 130564.8, 3452.1, 134016.9),
+    ChartSampleData("Jun", 120084.2, 0, 120084.2),
   ];
-  return <BarSeries<ChartSampleData, String>>[
-    BarSeries<ChartSampleData, String>(
-        dataSource: chartData,
-        xValueMapper: (ChartSampleData sales, _) => sales.x as String,
-        yValueMapper: (ChartSampleData sales, _) => sales.y,
-        name: '2015'),
-    BarSeries<ChartSampleData, String>(
-        dataSource: chartData,
-        xValueMapper: (ChartSampleData sales, _) => sales.x as String,
-        yValueMapper: (ChartSampleData sales, _) => sales.secondSeriesYValue,
-        name: '2016'),
-    BarSeries<ChartSampleData, String>(
-        dataSource: chartData,
-        xValueMapper: (ChartSampleData sales, _) => sales.x as String,
-        yValueMapper: (ChartSampleData sales, _) => sales.thirdSeriesYValue,
-        name: '2017')
-  ];
+  return chartData1;
 }
