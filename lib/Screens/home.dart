@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:apple/Screens/profile.dart';
 import 'package:apple/Screens/settings.dart';
+import 'package:apple/Templates/gradient.dart';
+import 'package:geolocator/geolocator.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -18,7 +20,13 @@ class HomePage extends StatelessWidget {
 }
 
 List<Widget> tabOptions = [
-  Home(),
+  Localizations(
+      locale: const Locale('en', 'US'),
+      delegates: <LocalizationsDelegate<dynamic>>[
+        DefaultWidgetsLocalizations.delegate,
+        DefaultMaterialLocalizations.delegate,
+      ],
+      child: Home()),
   Profile(),
   Settings(),
 ];
@@ -75,6 +83,68 @@ class _HomeState extends State<Home> {
   void initState() {
     _chartData1 = getDefaultBarSeries();
     super.initState();
+    checkUserAccelerometer();
+  }
+
+  checkUserAccelerometer() {
+    double kilometersPerHour = 0.0;
+    bool isPassenger = false;
+    const double averageRunningSpeed = 9.4;
+
+    Geolocator.getPositionStream(
+        intervalDuration: const Duration(seconds: 1),
+        desiredAccuracy: LocationAccuracy.high)
+        .listen((position) {
+      kilometersPerHour = position.speed * 3.6;
+      print(kilometersPerHour); // Remove later
+      if (kilometersPerHour > averageRunningSpeed) {
+        if (!isPassenger) {
+          showAlert(context);
+          isPassenger = true;
+        }
+      }
+    });
+  }
+
+  void showAlert(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) => CupertinoAlertDialog(
+          title: const Text("You're going too fast!"),
+          content: Column(
+            children: const <Widget>[
+              SizedBox(
+                height: 10.0,
+              ),
+              IconGradient(
+                CupertinoIcons.speedometer,
+                125.0,
+                LinearGradient(
+                  colors: <Color>[
+                    CupertinoColors.systemYellow,
+                    CupertinoColors.systemOrange,
+                    CupertinoColors.systemRed,
+                  ],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                  'This app should not be used while operating machinery.'),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => {
+                Navigator.pop(context, "I'M A PASSENGER"),
+              },
+              child: const Text("I'M A PASSENGER"),
+            ),
+          ],
+        ));
   }
 
   @override
