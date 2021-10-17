@@ -56,6 +56,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   double production = roundDouble(productionTotal(chartData), 2);
   double tender = roundDouble(tenderTotal(chartData), 2);
+  late List<ChartSampleData> _chartData1;
 
   displayProductionTotal() {
     setState(() {
@@ -72,6 +73,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    _chartData1 = getDefaultBarSeries();
     super.initState();
   }
 
@@ -278,6 +280,111 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
+                Card(
+                  child: Column(
+                    children: [
+                      ListTile(
+                        leading: Text("Overview", style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        ),
+                        trailing: CupertinoButton(
+                            onPressed: () {
+
+                            },
+                            child: Icon(CupertinoIcons.calendar)
+                        ),
+                      ),
+                      Divider(
+                        height: 1.0,
+                        color: CupertinoColors.systemGrey,
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                            child: InkWell(
+                              onTap: () {
+                              },
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text('',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("0%",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        height: 15.0,
+                        color: CupertinoColors.systemGrey,
+                      ),
+                      Container(
+                        height: 400,
+                        child: Center(
+                            child: SfCartesianChart(
+                              plotAreaBorderWidth: 0,
+                              title: ChartTitle(text: 'Production vs Tender'),
+                              legend: Legend(
+                                  isVisible: true,
+                                  position: LegendPosition.bottom,
+                              ),
+                              primaryXAxis: CategoryAxis(
+                                  majorGridLines: const MajorGridLines(width: 0)
+                              ),
+                              series: <ChartSeries>[
+                                StackedColumnSeries<ChartSampleData, String>(
+                                    dataSource: _chartData1,
+                                    xValueMapper: (ChartSampleData view1, _) => view1.x,
+                                    yValueMapper: (ChartSampleData view1, _) => view1.y,
+                                  name: 'Production'
+                                ),
+                                StackedColumnSeries<ChartSampleData, String>(
+                                    dataSource: _chartData1,
+                                    xValueMapper: (ChartSampleData view1, _) => view1.x,
+                                    yValueMapper: (ChartSampleData view1, _) => view1.y2,
+                                    name: 'Presplit'
+                                ),
+                                StackedColumnSeries<ChartSampleData, String>(
+                                    dataSource: _chartData1,
+                                    xValueMapper: (ChartSampleData view1, _) => view1.x,
+                                    yValueMapper: (ChartSampleData view1, _) => view1.y3,
+                                    name: 'Tender'
+                                ),
+                              ],
+                              tooltipBehavior: TooltipBehavior(
+                                enable: true,
+                              ),
+                            )
+                        ),
+                      ),
+                    ],
+                  )
+                )
               ],
             ),
           ),
