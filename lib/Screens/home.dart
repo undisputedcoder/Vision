@@ -10,9 +10,8 @@ import 'package:apple/Screens/settings.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
+    return MaterialApp(
       home: Main(),
-      theme: CupertinoThemeData(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -55,6 +54,22 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  double production = roundDouble(productionTotal(chartData), 2);
+  double tender = roundDouble(tenderTotal(chartData), 2);
+
+  displayProductionTotal() {
+    setState(() {
+      production = productionTotal(chartData);
+    });
+  }
+
+  displayTenderTotal() {
+    setState(() {
+      tender = tenderTotal(chartData);
+    });
+  }
+  
+
   @override
   void initState() {
     super.initState();
@@ -66,7 +81,11 @@ class _HomeState extends State<Home> {
         backgroundColor: CupertinoColors.extraLightBackgroundGray,
         navigationBar: CupertinoNavigationBar(
           padding: EdgeInsetsDirectional.all(2.0),
-          middle: Text("Analytics"),
+          middle: Text("Analytics",
+            style: TextStyle(
+              fontSize: 18
+            ),
+          ),
         ),
         child: SafeArea(
           child: CupertinoScrollbar(
@@ -74,25 +93,77 @@ class _HomeState extends State<Home> {
             child: ListView(
               padding: const EdgeInsets.all(8.0),
               children: <Widget>[
-                SizedBox(height: 50.0),
                 Center(
                   child: Card(
                     child: Column(
                         children: <Widget> [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 15, 0, 0),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text("Overview",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                          ListTile(
+                            leading: Text("Overview", style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
                               ),
+                            ),
+                            trailing: CupertinoButton(
+                                onPressed: () {
+                                  DateTime current = DateTime.now();
+                                  String currentFormatted = DateFormat('EEEE, dd MMM').format(current);
+                                  DateTime thirtyDays = current.add(Duration(days: 30));
+                                  String thirtyDaysFormatted = DateFormat('EEEE, dd MMM').format(thirtyDays);
+
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Container(
+                                          height: 200,
+                                          child: Column(
+                                            children: [
+                                              InkWell(
+                                                onTap: () async {
+                                                  final picked = await showDatePicker(
+                                                      context: context,
+                                                      initialDate: DateTime.now(),
+                                                      firstDate: DateTime(2021),
+                                                      lastDate: DateTime(2022)
+                                                  );
+
+                                                  if(picked != null) {
+                                                    setState(() {
+                                                      current = picked;
+                                                      currentFormatted = DateFormat('EEEE, dd MMM').format(current);
+                                                      print('$currentFormatted');
+                                                    });
+                                                  }
+                                                },
+                                                child: ListTile(
+                                                  title: Text("Start Date"),
+                                                  subtitle: Text("$currentFormatted"),
+                                                ),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  showDatePicker(
+                                                      context: context,
+                                                      initialDate: DateTime.now(),
+                                                      firstDate: DateTime(2021),
+                                                      lastDate: DateTime(2022)
+                                                  );
+                                                },
+                                                child: ListTile(
+                                                  title: Text("End Date"),
+                                                  subtitle: Text("$thirtyDaysFormatted"),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                  );
+                                },
+                                child: Icon(CupertinoIcons.calendar)
                             ),
                           ),
                           Divider(
-                            height: 15.0,
+                            height: 1.0,
                             color: CupertinoColors.systemGrey,
                           ),
                           Row(
@@ -100,7 +171,11 @@ class _HomeState extends State<Home> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
                                 child: InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    production = productionTotal(chartData);
+                                    //print('$production');
+                                    displayProductionTotal();
+                                  },
                                   child: Column(
                                     children: [
                                       Align(
@@ -113,7 +188,7 @@ class _HomeState extends State<Home> {
                                       ),
                                       Align(
                                         alignment: Alignment.centerLeft,
-                                        child: Text("85.2K",
+                                        child: Text('$production',
                                           style: TextStyle(
                                             fontSize: 24,
                                           ),
@@ -135,7 +210,9 @@ class _HomeState extends State<Home> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
                                 child: InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+
+                                  },
                                   child: Column(
                                     children: [
                                       Align(
@@ -148,7 +225,7 @@ class _HomeState extends State<Home> {
                                       ),
                                       Align(
                                         alignment: Alignment.topLeft,
-                                        child: Text("85.2K",
+                                        child: Text("$tender",
                                           style: TextStyle(
                                             fontSize: 24,
                                           ),
