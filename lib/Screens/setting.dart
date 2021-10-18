@@ -4,12 +4,12 @@ import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
 import 'package:apple/Screens/licenses.dart';
 import 'package:apple/Screens/version.dart';
 
-class Settings extends StatefulWidget {
+class Setting extends StatefulWidget {
   @override
-  _SettingsState createState() => _SettingsState();
+  _SettingState createState() => _SettingState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingState extends State<Setting> {
   bool switchState = false;
   bool safeModeSwitch = false;
   int current = 0;

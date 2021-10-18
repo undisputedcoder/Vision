@@ -5,9 +5,10 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:apple/Screens/profile.dart';
-import 'package:apple/Screens/settings.dart';
+import 'package:apple/Screens/setting.dart';
 import 'package:apple/Templates/gradient.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -28,7 +29,7 @@ List<Widget> tabOptions = [
       ],
       child: Home()),
   Profile(),
-  Settings(),
+  Setting(),
 ];
 
 class Main extends StatefulWidget {
@@ -189,6 +190,15 @@ class _HomeState extends State<Home> {
                                           height: 200,
                                           child: Column(
                                             children: [
+                                              Padding(
+                                                  padding: const EdgeInsets.only(top: 8)
+                                              ),
+                                              Text("Select the start and end date",
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500
+                                                ),
+                                              ),
                                               InkWell(
                                                 onTap: () async {
                                                   final picked = await showDatePicker(
@@ -242,78 +252,66 @@ class _HomeState extends State<Home> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                child: InkWell(
-                                  onTap: () {
-                                    production = productionTotal(chartData);
-                                    //print('$production');
-                                    displayProductionTotal();
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text("Production",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                          ),
+                                child: Column(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text("Production",
+                                        style: TextStyle(
+                                          fontSize: 14,
                                         ),
                                       ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text('$production',
-                                          style: TextStyle(
-                                            fontSize: 24,
-                                          ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text('$production',
+                                        style: TextStyle(
+                                          fontSize: 24,
                                         ),
                                       ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text("\u{2191} 20.7%",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.green
-                                          ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text("\u{2191} 20.7%",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.green
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                child: InkWell(
-                                  onTap: () {
-
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text("Tender",
-                                          style: TextStyle(
+                                child: Column(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text("Tender",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text("$tender",
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                        ),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text("\u{2193} 10.2%",
+                                        style: TextStyle(
                                             fontSize: 14,
-                                          ),
+                                            color: Colors.red
                                         ),
                                       ),
-                                      Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text("$tender",
-                                          style: TextStyle(
-                                            fontSize: 24,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text("\u{2193} 10.2%",
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.red
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -327,7 +325,7 @@ class _HomeState extends State<Home> {
                             child: Center(
                                 child: SfCartesianChart(
                                   plotAreaBorderWidth: 0,
-                                  title: ChartTitle(text: 'Inflation - Consumer price'),
+                                  title: ChartTitle(text: 'Production vs Tender'),
                                   legend: Legend(
                                       isVisible: true,
                                       overflowMode: LegendItemOverflowMode.wrap),
@@ -374,37 +372,33 @@ class _HomeState extends State<Home> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                            child: InkWell(
-                              onTap: () {
-                              },
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text("",
-                                      style: TextStyle(
+                            child: Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text("",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text('',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text("0%",
+                                    style: TextStyle(
                                         fontSize: 14,
-                                      ),
                                     ),
                                   ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text('',
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text("0%",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
