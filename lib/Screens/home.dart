@@ -100,8 +100,10 @@ class _HomeState extends State<Home> {
       kilometersPerHour = position.speed * 3.6;
       print(kilometersPerHour); // Remove later
       if (kilometersPerHour > averageRunningSpeed) {
-        ++count;
-
+        if (count < 3) {
+          ++count;
+        }
+        
         if (!isPassenger && count == 3) {
           showAlert(context);
           isPassenger = true;
