@@ -91,15 +91,20 @@ class _HomeState extends State<Home> {
     double kilometersPerHour = 0.0;
     bool isPassenger = false;
     const double averageRunningSpeed = 9.4;
+    int count = 0;
 
     Geolocator.getPositionStream(
-        intervalDuration: const Duration(seconds: 1),
+        intervalDuration: const Duration(seconds: 3),
         desiredAccuracy: LocationAccuracy.high)
         .listen((position) {
       kilometersPerHour = position.speed * 3.6;
       print(kilometersPerHour); // Remove later
       if (kilometersPerHour > averageRunningSpeed) {
-        if (!isPassenger) {
+        if(count < 3) {
+          ++count;
+        }
+
+        if (!isPassenger && count == 3) {
           showAlert(context);
           isPassenger = true;
         }
