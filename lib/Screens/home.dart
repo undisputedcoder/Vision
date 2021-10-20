@@ -5,7 +5,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:apple/Screens/profile.dart';
-import 'package:apple/Screens/setting.dart';
+import 'package:apple/Screens/settings.dart';
 import 'package:apple/Templates/gradient.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -91,15 +91,18 @@ class _HomeState extends State<Home> {
     double kilometersPerHour = 0.0;
     bool isPassenger = false;
     const double averageRunningSpeed = 9.4;
+    int count = 0;
 
     Geolocator.getPositionStream(
-        intervalDuration: const Duration(seconds: 1),
+        intervalDuration: const Duration(seconds: 3),
         desiredAccuracy: LocationAccuracy.high)
         .listen((position) {
       kilometersPerHour = position.speed * 3.6;
       print(kilometersPerHour); // Remove later
       if (kilometersPerHour > averageRunningSpeed) {
-        if (!isPassenger) {
+        ++count;
+
+        if (!isPassenger && count == 3) {
           showAlert(context);
           isPassenger = true;
         }
