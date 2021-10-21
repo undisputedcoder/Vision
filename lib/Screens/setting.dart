@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
-import 'package:apple/Screens/licenses.dart';
 import 'package:apple/Screens/version.dart';
 
 class Setting extends StatefulWidget {
@@ -11,15 +10,14 @@ class Setting extends StatefulWidget {
 
 class _SettingState extends State<Setting> {
   bool switchState = false;
-  bool safeModeSwitch = false;
+  bool safeModeSwitch = true;
   int current = 0;
 
   CSWidgetStyle safeModeStyle = const CSWidgetStyle(
-    icon: const Icon(
-      Icons.health_and_safety,
-      color: CupertinoColors.systemGreen,
-    )
-  );
+      icon: const Icon(
+    Icons.health_and_safety,
+    color: CupertinoColors.activeGreen,
+  ));
 
   @override
   Widget build(BuildContext context) {
@@ -27,59 +25,43 @@ class _SettingState extends State<Setting> {
       navigationBar: CupertinoNavigationBar(
         middle: Text('Settings'),
       ),
-      child: CupertinoSettings(
-          items: <Widget>[
-            const CSHeader('Safety'),
-            CSControl(
-              nameWidget: Text('User Safe mode'),
-              contentWidget: CupertinoSwitch(
-                value: safeModeSwitch,
-                activeColor: CupertinoColors.activeBlue,
-                onChanged: (bool value) {
-                  setState(() {
-                    safeModeSwitch = value;
-                  });
-                },
-              ),
-              style: safeModeStyle,
-            ),
-            CSDescription('If you are operating with machinery then enable this mode. Enabling safe mode will ensure the app does not become a distraction.'),
-            CSHeader('Theme'),
-            CSSelection<int>(
-              items: const <CSSelectionItem<int>>[
-                CSSelectionItem<int>(
-                    text: 'System (Default)',
-                    value: 0
-                ),
-                CSSelectionItem<int>(
-                    text: 'Light mode',
-                    value: 1
-                ),
-                CSSelectionItem<int>(
-                    text: 'Dark mode',
-                    value: 2
-                ),
-
-              ],
-              onSelected: (index) {
-                setState(() {
-                  current = index;
-                });
-              },
-              currentSelection: current,
-            ),
-            const CSHeader('About Vision'),
-            CSButton(CSButtonType.DEFAULT, "Version", (){
-              Navigator.push(
-                  context,
-                  CupertinoPageRoute(builder: (context) => Version())
-              );
-            }),
-          ]
-      ),
+      child: CupertinoSettings(items: <Widget>[
+        const CSHeader('Safety'),
+        CSControl(
+          nameWidget: Text('User Safe Mode'),
+          contentWidget: CupertinoSwitch(
+            value: safeModeSwitch,
+            activeColor: CupertinoColors.activeGreen,
+            onChanged: (bool value) {
+              setState(() {
+                safeModeSwitch = value;
+              });
+            },
+          ),
+          style: safeModeStyle,
+        ),
+        CSDescription(
+            'User Safe Mode prevents the app from becoming a distraction while operating machinery.'),
+        CSHeader('Theme'),
+        CSSelection<int>(
+          items: const <CSSelectionItem<int>>[
+            CSSelectionItem<int>(text: 'System (Default)', value: 0),
+            CSSelectionItem<int>(text: 'Light', value: 1),
+            CSSelectionItem<int>(text: 'Dark', value: 2),
+          ],
+          onSelected: (index) {
+            setState(() {
+              current = index;
+            });
+          },
+          currentSelection: current,
+        ),
+        const CSHeader('About Vision'),
+        CSButton(CSButtonType.DEFAULT, "Version", () {
+          Navigator.push(
+              context, CupertinoPageRoute(builder: (context) => Version()));
+        }),
+      ]),
     );
   }
 }
-
-
-
