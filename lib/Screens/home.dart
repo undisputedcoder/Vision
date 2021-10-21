@@ -63,6 +63,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  DateTime current = DateTime.now();
   double production = roundDouble(productionTotal(chartData), 2);
   double tender = roundDouble(tenderTotal(chartData), 2);
   late List<ChartSampleData> _chartData1;
@@ -153,8 +154,73 @@ class _HomeState extends State<Home> {
         ));
   }
 
+  void showProdInfo(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) => CupertinoAlertDialog(
+          title: Text("Production"),
+          content: Text("Production is blah blah blah"),
+          actions: [
+            CupertinoDialogAction(
+              child: Text("OK"),
+              isDefaultAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        )
+    );
+  }
+
+  void showTenderInfo(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) =>
+            CupertinoAlertDialog(
+              title: Text("Tender"),
+              content: Text("Tender is blah blah blah"),
+              actions: [
+                CupertinoDialogAction(
+                  child: Text("OK"),
+                  isDefaultAction: true,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              ],
+            )
+    );
+  }
+
+  void showHelp(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) =>
+            CupertinoAlertDialog(
+              title: Text("Info"),
+              content: Text("Blah blah blah"),
+              actions: [
+                CupertinoDialogAction(
+                  child: Text("OK"),
+                  isDefaultAction: true,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              ],
+            )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    String currentFormatted = DateFormat('EEEE, dd MMM').format(current);
+    String currentFormattedShort = DateFormat('EEE, dd MMM').format(current);
+    DateTime thirtyDays = current.add(Duration(days: 30));
+    String thirtyDaysFormatted = DateFormat('EEEE, dd MMM').format(thirtyDays);
+    String thirtyDaysFormattedShort = DateFormat('EEE, dd MMM').format(thirtyDays);
+
     return CupertinoPageScaffold(
         backgroundColor: CupertinoColors.extraLightBackgroundGray,
         navigationBar: CupertinoNavigationBar(
@@ -182,141 +248,159 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             trailing: CupertinoButton(
-                                onPressed: () {
-                                  DateTime current = DateTime.now();
-                                  String currentFormatted = DateFormat('EEEE, dd MMM').format(current);
-                                  DateTime thirtyDays = current.add(Duration(days: 30));
-                                  String thirtyDaysFormatted = DateFormat('EEEE, dd MMM').format(thirtyDays);
-
-                                  showModalBottomSheet(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return Container(
-                                          height: 200,
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                  padding: const EdgeInsets.only(top: 8)
-                                              ),
-                                              Text("Select the start and end date",
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w500
-                                                ),
-                                              ),
-                                              InkWell(
-                                                onTap: () async {
-                                                  final picked = await showDatePicker(
-                                                      context: context,
-                                                      initialDate: DateTime.now(),
-                                                      firstDate: DateTime(2021),
-                                                      lastDate: DateTime(2022)
-                                                  );
-
-                                                  if(picked != null) {
-                                                    setState(() {
-                                                      current = picked;
-                                                      currentFormatted = DateFormat('EEEE, dd MMM').format(current);
-                                                      print('$currentFormatted');
-                                                    });
-                                                  }
-                                                },
-                                                child: ListTile(
-                                                  title: Text("Start Date"),
-                                                  subtitle: Text("$currentFormatted"),
-                                                ),
-                                              ),
-                                              InkWell(
-                                                onTap: () {
-                                                  showDatePicker(
-                                                      context: context,
-                                                      initialDate: DateTime.now(),
-                                                      firstDate: DateTime(2021),
-                                                      lastDate: DateTime(2022)
-                                                  );
-                                                },
-                                                child: ListTile(
-                                                  title: Text("End Date"),
-                                                  subtitle: Text("$thirtyDaysFormatted"),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      }
-                                  );
-                                },
-                                child: Icon(CupertinoIcons.calendar)
+                                child: Icon(CupertinoIcons.question_circle),
+                              onPressed: () {
+                                  showHelp(context);
+                              },
                             ),
                           ),
                           Divider(
                             height: 1.0,
                             color: CupertinoColors.systemGrey,
                           ),
+                          InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      height: 200,
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                              padding: const EdgeInsets.only(top: 8)
+                                          ),
+                                          Text("Select the start and end date",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w500
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () async {
+                                              final picked = await showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime(2021),
+                                                  lastDate: DateTime(2022)
+                                              );
+
+                                              if(picked != null) {
+                                                setState(() {
+                                                  current = picked;
+                                                  currentFormatted = DateFormat('EEEE, dd MMM').format(current);
+                                                  print('$currentFormatted');
+                                                });
+                                              }
+                                            },
+                                            child: ListTile(
+                                              title: Text("Start Date"),
+                                              subtitle: Text("$currentFormatted"),
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime(2021),
+                                                  lastDate: DateTime(2022)
+                                              );
+                                            },
+                                            child: ListTile(
+                                              title: Text("End Date"),
+                                              subtitle: Text("$thirtyDaysFormatted"),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                              );
+                            },
+                            child: ListTile(
+                              leading: Icon(CupertinoIcons.calendar, color: CupertinoColors.activeBlue,),
+                              title: Text("$currentFormattedShort - $thirtyDaysFormattedShort"),
+                            ),
+                          ),
+                          Divider(
+                            height: 5.0,
+                            color: CupertinoColors.systemGrey,
+                          ),
                           Row(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                child: Column(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text("Production",
-                                        style: TextStyle(
-                                          fontSize: 14,
+                              InkWell(
+                                onTap: () {
+                                  showProdInfo(context);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text("Production",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text('$production',
-                                        style: TextStyle(
-                                          fontSize: 24,
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text('$production',
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text("\u{2191} 20.7%",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.green
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text("\u{2191} 20.7%",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.green
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                child: Column(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text("Tender",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text("$tender",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text("\u{2193} 10.2%",
-                                        style: TextStyle(
+                              InkWell(
+                                onTap: () {
+                                  showTenderInfo(context);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text("Tender",
+                                          style: TextStyle(
                                             fontSize: 14,
-                                            color: Colors.red
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text("$tender",
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                          ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text("\u{2193} 10.2%",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.red
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -352,6 +436,9 @@ class _HomeState extends State<Home> {
                         ]
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 Card(
                   child: Column(
@@ -426,24 +513,25 @@ class _HomeState extends State<Home> {
                                   majorGridLines: const MajorGridLines(width: 0)
                               ),
                               series: <ChartSeries>[
-                                StackedColumnSeries<ChartSampleData, String>(
+                                ColumnSeries<ChartSampleData,String>(
                                     dataSource: _chartData1,
                                     xValueMapper: (ChartSampleData view1, _) => view1.x,
                                     yValueMapper: (ChartSampleData view1, _) => view1.y,
                                   name: 'Production'
                                 ),
-                                StackedColumnSeries<ChartSampleData, String>(
-                                    dataSource: _chartData1,
-                                    xValueMapper: (ChartSampleData view1, _) => view1.x,
-                                    yValueMapper: (ChartSampleData view1, _) => view1.y2,
-                                    name: 'Presplit'
-                                ),
-                                StackedColumnSeries<ChartSampleData, String>(
+                                ColumnSeries<ChartSampleData, String>(
                                     dataSource: _chartData1,
                                     xValueMapper: (ChartSampleData view1, _) => view1.x,
                                     yValueMapper: (ChartSampleData view1, _) => view1.y3,
                                     name: 'Tender'
                                 ),
+                                ColumnSeries<ChartSampleData, String>(
+                                    dataSource: _chartData1,
+                                    xValueMapper: (ChartSampleData view1, _) => view1.x,
+                                    yValueMapper: (ChartSampleData view1, _) => view1.y2,
+                                    name: 'Presplit'
+                                ),
+
                               ],
                               tooltipBehavior: TooltipBehavior(
                                 enable: true,
