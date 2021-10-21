@@ -121,13 +121,21 @@ class _LoginPageState extends State<LoginPage> {
                       focusNode: _focusEmail,
                       validator: (value) => Validator.validateEmail(email: value),
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xffeeeeee),
+                        enabledBorder: new OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:  BorderSide(color: Colors.white ),
+                        ),
                         prefixIcon: Padding(
                           padding: EdgeInsets.all(0.0),
                           child: Icon(
                             CupertinoIcons.mail,
+                            color: Color(0xff00b09b),
                           ),
                         ),
                         hintText: 'Email',
+                        hintStyle: TextStyle(color: Color(0xff00b09b)),
                       ),
                       obscureText: false,
                     ),
@@ -139,56 +147,76 @@ class _LoginPageState extends State<LoginPage> {
                       focusNode: _focusPassword,
                       validator: (value) => Validator.validatePassword(password: value),
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xffeeeeee),
+                        enabledBorder: new OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:  BorderSide(color: Colors.white ),
+
+                        ),
                         prefixIcon: Padding(
                           padding: EdgeInsets.all(0.0),
                           child: Icon(
                             Icons.lock_outline,
+                            color: Color(0xff00b09b),
                           ),
                         ),
                         hintText: 'Password',
+                        hintStyle: TextStyle(color: Color(0xff00b09b)),
                       ),
                       obscureText: true,
                     ),
                     SizedBox(
-                      height: 20.0,
+                      height: 10.0,
                     ),
-                    FlatButton(
-                        child: Text('Login'),
-                        onPressed: () async{
-                          if(_formKey.currentState!.validate()){
-                            User? user = await FireAuth.signInUsingEmailPassword(email: _emailTextController.text, password: _passwordTextController.text,);
-                            if(user!=null) {
-                              Navigator.of(context)
-                                  .pushReplacement(
-                                MaterialPageRoute(builder: (context) => Main()),
-                              );
-                            }else{
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context){
-                                  return AlertDialog(
-                                    title: Text("Auth Exception!"),
-                                    content: Text("Invalid username or password."),
-                                    actions: <Widget>[
-                                      Row(
-                                        children: [
-                                          ElevatedButton(
-                                            child: Text("Log In again"),
-                                            onPressed: (){
-                                              Navigator.of(context).pop();
-                                            },
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  );
+                    SizedBox(
+                      width: double.infinity,
+                      height: 60.0,
+                      child: RaisedButton(
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(10.0),
+                                ),
+                                child: Text(
+                                    'Login',
+                                    style: TextStyle(color: Colors.white),
+                                ),
+                                color: Color(0xff00b09b),
+                                onPressed: () async{
+                                  if(_formKey.currentState!.validate()){
+                                    User? user = await FireAuth.signInUsingEmailPassword(email: _emailTextController.text, password: _passwordTextController.text,);
+                                    if(user!=null) {
+                                      Navigator.of(context)
+                                          .pushReplacement(
+                                        MaterialPageRoute(builder: (context) => Main()),
+                                      );
+                                    }else{
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context){
+                                          return AlertDialog(
+                                            title: Text("Auth Exception!"),
+                                            content: Text("Invalid username or password."),
+                                            actions: <Widget>[
+                                              Row(
+                                                children: [
+                                                  ElevatedButton(
+                                                    child: Text("Log In again"),
+                                                    onPressed: (){
+                                                      Navigator.of(context).pop();
+                                                    },
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          );
+                                        }
+                                      );
+                                    }
+                                  }
                                 }
-                              );
-                            }
-                          }
-                        }
 
-                    ),
+                            ),
+              ),
                     SizedBox(
                       height: 8.0,
                     ),
