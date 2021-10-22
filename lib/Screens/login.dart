@@ -20,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   late FocusNode _focusEmail;
   late FocusNode _focusPassword;
   final _formKey = GlobalKey<FormState>();
+  late bool _passwordVisible;
 
   @override
   void initState(){
@@ -28,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
     _passwordTextController = TextEditingController();
     _focusEmail = FocusNode();
     _focusPassword = FocusNode();
+    _passwordVisible = false;
   }
 
   @override
@@ -145,6 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextFormField(
                       controller: _passwordTextController,
                       focusNode: _focusPassword,
+                      obscureText: !_passwordVisible,
                       validator: (value) => Validator.validatePassword(password: value),
                       decoration: InputDecoration(
                         filled: true,
@@ -163,8 +166,20 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         hintText: 'Password',
                         hintStyle: TextStyle(color: Color(0xff00b09b)),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                            color: Color(0xff00b09b),
+                          ),
+                          onPressed: (){
+                            setState(() {
+                              _passwordVisible = !_passwordVisible;
+                            });
+                          },
+                        )
                       ),
-                      obscureText: true,
                     ),
                     SizedBox(
                       height: 10.0,
