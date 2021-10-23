@@ -5,11 +5,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 
 class Profile extends StatefulWidget {
+  final User user;
+  const Profile({required this.user});
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
+
+  late User _currentUser;
+
+  @override
+  void initState() {
+    _currentUser = widget.user;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +57,8 @@ class _ProfileState extends State<Profile> {
                     height: 5.0,
                   ),
                   Text(
-                    'User 1',
+                   // 'User 1',
+                    '${_currentUser.displayName}',
                   ),
                   SizedBox(
                     height: 20.0,
@@ -61,7 +73,8 @@ class _ProfileState extends State<Profile> {
                     height: 5.0,
                   ),
                   Text(
-                    'user1@hotmail.com',
+                    //'user1@hotmail.com',
+                    '${_currentUser.email}',
                   ),
                   SizedBox(
                     height: 20.0,
