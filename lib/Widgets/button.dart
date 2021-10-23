@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:apple/Api/local_auth_api.dart';
 import 'package:apple/Screens/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ButtonWidget extends StatelessWidget {
   final String title;
   final bool hasBorder;
+  final User user;
+
 
   ButtonWidget({
     required this.title,
     required this.hasBorder,
+    required this.user,
   });
 
   @override
@@ -42,12 +46,12 @@ class ButtonWidget extends StatelessWidget {
 
                     if (authenticationSuccessful) {
                       Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => HomePage()),
+                        MaterialPageRoute(builder: (context) => HomePage(user: user)),
                       );
                     }
                   } else {
                     Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => HomePage()),
+                      MaterialPageRoute(builder: (context) => HomePage(user: user)),
                     );
                   }
                 },

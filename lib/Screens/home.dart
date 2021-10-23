@@ -9,16 +9,27 @@ import 'package:apple/Screens/setting.dart';
 import 'package:apple/Templates/gradient.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+late User _currentUser;
 
 class HomePage extends StatelessWidget {
+  final User user;
+  const HomePage({required this.user});
+
   @override
   Widget build(BuildContext context) {
+    final text = MediaQuery.of(context).platformBrightness == Brightness.dark
+        ? 'DarkTheme'
+        : 'LightTheme';
+
     return MaterialApp(
-      home: Main(),
+      home: Main(user: user),
       debugShowCheckedModeBanner: false,
     );
   }
 }
+
 
 List<Widget> tabOptions = [
   Localizations(
@@ -28,16 +39,26 @@ List<Widget> tabOptions = [
         DefaultMaterialLocalizations.delegate,
       ],
       child: Home()),
-  Profile(),
+  Profile(user: _currentUser),
   Setting(),
 ];
 
 class Main extends StatefulWidget {
+  final User user;
+  const Main({required this.user});
+
   @override
   _MainState createState() => _MainState();
 }
 
 class _MainState extends State<Main> {
+
+  @override
+  void initState() {
+    _currentUser = widget.user;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
