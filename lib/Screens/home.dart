@@ -213,13 +213,14 @@ class _HomeState extends State<Home> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
     String currentFormatted = DateFormat('EEEE, dd MMM').format(current);
-    String currentFormattedShort = DateFormat('EEE, dd MMM').format(current);
+    String currentFormattedShort = DateFormat('dd MMM').format(current);
     DateTime thirtyDays = current.add(Duration(days: 30));
     String thirtyDaysFormatted = DateFormat('EEEE, dd MMM').format(thirtyDays);
-    String thirtyDaysFormattedShort = DateFormat('EEE, dd MMM').format(thirtyDays);
+    String thirtyDaysFormattedShort = DateFormat('dd MMM').format(thirtyDays);
 
     return CupertinoPageScaffold(
         backgroundColor: CupertinoColors.extraLightBackgroundGray,
@@ -242,7 +243,7 @@ class _HomeState extends State<Home> {
                     child: Column(
                         children: <Widget> [
                           ListTile(
-                            leading: Text("Overview", style: TextStyle(
+                            leading: Text("Target Overview", style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
                               ),
@@ -264,7 +265,6 @@ class _HomeState extends State<Home> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return Container(
-                                      height: 200,
                                       child: Column(
                                         children: [
                                           Padding(
@@ -289,7 +289,6 @@ class _HomeState extends State<Home> {
                                                 setState(() {
                                                   current = picked;
                                                   currentFormatted = DateFormat('EEEE, dd MMM').format(current);
-                                                  print('$currentFormatted');
                                                 });
                                               }
                                             },
@@ -319,7 +318,9 @@ class _HomeState extends State<Home> {
                               );
                             },
                             child: ListTile(
-                              leading: Icon(CupertinoIcons.calendar, color: CupertinoColors.activeBlue,),
+                              leading: Icon(CupertinoIcons.calendar,
+                                color: CupertinoColors.systemBlue,
+                              ),
                               title: Text("$currentFormattedShort - $thirtyDaysFormattedShort"),
                             ),
                           ),
@@ -339,15 +340,20 @@ class _HomeState extends State<Home> {
                                     children: [
                                       Align(
                                         alignment: Alignment.centerLeft,
-                                        child: Text("Production",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                          ),
+                                        child: Row(
+                                          children: [
+                                            Text("Total Production ",
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                            Icon(CupertinoIcons.info_circle_fill, size: 15),
+                                          ],
                                         ),
                                       ),
                                       Align(
                                         alignment: Alignment.centerLeft,
-                                        child: Text('$production',
+                                        child: Text('\$$production',
                                           style: TextStyle(
                                             fontSize: 24,
                                           ),
@@ -376,15 +382,20 @@ class _HomeState extends State<Home> {
                                     children: [
                                       Align(
                                         alignment: Alignment.centerLeft,
-                                        child: Text("Tender",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                          ),
+                                        child: Row(
+                                          children: [
+                                            Text("Total Tender ",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            Icon(CupertinoIcons.info_circle_fill, size: 15,),
+                                          ],
                                         ),
                                       ),
                                       Align(
                                         alignment: Alignment.topLeft,
-                                        child: Text("$tender",
+                                        child: Text("\$$tender",
                                           style: TextStyle(
                                             fontSize: 24,
                                           ),
@@ -417,13 +428,15 @@ class _HomeState extends State<Home> {
                                   title: ChartTitle(text: 'Production vs Tender'),
                                   legend: Legend(
                                       isVisible: true,
-                                      overflowMode: LegendItemOverflowMode.wrap),
+                                      overflowMode: LegendItemOverflowMode.wrap,
+                                    position: LegendPosition.bottom
+                                  ),
                                   primaryXAxis: DateTimeAxis(
                                       intervalType: DateTimeIntervalType.days,
                                       interval: 7,
                                       majorGridLines: const MajorGridLines(width: 0)),
                                   primaryYAxis: NumericAxis(
-                                      labelFormat: '{value}',
+                                      labelFormat: '\${value}',
                                       axisLine: const AxisLine(width: 0),
                                       majorTickLines: const MajorTickLines(color: Colors.transparent)),
                                   series: getDefaultLineSeries(),
