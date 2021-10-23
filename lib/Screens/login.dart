@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:apple/Auth/fire_auth.dart';
 import 'package:apple/Screens/home.dart';
+import 'package:apple/Api/local_auth_api.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -200,10 +201,27 @@ class _LoginPageState extends State<LoginPage> {
                                   if(_formKey.currentState!.validate()){
                                     User? user = await FireAuth.signInUsingEmailPassword(email: _emailTextController.text, password: _passwordTextController.text,);
                                     if(user!=null) {
-                                      Navigator.of(context)
-                                          .pushReplacement(
-                                        MaterialPageRoute(builder: (context) => Main(user:user)),
-                                      );
+                                      final localAuthIsAvail =
+                                      await LocalAuthApi.localAuthIsAvail();
+
+                                      if (localAuthIsAvail) {
+                                        final authenticationSuccessful =
+                                        await LocalAuthApi.authenticate();
+
+                                        if (authenticationSuccessful) {
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomePage(user: user)),
+                                          );
+                                        }
+                                      } else {
+                                        Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HomePage(user: user)),
+                                        );
+                                      }
                                     }else{
                                       showDialog(
                                         context: context,
