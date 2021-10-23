@@ -202,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                                     if(user!=null) {
                                       Navigator.of(context)
                                           .pushReplacement(
-                                        MaterialPageRoute(builder: (context) => Main()),
+                                        MaterialPageRoute(builder: (context) => Main(user:user)),
                                       );
                                     }else{
                                       showDialog(

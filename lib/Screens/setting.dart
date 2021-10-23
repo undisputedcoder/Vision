@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
 import 'package:apple/Screens/version.dart';
+import 'package:apple/Screens/home.dart';
+import 'package:apple/Theme/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class Setting extends StatefulWidget {
   @override
@@ -33,6 +36,8 @@ class _SettingState extends State<Setting> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('Settings'),
@@ -62,6 +67,8 @@ class _SettingState extends State<Setting> {
             CSSelectionItem<int>(text: 'Dark', value: 2),
           ],
           onSelected: (index) {
+            final provider = Provider.of<ThemeProvider>(context, listen: false);
+            provider.toggleTheme(index);
             setState(() {
               current = index;
             });
@@ -77,3 +84,4 @@ class _SettingState extends State<Setting> {
     );
   }
 }
+
