@@ -8,6 +8,18 @@ class Setting extends StatefulWidget {
   _SettingState createState() => _SettingState();
 }
 
+ThemeData _lightTheme = ThemeData(
+    accentColor: Colors.pink,
+    brightness: Brightness.light,
+    primaryColor: Colors.blue
+);
+
+ThemeData _darkTheme = ThemeData(
+  accentColor: Colors.red,
+  brightness: Brightness.dark,
+  primaryColor: Colors.amber
+);
+
 class _SettingState extends State<Setting> {
   bool switchState = false;
   bool safeModeSwitch = true;

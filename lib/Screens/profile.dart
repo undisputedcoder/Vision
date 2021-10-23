@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:apple/Screens/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class Profile extends StatefulWidget {
@@ -108,6 +109,7 @@ class _ProfileState extends State<Profile> {
                           Navigator.push(
                             context,
                               CupertinoPageRoute(builder: (context) {
+                                FirebaseAuth.instance.signOut();
                                 return LoginPage();
                               }),
                           );
