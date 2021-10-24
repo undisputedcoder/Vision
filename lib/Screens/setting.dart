@@ -53,7 +53,7 @@ class _SettingState extends State<Setting> {
             onChanged: (bool value) {
               setState(() {
                 userSafeModeSwitch = value;
-                print(userSafeModeSwitch);
+                print(userSafeModeSwitch); // Remove later
               });
             },
           ),

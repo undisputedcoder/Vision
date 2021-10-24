@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:apple/Samples/BarSample.dart';
 import 'package:apple/Samples/SalesData.dart';
 import 'package:intl/intl.dart';
@@ -107,6 +109,20 @@ class _HomeState extends State<Home> {
     checkUserAccelerometer();
   }
 
+  checkUserSafeModeSwitch(subscription) {
+    if (userSafeModeSwitch == true) {
+      if (subscription.isPaused) {
+        subscription.resume();
+      }
+    }
+
+    if (userSafeModeSwitch == false) {
+      if (!subscription.isPaused) {
+        subscription.pause();
+      }
+    }
+  }
+
   checkUserAccelerometer() {
     var subscription;
     double kilometersPerHour = 0.0;
@@ -118,26 +134,8 @@ class _HomeState extends State<Home> {
             intervalDuration: const Duration(seconds: 3),
             desiredAccuracy: LocationAccuracy.high)
         .listen((position) {
-      if (userSafeModeSwitch == true) {
-        if (subscription.isPaused) {
-          print('Test 1');
-          print(subscription.isPaused);
-          subscription.resume();
-          print('Test 2');
-          print(subscription.isPaused);
-        }
-      }
-
-      if (userSafeModeSwitch == false) {
-        if (!subscription.isPaused) {
-          print('Test 3');
-          print(subscription.isPaused);
-          subscription.pause();
-          print('Test 4');
-          print(subscription.isPaused);
-        }
-      }
-
+      const oneSecond = Duration(seconds: 1);
+      Timer.periodic(oneSecond, (Timer t) => checkUserSafeModeSwitch(subscription));
       kilometersPerHour = position.speed * 3.6;
       print(kilometersPerHour); // Remove later
 
