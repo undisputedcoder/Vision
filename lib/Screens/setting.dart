@@ -5,6 +5,7 @@ import 'package:apple/Screens/version.dart';
 import 'package:apple/Screens/home.dart';
 import 'package:apple/Theme/theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:apple/globals.dart';
 
 class Setting extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ ThemeData _darkTheme = ThemeData(
 
 class _SettingState extends State<Setting> {
   bool switchState = false;
-  bool safeModeSwitch = true;
+  //bool safeModeSwitch = true;
   int current = 0;
 
   CSWidgetStyle safeModeStyle = const CSWidgetStyle(
@@ -47,11 +48,12 @@ class _SettingState extends State<Setting> {
         CSControl(
           nameWidget: Text('User Safe Mode'),
           contentWidget: CupertinoSwitch(
-            value: safeModeSwitch,
+            value: userSafeModeSwitch,
             activeColor: CupertinoColors.activeGreen,
             onChanged: (bool value) {
               setState(() {
-                safeModeSwitch = value;
+                userSafeModeSwitch = value;
+                print(userSafeModeSwitch);
               });
             },
           ),
