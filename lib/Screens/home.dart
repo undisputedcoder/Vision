@@ -1,18 +1,16 @@
-import 'dart:async';
-
-import 'package:apple/Samples/BarSample.dart';
-import 'package:apple/Samples/SalesData.dart';
+import 'package:apple/Alert/alert.dart';
+import 'package:apple/Data/BarSample.dart';
+import 'package:apple/Data/SalesData.dart';
+import 'package:apple/Data/info.dart';
+import 'package:apple/Templates/card.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:apple/Screens/profile.dart';
 import 'package:apple/Screens/setting.dart';
-import 'package:apple/Templates/gradient.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:apple/globals.dart';
 
 late User _currentUser;
 
@@ -86,19 +84,19 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   DateTime current = DateTime.now();
-  double production = roundDouble(productionTotal(chartData), 2);
-  double tender = roundDouble(tenderTotal(chartData), 2);
+  double _production = roundDouble(productionTotal(chartData), 2);
+  double _tender = roundDouble(tenderTotal(chartData), 2);
   late List<ChartSampleData> _chartData1;
 
   displayProductionTotal() {
     setState(() {
-      production = productionTotal(chartData);
+      _production = productionTotal(chartData);
     });
   }
 
   displayTenderTotal() {
     setState(() {
-      tender = tenderTotal(chartData);
+      _tender = tenderTotal(chartData);
     });
   }
 
@@ -106,145 +104,7 @@ class _HomeState extends State<Home> {
   void initState() {
     _chartData1 = getDefaultBarSeries();
     super.initState();
-    checkUserAccelerometer();
-  }
-
-  checkUserSafeModeSwitch(subscription) {
-    if (userSafeModeSwitch == true) {
-      if (subscription.isPaused) {
-        subscription.resume();
-      }
-    }
-
-    if (userSafeModeSwitch == false) {
-      if (!subscription.isPaused) {
-        subscription.pause();
-      }
-    }
-  }
-
-  checkUserAccelerometer() {
-    var subscription;
-    double kilometersPerHour = 0.0;
-    bool isPassenger = false;
-    const double averageRunningSpeed = 9.4;
-    int count = 0;
-
-    subscription = Geolocator.getPositionStream(
-            intervalDuration: const Duration(seconds: 3),
-            desiredAccuracy: LocationAccuracy.high)
-        .listen((position) {
-      const oneSecond = Duration(seconds: 1);
-      Timer.periodic(oneSecond, (Timer t) => checkUserSafeModeSwitch(subscription));
-      kilometersPerHour = position.speed * 3.6;
-      print(kilometersPerHour); // Remove later
-
-      if (kilometersPerHour > averageRunningSpeed) {
-        if (count < 3) {
-          ++count;
-        }
-
-        if (!isPassenger && count == 3) {
-          showAlert(context);
-          isPassenger = true;
-        }
-      }
-    });
-  }
-
-  void showAlert(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) => CupertinoAlertDialog(
-              title: const Text("You're going too fast!"),
-              content: Column(
-                children: const <Widget>[
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  IconGradient(
-                    CupertinoIcons.speedometer,
-                    125.0,
-                    LinearGradient(
-                      colors: <Color>[
-                        CupertinoColors.systemYellow,
-                        CupertinoColors.systemOrange,
-                        CupertinoColors.systemRed,
-                      ],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Text(
-                      'This app should not be used while operating machinery.'),
-                ],
-              ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => {
-                    Navigator.pop(context, "I'M A PASSENGER"),
-                  },
-                  child: const Text("I'M A PASSENGER"),
-                ),
-              ],
-            ));
-  }
-
-  void showProdInfo(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) => CupertinoAlertDialog(
-              title: Text("Production"),
-              content: Text("Production is blah blah blah"),
-              actions: [
-                CupertinoDialogAction(
-                  child: Text("OK"),
-                  isDefaultAction: true,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                )
-              ],
-            ));
-  }
-
-  void showTenderInfo(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) => CupertinoAlertDialog(
-              title: Text("Tender"),
-              content: Text("Tender is blah blah blah"),
-              actions: [
-                CupertinoDialogAction(
-                  child: Text("OK"),
-                  isDefaultAction: true,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                )
-              ],
-            ));
-  }
-
-  void showHelp(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) => CupertinoAlertDialog(
-              title: Text("Info"),
-              content: Text("Blah blah blah"),
-              actions: [
-                CupertinoDialogAction(
-                  child: Text("OK"),
-                  isDefaultAction: true,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                )
-              ],
-            ));
+    checkUserAccelerometer(context);
   }
 
   @override
@@ -371,42 +231,7 @@ class _HomeState extends State<Home> {
                             },
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Total Production ",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                        Icon(CupertinoIcons.info_circle_fill,
-                                            size: 15),
-                                      ],
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      '\$$production',
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "\u{2191} 20.7%",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.green),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              child: info('Total Production ', _production, 20.7)
                             ),
                           ),
                           InkWell(
@@ -415,44 +240,7 @@ class _HomeState extends State<Home> {
                             },
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Total Tender ",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Icon(
-                                          CupertinoIcons.info_circle_fill,
-                                          size: 15,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      "\$$tender",
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "\u{2193} 10.2%",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.red),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              child: info('Total Tender ', _tender, 10.2)
                             ),
                           ),
                         ],
@@ -504,8 +292,10 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       trailing: CupertinoButton(
-                          onPressed: () {},
-                          child: Icon(CupertinoIcons.calendar)),
+                          onPressed: () {
+                            showHelp(context);
+                          },
+                          child: Icon(CupertinoIcons.info_circle)),
                     ),
                     Divider(
                       height: 1.0,
@@ -513,38 +303,13 @@ class _HomeState extends State<Home> {
                     ),
                     Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                          child: Column(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  '',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "0%",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                            ],
+                        InkWell(
+                          onTap: () {
+                            showProdInfo(context);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                            child: info('Total Production ', 709645, 9.8)
                           ),
                         ),
                       ],

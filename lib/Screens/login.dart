@@ -1,14 +1,11 @@
+import 'package:apple/Authentication/fire_auth.dart';
+import 'package:apple/Authentication/local_auth_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:apple/Widgets/text_field.dart';
-import 'package:apple/Widgets/button.dart';
 import 'package:apple/Widgets/wave.dart';
-import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:apple/Auth/fire_auth.dart';
 import 'package:apple/Screens/home.dart';
-import 'package:apple/Api/local_auth_api.dart';
 
 class LoginPage extends StatefulWidget {
   @override
