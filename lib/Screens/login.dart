@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   late bool _passwordVisible;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _emailTextController = TextEditingController();
     _passwordTextController = TextEditingController();
@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     _emailTextController.dispose();
     _passwordTextController.dispose();
     _focusEmail.dispose();
@@ -111,101 +111,143 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(30, 30, 30, 10),
                 child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(padding: const EdgeInsets.only(top: 50)),
-                    TextFormField(
-                      controller: _emailTextController,
-                      focusNode: _focusEmail,
-                      validator: (value) => Validator.validateEmail(email: value),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color(0xffeeeeee),
-                        enabledBorder: new OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide:  BorderSide(color: Colors.white ),
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextFormField(
+                        controller: _emailTextController,
+                        focusNode: _focusEmail,
+                        validator: (value) =>
+                            Validator.validateEmail(email: value),
+                        obscureText: false,
+                        style: TextStyle(
+                          color: Color(0xff00b09b),
+                          fontSize: 14.0,
                         ),
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(0.0),
-                          child: Icon(
+                        cursorColor: Color(0xff00b09b),
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          prefixIcon: Icon(
                             CupertinoIcons.mail,
+                            size: 18.0,
                             color: Color(0xff00b09b),
                           ),
+                          filled: true,
+                          enabledBorder: UnderlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Color(0xff00b09b),
+                            ),
+                          ),
+                          labelStyle: TextStyle(
+                            color: Color(0xff00b09b),
+                          ),
+                          focusColor: Color(0xff00b09b),
                         ),
-                        hintText: 'Email',
-                        hintStyle: TextStyle(color: Color(0xff00b09b)),
                       ),
-                      obscureText: false,
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    TextFormField(
-                      controller: _passwordTextController,
-                      focusNode: _focusPassword,
-                      obscureText: !_passwordVisible,
-                      validator: (value) => Validator.validatePassword(password: value),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color(0xffeeeeee),
-                        enabledBorder: new OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide:  BorderSide(color: Colors.white ),
-
-                        ),
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(0.0),
-                          child: Icon(
-                            Icons.lock_outline,
-                            color: Color(0xff00b09b),
-                          ),
-                        ),
-                        hintText: 'Password',
-                        hintStyle: TextStyle(color: Color(0xff00b09b)),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                            color: Color(0xff00b09b),
-                          ),
-                          onPressed: (){
-                            setState(() {
-                              _passwordVisible = !_passwordVisible;
-                            });
-                          },
-                        )
+                      SizedBox(
+                        height: 10.0,
                       ),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 60.0,
-                      child: RaisedButton(
-                                shape: new RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(10.0),
-                                ),
-                                child: Text(
-                                    'Login',
-                                    style: TextStyle(color: Colors.white),
-                                ),
-                                color: Color(0xff00b09b),
-                                onPressed: () async{
-                                  if(_formKey.currentState!.validate()){
-                                    User? user = await FireAuth.signInUsingEmailPassword(email: _emailTextController.text, password: _passwordTextController.text,);
-                                    if(user!=null) {
-                                      final localAuthIsAvail =
-                                      await LocalAuthApi.localAuthIsAvail();
+                      TextFormField(
+                        controller: _passwordTextController,
+                        focusNode: _focusPassword,
+                        validator: (value) =>
+                            Validator.validatePassword(password: value),
+                        obscureText: !_passwordVisible,
+                        style: TextStyle(
+                          color: Color(0xff00b09b),
+                          fontSize: 14.0,
+                        ),
+                        cursorColor: Color(0xff00b09b),
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          prefixIcon: Icon(
+                            CupertinoIcons.lock,
+                            size: 18.0,
+                            color: Color(0xff00b09b),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              size: 18,
+                              color: Color(0xff00b09b),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                          ),
+                          filled: true,
+                          enabledBorder: UnderlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Color(0xff00b09b),
+                            ),
+                          ),
+                          labelStyle: TextStyle(
+                            color: Color(0xff00b09b),
+                          ),
+                          focusColor: Color(0xff00b09b),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Material(
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            color: Color(0xff00b09b),
+                            borderRadius: BorderRadius.circular(10.0),
+                            border: Border.fromBorderSide(BorderSide.none),
+                          ),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              height: 60.0,
+                              child: Center(
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    primary: Color(0xff00b09b),
+                                    minimumSize: Size(double.infinity, 60),
+                                  ),
+                                  onPressed: () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      User? user = await FireAuth
+                                          .signInUsingEmailPassword(
+                                        email: _emailTextController.text,
+                                        password: _passwordTextController.text,
+                                      );
 
-                                      if (localAuthIsAvail) {
-                                        final authenticationSuccessful =
-                                        await LocalAuthApi.authenticate();
+                                      if (user != null) {
+                                        final localAuthIsAvail =
+                                            await LocalAuthApi
+                                                .localAuthIsAvail();
 
-                                        if (authenticationSuccessful) {
+                                        if (localAuthIsAvail) {
+                                          final authenticationSuccessful =
+                                              await LocalAuthApi.authenticate();
+
+                                          if (authenticationSuccessful) {
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomePage(user: user)),
+                                            );
+                                          }
+                                        } else {
                                           Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (context) =>
@@ -213,47 +255,46 @@ class _LoginPageState extends State<LoginPage> {
                                           );
                                         }
                                       } else {
-                                        Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  HomePage(user: user)),
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => CupertinoAlertDialog(
+                                              title: Text('Login Failed'),
+                                              content: Text(
+                                                  'Invalid username or password.'),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () => {
+                                                    Navigator.pop(context, 'OK'),
+                                                  },
+                                                  child: const Text('OK'),
+                                                ),
+                                              ],
+                                            ),
                                         );
                                       }
-                                    }else{
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context){
-                                          return AlertDialog(
-                                            title: Text("Auth Exception!"),
-                                            content: Text("Invalid username or password."),
-                                            actions: <Widget>[
-                                              Row(
-                                                children: [
-                                                  ElevatedButton(
-                                                    child: Text("Log In again"),
-                                                    onPressed: (){
-                                                      Navigator.of(context).pop();
-                                                    },
-                                                  )
-                                                ]
-                                              )
-                                            ]
-                                          );
-                                        }
-                                      );
                                     }
-                                  }
-                                }
-
+                                  },
+                                  child: Text(
+                                    'Login',
+                                    style: TextStyle(
+                                      color: CupertinoColors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
-              ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    Text('Vision 2021'),
-                  ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8.0,
+                      ),
+                      Text('Marketable Mobile Apps 2021'),
+                    ],
+                  ),
                 ),
-              ),
               ),
             ],
           ),
@@ -272,9 +313,9 @@ class Validator {
         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
     if (email.isEmpty) {
-      return 'Email can\'t be empty';
+      return 'Please enter your email.';
     } else if (!emailRegExp.hasMatch(email)) {
-      return 'Enter a correct email';
+      return 'Invalid email.';
     }
 
     return null;
@@ -285,9 +326,9 @@ class Validator {
       return null;
     }
     if (password.isEmpty) {
-      return 'Password can\'t be empty';
+      return 'Please enter your password.';
     } else if (password.length < 6) {
-      return 'Enter a password with length at least 6';
+      return 'Invalid password.';
     }
 
     return null;
