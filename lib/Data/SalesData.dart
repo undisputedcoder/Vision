@@ -63,7 +63,7 @@ double tenderTotal(List<_ChartData> chartData) {
   return total;
 }
 
-List<LineSeries<_ChartData, DateTime>> getDefaultLineSeries() {
+List<LineSeries<_ChartData, DateTime>> getLineSeries() {
   return <LineSeries<_ChartData, DateTime>>[
     LineSeries<_ChartData, DateTime>(
         animationDuration: 2500,
@@ -87,4 +87,18 @@ List<LineSeries<_ChartData, DateTime>> getDefaultLineSeries() {
 double roundDouble(double value, int places){
   num mod = pow(10.0, places);
   return ((value * mod).round().toDouble() / mod);
+}
+
+List<LineSeries<_ChartData, DateTime>> getDefaultLineSeries() {
+  return <LineSeries<_ChartData, DateTime>>[
+    LineSeries<_ChartData, DateTime>(
+        animationDuration: 2500,
+        dataSource: chartData,
+        xValueMapper: (_ChartData sales, _) => sales.date,
+        yValueMapper: (_ChartData sales, _) => sales.y2,
+        width: 2,
+        name: 'Tender',
+        markerSettings: const MarkerSettings(isVisible: true)
+    ),
+  ];
 }

@@ -268,11 +268,403 @@ class _HomeState extends State<Home> {
                               axisLine: const AxisLine(width: 0),
                               majorTickLines: const MajorTickLines(
                                   color: Colors.transparent)),
-                          series: getDefaultLineSeries(),
+                          series: getLineSeries(),
                           tooltipBehavior: TooltipBehavior(
                             enable: true,
                           ),
                         )),
+                      ),
+                    ]),
+                  ),
+                ),
+                Center(
+                  child: Card(
+                    child: Column(children: <Widget>[
+                      ListTile(
+                        leading: Text(
+                          "Target Overview",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        trailing: CupertinoButton(
+                          child: Icon(CupertinoIcons.question_circle),
+                          onPressed: () {
+                            showHelp(context);
+                          },
+                        ),
+                      ),
+                      Divider(
+                        height: 1.0,
+                        color: CupertinoColors.systemGrey,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  height: MediaQuery.of(context).size.height * 0.75,
+                                  child: DefaultTabController(
+                                      length: 3,
+                                      child: Scaffold(
+                                        appBar: AppBar(
+                                          bottom: const TabBar(
+                                            tabs: [
+                                              Tab(text: 'Week'),
+                                              Tab(text: 'Month'),
+                                              Tab(text: 'Custom'),
+                                            ],
+                                          ),
+                                          title: const Text('Date Range'),
+                                        ),
+                                        body: TabBarView(
+                                          children: [
+                                            Column(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () async {
+                                                    final picked = await showDatePicker(
+                                                        context: context,
+                                                        initialDate: DateTime.now(),
+                                                        firstDate: DateTime(2021),
+                                                        lastDate: DateTime(2022));
+
+                                                    if (picked != null) {
+                                                      setState(() {
+                                                        current = picked;
+                                                        currentFormatted =
+                                                            DateFormat('EEEE, dd MMM')
+                                                                .format(current);
+                                                      });
+                                                    }
+                                                  },
+                                                  child: ListTile(
+                                                    title: Text("Last 7 days"),
+                                                    subtitle: Text("$currentFormatted"),
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  height: 1.0,
+                                                  color: CupertinoColors.systemGrey,
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    showDatePicker(
+                                                        context: context,
+                                                        initialDate: DateTime.now(),
+                                                        firstDate: DateTime(2021),
+                                                        lastDate: DateTime(2022));
+                                                  },
+                                                  child: ListTile(
+                                                    title: Text("Last week"),
+                                                    subtitle:
+                                                    Text("$thirtyDaysFormatted"),
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  height: 1.0,
+                                                  color: CupertinoColors.systemGrey,
+                                                ),
+                                                SizedBox(
+                                                  height: 15,
+                                                ),
+                                                ListTile(
+                                                  leading: Text('Compare',
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight: FontWeight.w500
+                                                      )
+                                                  ),
+                                                  trailing: CupertinoSwitch(
+                                                    onChanged: (bool value) {
+                                                      setState(() {
+                                                        _lights = value;
+                                                      });
+                                                    },
+                                                    value: _lights,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    showDatePicker(
+                                                        context: context,
+                                                        initialDate: DateTime.now(),
+                                                        firstDate: DateTime(2021),
+                                                        lastDate: DateTime(2022));
+                                                  },
+                                                  child: ListTile(
+                                                    title: Text("Preceding period"),
+                                                    subtitle:
+                                                    Text("$thirtyDaysFormatted"),
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  height: 1.0,
+                                                  color: CupertinoColors.systemGrey,
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    showDatePicker(
+                                                        context: context,
+                                                        initialDate: DateTime.now(),
+                                                        firstDate: DateTime(2021),
+                                                        lastDate: DateTime(2022));
+                                                  },
+                                                  child: ListTile(
+                                                    title: Text("Two weeks ago"),
+                                                    subtitle:
+                                                    Text("$thirtyDaysFormatted"),
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  height: 1.0,
+                                                  color: CupertinoColors.systemGrey,
+                                                ),
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () async {
+                                                    final picked = await showDatePicker(
+                                                        context: context,
+                                                        initialDate: DateTime.now(),
+                                                        firstDate: DateTime(2021),
+                                                        lastDate: DateTime(2022));
+
+                                                    if (picked != null) {
+                                                      setState(() {
+                                                        current = picked;
+                                                        currentFormatted =
+                                                            DateFormat('EEEE, dd MMM')
+                                                                .format(current);
+                                                      });
+                                                    }
+                                                  },
+                                                  child: ListTile(
+                                                    title: Text("Last 30 days"),
+                                                    subtitle: Text("$currentFormatted"),
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  height: 1.0,
+                                                  color: CupertinoColors.systemGrey,
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    showDatePicker(
+                                                        context: context,
+                                                        initialDate: DateTime.now(),
+                                                        firstDate: DateTime(2021),
+                                                        lastDate: DateTime(2022));
+                                                  },
+                                                  child: ListTile(
+                                                    title: Text("Last month"),
+                                                    subtitle:
+                                                    Text("$thirtyDaysFormatted"),
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  height: 1.0,
+                                                  color: CupertinoColors.systemGrey,
+                                                ),
+                                                SizedBox(
+                                                  height: 15,
+                                                ),
+                                                ListTile(
+                                                  leading: Text('Compare',
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight: FontWeight.w500
+                                                      )
+                                                  ),
+                                                  trailing: CupertinoSwitch(
+                                                    onChanged: (bool value) {
+                                                      setState(() {
+                                                        _lights = value;
+                                                      });
+                                                    },
+                                                    value: _lights,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    showDatePicker(
+                                                        context: context,
+                                                        initialDate: DateTime.now(),
+                                                        firstDate: DateTime(2021),
+                                                        lastDate: DateTime(2022));
+                                                  },
+                                                  child: ListTile(
+                                                    title: Text("Preceding period"),
+                                                    subtitle:
+                                                    Text("$thirtyDaysFormatted"),
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  height: 1.0,
+                                                  color: CupertinoColors.systemGrey,
+                                                ),
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () async {
+                                                    final picked = await showDatePicker(
+                                                        context: context,
+                                                        initialDate: DateTime.now(),
+                                                        firstDate: DateTime(2021),
+                                                        lastDate: DateTime(2022));
+
+                                                    if (picked != null) {
+                                                      setState(() {
+                                                        current = picked;
+                                                        currentFormatted =
+                                                            DateFormat('EEEE, dd MMM')
+                                                                .format(current);
+                                                      });
+                                                    }
+                                                  },
+                                                  child: ListTile(
+                                                    title: Text("Start Date"),
+                                                    subtitle: Text("$currentFormatted"),
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  height: 1.0,
+                                                  color: CupertinoColors.systemGrey,
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    showDatePicker(
+                                                        context: context,
+                                                        initialDate: DateTime.now(),
+                                                        firstDate: DateTime(2021),
+                                                        lastDate: DateTime(2022));
+                                                  },
+                                                  child: ListTile(
+                                                    title: Text("End Date"),
+                                                    subtitle:
+                                                    Text("$thirtyDaysFormatted"),
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  height: 1.0,
+                                                  color: CupertinoColors.systemGrey,
+                                                ),
+                                                SizedBox(
+                                                  height: 15,
+                                                ),
+                                                ListTile(
+                                                  leading: Text('Compare',
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight: FontWeight.w500
+                                                      )
+                                                  ),
+                                                  trailing: CupertinoSwitch(
+                                                    onChanged: (bool value) {
+                                                      setState(() {
+                                                        _lights = value;
+                                                      });
+                                                    },
+                                                    value: _lights,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    showDatePicker(
+                                                        context: context,
+                                                        initialDate: DateTime.now(),
+                                                        firstDate: DateTime(2021),
+                                                        lastDate: DateTime(2022));
+                                                  },
+                                                  child: ListTile(
+                                                    title: Text("Preceding period"),
+                                                    subtitle:
+                                                    Text("$thirtyDaysFormatted"),
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  height: 1.0,
+                                                  color: CupertinoColors.systemGrey,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                  ),
+                                );
+                              });
+                        },
+                        child: ListTile(
+                          leading: Icon(
+                            CupertinoIcons.calendar,
+                            color: CupertinoColors.systemBlue,
+                          ),
+                          title: Text(
+                              "$currentFormattedShort - $thirtyDaysFormattedShort"),
+                        ),
+                      ),
+                      Divider(
+                        height: 5.0,
+                        color: CupertinoColors.systemGrey,
+                      ),
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              showProdInfo(context);
+                            },
+                            child: Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                                child: info('Total Production ', _production, 20.7)
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        height: 15.0,
+                        color: CupertinoColors.systemGrey,
+                      ),
+                      Container(
+                        height: 400,
+                        child: Center(
+                            child: SfCartesianChart(
+                              plotAreaBorderWidth: 0,
+                              title: ChartTitle(text: 'Tender'),
+                              legend: Legend(
+                                  isVisible: true,
+                                  overflowMode: LegendItemOverflowMode.wrap,
+                                  position: LegendPosition.bottom),
+                              primaryXAxis: DateTimeAxis(
+                                  intervalType: DateTimeIntervalType.days,
+                                  interval: 7,
+                                  majorGridLines: const MajorGridLines(width: 0)),
+                              primaryYAxis: NumericAxis(
+                                  labelFormat: '\${value}',
+                                  axisLine: const AxisLine(width: 0),
+                                  majorTickLines: const MajorTickLines(
+                                      color: Colors.transparent)),
+                              series: getDefaultLineSeries(),
+                              tooltipBehavior: TooltipBehavior(
+                                enable: true,
+                              ),
+                            )),
                       ),
                     ]),
                   ),
