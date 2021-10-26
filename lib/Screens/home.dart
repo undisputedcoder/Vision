@@ -11,6 +11,7 @@ import 'package:apple/Screens/profile.dart';
 import 'package:apple/Screens/setting.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 late User _currentUser;
 
@@ -87,6 +88,12 @@ class _HomeState extends State<Home> {
   double _production = roundDouble(productionTotal(chartData), 2);
   double _tender = roundDouble(tenderTotal(chartData), 2);
   late List<ChartSampleData> _chartData1;
+  final DateTime _dateMin = DateTime(2021,1,1);
+  final DateTime _dateMax = DateTime(2021,1,31);
+  final SfRangeValues _dateValues = SfRangeValues(
+      DateTime(2021,1,1), 
+      DateTime(2021,1,31)
+  );
 
   displayProductionTotal() {
     setState(() {
@@ -279,7 +286,7 @@ class _HomeState extends State<Home> {
                               interval: 7,
                               majorGridLines: const MajorGridLines(width: 0)),
                           primaryYAxis: NumericAxis(
-                              labelFormat: '\${value}',
+                              labelFormat: '{value} m',
                               axisLine: const AxisLine(width: 0),
                               majorTickLines: const MajorTickLines(
                                   color: Colors.transparent)),
@@ -572,7 +579,7 @@ class _HomeState extends State<Home> {
                                   interval: 7,
                                   majorGridLines: const MajorGridLines(width: 0)),
                               primaryYAxis: NumericAxis(
-                                  labelFormat: '\${value}',
+                                  labelFormat: '{value} m',
                                   axisLine: const AxisLine(width: 0),
                                   majorTickLines: const MajorTickLines(
                                       color: Colors.transparent)),
