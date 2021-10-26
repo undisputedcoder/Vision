@@ -106,14 +106,29 @@ class _HomeState extends State<Home> {
     super.initState();
     checkUserAccelerometer(context);
   }
+  
+  String dateFormattedGenerator(int fromToday){
+    DateTime result = current.add(Duration(days: fromToday));
+    String resultFormatted = DateFormat('EEEE, dd MMM').format(result);
+    return resultFormatted;
+  }
+  
+  DateTime dateTimeGenerator(int fromToday){
+    DateTime result = current.add(Duration(days: fromToday));
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
+    //*******CURRENT DATE*************//
     String currentFormatted = DateFormat('EEEE, dd MMM').format(current);
     String currentFormattedShort = DateFormat('dd MMM').format(current);
+
+    //*******30 DAYS FROM TODAY*******//
     DateTime thirtyDays = current.add(Duration(days: 30));
     String thirtyDaysFormatted = DateFormat('EEEE, dd MMM').format(thirtyDays);
     String thirtyDaysFormattedShort = DateFormat('dd MMM').format(thirtyDays);
+
     bool _lights = false;
 
     return CupertinoPageScaffold(
@@ -325,43 +340,10 @@ class _HomeState extends State<Home> {
                                             Column(
                                               children: [
                                                 InkWell(
-                                                  onTap: () async {
-                                                    final picked = await showDatePicker(
-                                                        context: context,
-                                                        initialDate: DateTime.now(),
-                                                        firstDate: DateTime(2021),
-                                                        lastDate: DateTime(2022));
-
-                                                    if (picked != null) {
-                                                      setState(() {
-                                                        current = picked;
-                                                        currentFormatted =
-                                                            DateFormat('EEEE, dd MMM')
-                                                                .format(current);
-                                                      });
-                                                    }
-                                                  },
                                                   child: ListTile(
                                                     title: Text("Last 7 days"),
-                                                    subtitle: Text("$currentFormatted"),
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  height: 1.0,
-                                                  color: CupertinoColors.systemGrey,
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    showDatePicker(
-                                                        context: context,
-                                                        initialDate: DateTime.now(),
-                                                        firstDate: DateTime(2021),
-                                                        lastDate: DateTime(2022));
-                                                  },
-                                                  child: ListTile(
-                                                    title: Text("Last week"),
-                                                    subtitle:
-                                                    Text("$thirtyDaysFormatted"),
+                                                    //subtitle: Text("$lastWeekFormatted - $yesterdayFormatted"),
+                                                    subtitle: Text(dateFormattedGenerator(-7)+" - "+dateFormattedGenerator(-1)),
                                                   ),
                                                 ),
                                                 Divider(
@@ -379,47 +361,21 @@ class _HomeState extends State<Home> {
                                                       )
                                                   ),
                                                   trailing: CupertinoSwitch(
+                                                    value: _lights,
                                                     onChanged: (bool value) {
                                                       setState(() {
                                                         _lights = value;
                                                       });
                                                     },
-                                                    value: _lights,
                                                   ),
                                                 ),
                                                 SizedBox(
                                                   height: 5,
                                                 ),
                                                 InkWell(
-                                                  onTap: () {
-                                                    showDatePicker(
-                                                        context: context,
-                                                        initialDate: DateTime.now(),
-                                                        firstDate: DateTime(2021),
-                                                        lastDate: DateTime(2022));
-                                                  },
                                                   child: ListTile(
                                                     title: Text("Preceding period"),
-                                                    subtitle:
-                                                    Text("$thirtyDaysFormatted"),
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  height: 1.0,
-                                                  color: CupertinoColors.systemGrey,
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    showDatePicker(
-                                                        context: context,
-                                                        initialDate: DateTime.now(),
-                                                        firstDate: DateTime(2021),
-                                                        lastDate: DateTime(2022));
-                                                  },
-                                                  child: ListTile(
-                                                    title: Text("Two weeks ago"),
-                                                    subtitle:
-                                                    Text("$thirtyDaysFormatted"),
+                                                    subtitle: Text(dateFormattedGenerator(-14)+" - "+dateFormattedGenerator(-8)),
                                                   ),
                                                 ),
                                                 Divider(
@@ -431,43 +387,9 @@ class _HomeState extends State<Home> {
                                             Column(
                                               children: [
                                                 InkWell(
-                                                  onTap: () async {
-                                                    final picked = await showDatePicker(
-                                                        context: context,
-                                                        initialDate: DateTime.now(),
-                                                        firstDate: DateTime(2021),
-                                                        lastDate: DateTime(2022));
-
-                                                    if (picked != null) {
-                                                      setState(() {
-                                                        current = picked;
-                                                        currentFormatted =
-                                                            DateFormat('EEEE, dd MMM')
-                                                                .format(current);
-                                                      });
-                                                    }
-                                                  },
                                                   child: ListTile(
                                                     title: Text("Last 30 days"),
-                                                    subtitle: Text("$currentFormatted"),
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  height: 1.0,
-                                                  color: CupertinoColors.systemGrey,
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    showDatePicker(
-                                                        context: context,
-                                                        initialDate: DateTime.now(),
-                                                        firstDate: DateTime(2021),
-                                                        lastDate: DateTime(2022));
-                                                  },
-                                                  child: ListTile(
-                                                    title: Text("Last month"),
-                                                    subtitle:
-                                                    Text("$thirtyDaysFormatted"),
+                                                    subtitle: Text(dateFormattedGenerator(-30)+" - "+dateFormattedGenerator(-1)),
                                                   ),
                                                 ),
                                                 Divider(
@@ -497,17 +419,9 @@ class _HomeState extends State<Home> {
                                                   height: 5,
                                                 ),
                                                 InkWell(
-                                                  onTap: () {
-                                                    showDatePicker(
-                                                        context: context,
-                                                        initialDate: DateTime.now(),
-                                                        firstDate: DateTime(2021),
-                                                        lastDate: DateTime(2022));
-                                                  },
                                                   child: ListTile(
                                                     title: Text("Preceding period"),
-                                                    subtitle:
-                                                    Text("$thirtyDaysFormatted"),
+                                                    subtitle: Text(dateFormattedGenerator(-60)+" - "+dateFormattedGenerator(-31)),
                                                   ),
                                                 ),
                                                 Divider(
@@ -652,6 +566,8 @@ class _HomeState extends State<Home> {
                                   overflowMode: LegendItemOverflowMode.wrap,
                                   position: LegendPosition.bottom),
                               primaryXAxis: DateTimeAxis(
+                                 /* maximum: dateTimeGenerator(-30),
+                                  minimum: dateTimeGenerator(-1),*/ //tester
                                   intervalType: DateTimeIntervalType.days,
                                   interval: 7,
                                   majorGridLines: const MajorGridLines(width: 0)),
