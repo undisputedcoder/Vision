@@ -1,7 +1,10 @@
 import 'package:apple/Alert/alert.dart';
-import 'package:apple/Data/BarSample.dart';
+import 'package:apple/Data/View3.dart';
 import 'package:apple/Data/SalesData.dart';
 import 'package:apple/Data/info.dart';
+import 'package:apple/Screens/view1.dart';
+import 'package:apple/Screens/view2.dart';
+import 'package:apple/Screens/view3.dart';
 import 'package:apple/Templates/card.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -87,13 +90,7 @@ class _HomeState extends State<Home> {
   DateTime current = DateTime.now();
   double _production = roundDouble(productionTotal(chartData), 2);
   double _tender = roundDouble(tenderTotal(chartData), 2);
-  late List<ChartSampleData> _chartData1;
-  final DateTime _dateMin = DateTime(2021,1,1);
-  final DateTime _dateMax = DateTime(2021,1,31);
-  final SfRangeValues _dateValues = SfRangeValues(
-      DateTime(2021,1,1), 
-      DateTime(2021,1,31)
-  );
+  late List<BarChartData> _chartData1;
 
   displayProductionTotal() {
     setState(() {
@@ -104,6 +101,12 @@ class _HomeState extends State<Home> {
   displayTenderTotal() {
     setState(() {
       _tender = tenderTotal(chartData);
+    });
+  }
+
+  displayPresplitTotal() {
+    setState(() {
+
     });
   }
 
@@ -152,445 +155,449 @@ class _HomeState extends State<Home> {
             child: ListView(
               padding: const EdgeInsets.all(8.0),
               children: <Widget>[
-                Center(
-                  child: Card(
-                    child: Column(children: <Widget>[
-                      ListTile(
-                        leading: Text(
-                          "Target Overview",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        trailing: CupertinoButton(
-                          child: Icon(CupertinoIcons.question_circle),
-                          onPressed: () {
-                            showHelp(context);
-                          },
+                Card(
+                  child: Column(children: <Widget>[
+                    ListTile(
+                      leading: Text(
+                        "Target Overview",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Divider(
-                        height: 1.0,
-                        color: CupertinoColors.systemGrey,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return Container(
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 8)),
-                                      Text(
-                                        "Select the start and end date",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      InkWell(
-                                        onTap: () async {
-                                          final picked = await showDatePicker(
-                                              context: context,
-                                              initialDate: DateTime.now(),
-                                              firstDate: DateTime(2021),
-                                              lastDate: DateTime(2022));
-
-                                          if (picked != null) {
-                                            setState(() {
-                                              current = picked;
-                                              currentFormatted =
-                                                  DateFormat('EEEE, dd MMM')
-                                                      .format(current);
-                                            });
-                                          }
-                                        },
-                                        child: ListTile(
-                                          title: Text("Start Date"),
-                                          subtitle: Text("$currentFormatted"),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          showDatePicker(
-                                              context: context,
-                                              initialDate: DateTime.now(),
-                                              firstDate: DateTime(2021),
-                                              lastDate: DateTime(2022));
-                                        },
-                                        child: ListTile(
-                                          title: Text("End Date"),
-                                          subtitle:
-                                              Text("$thirtyDaysFormatted"),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              });
+                      trailing: CupertinoButton(
+                        child: Icon(CupertinoIcons.fullscreen),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => View1())
+                          );
                         },
-                        child: ListTile(
-                          leading: Icon(
-                            CupertinoIcons.calendar,
-                            color: CupertinoColors.systemBlue,
-                          ),
-                          title: Text(
-                              "$currentFormattedShort - $thirtyDaysFormattedShort"),
+                      ),
+                    ),
+                    Divider(
+                      height: 1.0,
+                      color: CupertinoColors.systemGrey,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Container(
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                        padding:
+                                        const EdgeInsets.only(top: 8)),
+                                    Text(
+                                      "Select the start and end date",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    InkWell(
+                                      onTap: () async {
+                                        final picked = await showDatePicker(
+                                            context: context,
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime(2021),
+                                            lastDate: DateTime(2022));
+
+                                        if (picked != null) {
+                                          setState(() {
+                                            current = picked;
+                                            currentFormatted =
+                                                DateFormat('EEEE, dd MMM')
+                                                    .format(current);
+                                          });
+                                        }
+                                      },
+                                      child: ListTile(
+                                        title: Text("Start Date"),
+                                        subtitle: Text("$currentFormatted"),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        showDatePicker(
+                                            context: context,
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime(2021),
+                                            lastDate: DateTime(2022));
+                                      },
+                                      child: ListTile(
+                                        title: Text("End Date"),
+                                        subtitle:
+                                        Text("$thirtyDaysFormatted"),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            });
+                      },
+                      child: ListTile(
+                        leading: Icon(
+                          CupertinoIcons.calendar,
+                          color: CupertinoColors.systemBlue,
                         ),
+                        title: Text(
+                            "$currentFormattedShort - $thirtyDaysFormattedShort"),
                       ),
-                      Divider(
-                        height: 5.0,
-                        color: CupertinoColors.systemGrey,
-                      ),
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              showProdInfo(context);
-                            },
-                            child: Padding(
+                    ),
+                    Divider(
+                      height: 5.0,
+                      color: CupertinoColors.systemGrey,
+                    ),
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            showProdInfo(context);
+                          },
+                          child: Padding(
                               padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
                               child: info('Total Production ', _production, 20.7)
-                            ),
                           ),
-                          InkWell(
-                            onTap: () {
-                              showTenderInfo(context);
-                            },
-                            child: Padding(
+                        ),
+                        InkWell(
+                          onTap: () {
+                            showTenderInfo(context);
+                          },
+                          child: Padding(
                               padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
                               child: info('Total Tender ', _tender, 10.2)
+                          ),
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      height: 15.0,
+                      color: CupertinoColors.systemGrey,
+                    ),
+                    Container(
+                      height: 400,
+                      child: Center(
+                          child: SfCartesianChart(
+                            plotAreaBorderWidth: 0,
+                            title: ChartTitle(text: 'Production vs Tender'),
+                            legend: Legend(
+                                isVisible: true,
+                                overflowMode: LegendItemOverflowMode.wrap,
+                                position: LegendPosition.bottom),
+                            primaryXAxis: DateTimeAxis(
+                                intervalType: DateTimeIntervalType.days,
+                                interval: 7,
+                                majorGridLines: const MajorGridLines(width: 0)),
+                            primaryYAxis: NumericAxis(
+                                labelFormat: '{value} m',
+                                axisLine: const AxisLine(width: 0),
+                                majorTickLines: const MajorTickLines(
+                                    color: Colors.transparent)),
+                            series: getLineSeries(),
+                            tooltipBehavior: TooltipBehavior(
+                              enable: true,
                             ),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        height: 15.0,
-                        color: CupertinoColors.systemGrey,
-                      ),
-                      Container(
-                        height: 400,
-                        child: Center(
-                            child: SfCartesianChart(
-                          plotAreaBorderWidth: 0,
-                          title: ChartTitle(text: 'Production vs Tender'),
-                          legend: Legend(
-                              isVisible: true,
-                              overflowMode: LegendItemOverflowMode.wrap,
-                              position: LegendPosition.bottom),
-                          primaryXAxis: DateTimeAxis(
-                              intervalType: DateTimeIntervalType.days,
-                              interval: 7,
-                              majorGridLines: const MajorGridLines(width: 0)),
-                          primaryYAxis: NumericAxis(
-                              labelFormat: '{value} m',
-                              axisLine: const AxisLine(width: 0),
-                              majorTickLines: const MajorTickLines(
-                                  color: Colors.transparent)),
-                          series: getLineSeries(),
-                          tooltipBehavior: TooltipBehavior(
-                            enable: true,
-                          ),
-                        )),
-                      ),
-                    ]),
-                  ),
+                          )),
+                    ),
+                  ]),
                 ),
-                Center(
-                  child: Card(
-                    child: Column(children: <Widget>[
-                      ListTile(
-                        leading: Text(
-                          "Target Overview",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        trailing: CupertinoButton(
-                          child: Icon(CupertinoIcons.question_circle),
-                          onPressed: () {
-                            showHelp(context);
-                          },
+                Card(
+                  child: Column(children: <Widget>[
+                    ListTile(
+                      leading: Text(
+                        "Target Overview",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Divider(
-                        height: 1.0,
-                        color: CupertinoColors.systemGrey,
+                      trailing: CupertinoButton(
+                        child: Icon(CupertinoIcons.fullscreen),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => View2())
+                          );
+                        },
                       ),
-                      InkWell(
-                        onTap: () {
-                          showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              builder: (BuildContext context) {
-                                return Container(
-                                  height: MediaQuery.of(context).size.height * 0.75,
-                                  child: DefaultTabController(
-                                      length: 3,
-                                      child: Scaffold(
-                                        appBar: AppBar(
-                                          bottom: const TabBar(
-                                            tabs: [
-                                              Tab(text: 'Week'),
-                                              Tab(text: 'Month'),
-                                              Tab(text: 'Custom'),
-                                            ],
-                                          ),
-                                          title: const Text('Date Range'),
-                                        ),
-                                        body: TabBarView(
-                                          children: [
-                                            Column(
-                                              children: [
-                                                InkWell(
-                                                  child: ListTile(
-                                                    title: Text("Last 7 days"),
-                                                    //subtitle: Text("$lastWeekFormatted - $yesterdayFormatted"),
-                                                    subtitle: Text(dateFormattedGenerator(-7)+" - "+dateFormattedGenerator(-1)),
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  height: 1.0,
-                                                  color: CupertinoColors.systemGrey,
-                                                ),
-                                                SizedBox(
-                                                  height: 15,
-                                                ),
-                                                ListTile(
-                                                  leading: Text('Compare',
-                                                      style: TextStyle(
-                                                          fontSize: 16,
-                                                          fontWeight: FontWeight.w500
-                                                      )
-                                                  ),
-                                                  trailing: CupertinoSwitch(
-                                                    value: _lights,
-                                                    onChanged: (bool value) {
-                                                      setState(() {
-                                                        _lights = value;
-                                                      });
-                                                    },
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                InkWell(
-                                                  child: ListTile(
-                                                    title: Text("Preceding period"),
-                                                    subtitle: Text(dateFormattedGenerator(-14)+" - "+dateFormattedGenerator(-8)),
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  height: 1.0,
-                                                  color: CupertinoColors.systemGrey,
-                                                ),
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                InkWell(
-                                                  child: ListTile(
-                                                    title: Text("Last 30 days"),
-                                                    subtitle: Text(dateFormattedGenerator(-30)+" - "+dateFormattedGenerator(-1)),
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  height: 1.0,
-                                                  color: CupertinoColors.systemGrey,
-                                                ),
-                                                SizedBox(
-                                                  height: 15,
-                                                ),
-                                                ListTile(
-                                                  leading: Text('Compare',
-                                                      style: TextStyle(
-                                                          fontSize: 16,
-                                                          fontWeight: FontWeight.w500
-                                                      )
-                                                  ),
-                                                  trailing: CupertinoSwitch(
-                                                    onChanged: (bool value) {
-                                                      setState(() {
-                                                        _lights = value;
-                                                      });
-                                                    },
-                                                    value: _lights,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                InkWell(
-                                                  child: ListTile(
-                                                    title: Text("Preceding period"),
-                                                    subtitle: Text(dateFormattedGenerator(-60)+" - "+dateFormattedGenerator(-31)),
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  height: 1.0,
-                                                  color: CupertinoColors.systemGrey,
-                                                ),
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                InkWell(
-                                                  onTap: () async {
-                                                    final picked = await showDatePicker(
-                                                        context: context,
-                                                        initialDate: DateTime.now(),
-                                                        firstDate: DateTime(2021),
-                                                        lastDate: DateTime(2022));
-
-                                                    if (picked != null) {
-                                                      setState(() {
-                                                        current = picked;
-                                                        currentFormatted =
-                                                            DateFormat('EEEE, dd MMM')
-                                                                .format(current);
-                                                      });
-                                                    }
-                                                  },
-                                                  child: ListTile(
-                                                    title: Text("Start Date"),
-                                                    subtitle: Text("$currentFormatted"),
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  height: 1.0,
-                                                  color: CupertinoColors.systemGrey,
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    showDatePicker(
-                                                        context: context,
-                                                        initialDate: DateTime.now(),
-                                                        firstDate: DateTime(2021),
-                                                        lastDate: DateTime(2022));
-                                                  },
-                                                  child: ListTile(
-                                                    title: Text("End Date"),
-                                                    subtitle:
-                                                    Text("$thirtyDaysFormatted"),
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  height: 1.0,
-                                                  color: CupertinoColors.systemGrey,
-                                                ),
-                                                SizedBox(
-                                                  height: 15,
-                                                ),
-                                                ListTile(
-                                                  leading: Text('Compare',
-                                                      style: TextStyle(
-                                                          fontSize: 16,
-                                                          fontWeight: FontWeight.w500
-                                                      )
-                                                  ),
-                                                  trailing: CupertinoSwitch(
-                                                    onChanged: (bool value) {
-                                                      setState(() {
-                                                        _lights = value;
-                                                      });
-                                                    },
-                                                    value: _lights,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    showDatePicker(
-                                                        context: context,
-                                                        initialDate: DateTime.now(),
-                                                        firstDate: DateTime(2021),
-                                                        lastDate: DateTime(2022));
-                                                  },
-                                                  child: ListTile(
-                                                    title: Text("Preceding period"),
-                                                    subtitle:
-                                                    Text("$thirtyDaysFormatted"),
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  height: 1.0,
-                                                  color: CupertinoColors.systemGrey,
-                                                ),
-                                              ],
-                                            ),
+                    ),
+                    Divider(
+                      height: 1.0,
+                      color: CupertinoColors.systemGrey,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (BuildContext context) {
+                              return Container(
+                                height: MediaQuery.of(context).size.height * 0.75,
+                                child: DefaultTabController(
+                                    length: 3,
+                                    child: Scaffold(
+                                      appBar: AppBar(
+                                        bottom: const TabBar(
+                                          tabs: [
+                                            Tab(text: 'Week'),
+                                            Tab(text: 'Month'),
+                                            Tab(text: 'Custom'),
                                           ],
                                         ),
-                                      )
-                                  ),
-                                );
-                              });
-                        },
-                        child: ListTile(
-                          leading: Icon(
-                            CupertinoIcons.calendar,
-                            color: CupertinoColors.systemBlue,
-                          ),
-                          title: Text(
-                              "$currentFormattedShort - $thirtyDaysFormattedShort"),
+                                        title: const Text('Date Range'),
+                                      ),
+                                      body: TabBarView(
+                                        children: [
+                                          Column(
+                                            children: [
+                                              InkWell(
+                                                child: ListTile(
+                                                  title: Text("Last 7 days"),
+                                                  //subtitle: Text("$lastWeekFormatted - $yesterdayFormatted"),
+                                                  subtitle: Text(dateFormattedGenerator(-7)+" - "+dateFormattedGenerator(-1)),
+                                                ),
+                                              ),
+                                              Divider(
+                                                height: 1.0,
+                                                color: CupertinoColors.systemGrey,
+                                              ),
+                                              SizedBox(
+                                                height: 15,
+                                              ),
+                                              ListTile(
+                                                leading: Text('Compare',
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight: FontWeight.w500
+                                                    )
+                                                ),
+                                                trailing: CupertinoSwitch(
+                                                  value: _lights,
+                                                  onChanged: (bool value) {
+                                                    setState(() {
+                                                      _lights = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              InkWell(
+                                                child: ListTile(
+                                                  title: Text("Preceding period"),
+                                                  subtitle: Text(dateFormattedGenerator(-14)+" - "+dateFormattedGenerator(-8)),
+                                                ),
+                                              ),
+                                              Divider(
+                                                height: 1.0,
+                                                color: CupertinoColors.systemGrey,
+                                              ),
+                                            ],
+                                          ),
+                                          Column(
+                                            children: [
+                                              InkWell(
+                                                child: ListTile(
+                                                  title: Text("Last 30 days"),
+                                                  subtitle: Text(dateFormattedGenerator(-30)+" - "+dateFormattedGenerator(-1)),
+                                                ),
+                                              ),
+                                              Divider(
+                                                height: 1.0,
+                                                color: CupertinoColors.systemGrey,
+                                              ),
+                                              SizedBox(
+                                                height: 15,
+                                              ),
+                                              ListTile(
+                                                leading: Text('Compare',
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight: FontWeight.w500
+                                                    )
+                                                ),
+                                                trailing: CupertinoSwitch(
+                                                  onChanged: (bool value) {
+                                                    setState(() {
+                                                      _lights = value;
+                                                    });
+                                                  },
+                                                  value: _lights,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              InkWell(
+                                                child: ListTile(
+                                                  title: Text("Preceding period"),
+                                                  subtitle: Text(dateFormattedGenerator(-60)+" - "+dateFormattedGenerator(-31)),
+                                                ),
+                                              ),
+                                              Divider(
+                                                height: 1.0,
+                                                color: CupertinoColors.systemGrey,
+                                              ),
+                                            ],
+                                          ),
+                                          Column(
+                                            children: [
+                                              InkWell(
+                                                onTap: () async {
+                                                  final picked = await showDatePicker(
+                                                      context: context,
+                                                      initialDate: DateTime.now(),
+                                                      firstDate: DateTime(2021),
+                                                      lastDate: DateTime(2022));
+
+                                                  if (picked != null) {
+                                                    setState(() {
+                                                      current = picked;
+                                                      currentFormatted =
+                                                          DateFormat('EEEE, dd MMM')
+                                                              .format(current);
+                                                    });
+                                                  }
+                                                },
+                                                child: ListTile(
+                                                  title: Text("Start Date"),
+                                                  subtitle: Text("$currentFormatted"),
+                                                ),
+                                              ),
+                                              Divider(
+                                                height: 1.0,
+                                                color: CupertinoColors.systemGrey,
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  showDatePicker(
+                                                      context: context,
+                                                      initialDate: DateTime.now(),
+                                                      firstDate: DateTime(2021),
+                                                      lastDate: DateTime(2022));
+                                                },
+                                                child: ListTile(
+                                                  title: Text("End Date"),
+                                                  subtitle:
+                                                  Text("$thirtyDaysFormatted"),
+                                                ),
+                                              ),
+                                              Divider(
+                                                height: 1.0,
+                                                color: CupertinoColors.systemGrey,
+                                              ),
+                                              SizedBox(
+                                                height: 15,
+                                              ),
+                                              ListTile(
+                                                leading: Text('Compare',
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight: FontWeight.w500
+                                                    )
+                                                ),
+                                                trailing: CupertinoSwitch(
+                                                  onChanged: (bool value) {
+                                                    setState(() {
+                                                      _lights = value;
+                                                    });
+                                                  },
+                                                  value: _lights,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  showDatePicker(
+                                                      context: context,
+                                                      initialDate: DateTime.now(),
+                                                      firstDate: DateTime(2021),
+                                                      lastDate: DateTime(2022));
+                                                },
+                                                child: ListTile(
+                                                  title: Text("Preceding period"),
+                                                  subtitle:
+                                                  Text("$thirtyDaysFormatted"),
+                                                ),
+                                              ),
+                                              Divider(
+                                                height: 1.0,
+                                                color: CupertinoColors.systemGrey,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                ),
+                              );
+                            });
+                      },
+                      child: ListTile(
+                        leading: Icon(
+                          CupertinoIcons.calendar,
+                          color: CupertinoColors.systemBlue,
                         ),
+                        title: Text(
+                            "$currentFormattedShort - $thirtyDaysFormattedShort"),
                       ),
-                      Divider(
-                        height: 5.0,
-                        color: CupertinoColors.systemGrey,
-                      ),
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              showProdInfo(context);
-                            },
-                            child: Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                child: info('Total Production ', _production, 20.7)
-                            ),
+                    ),
+                    Divider(
+                      height: 5.0,
+                      color: CupertinoColors.systemGrey,
+                    ),
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            showProdInfo(context);
+                          },
+                          child: Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                              child: info('Total Production ', _production, 20.7)
                           ),
-                        ],
-                      ),
-                      Divider(
-                        height: 15.0,
-                        color: CupertinoColors.systemGrey,
-                      ),
-                      Container(
-                        height: 400,
-                        child: Center(
-                            child: SfCartesianChart(
-                              plotAreaBorderWidth: 0,
-                              title: ChartTitle(text: 'Tender'),
-                              legend: Legend(
-                                  isVisible: true,
-                                  overflowMode: LegendItemOverflowMode.wrap,
-                                  position: LegendPosition.bottom),
-                              primaryXAxis: DateTimeAxis(
-                                 /* maximum: dateTimeGenerator(-30),
-                                  minimum: dateTimeGenerator(-1),*/ //tester
-                                  intervalType: DateTimeIntervalType.days,
-                                  interval: 7,
-                                  majorGridLines: const MajorGridLines(width: 0)),
-                              primaryYAxis: NumericAxis(
-                                  labelFormat: '{value} m',
-                                  axisLine: const AxisLine(width: 0),
-                                  majorTickLines: const MajorTickLines(
-                                      color: Colors.transparent)),
-                              series: getDefaultLineSeries(),
-                              tooltipBehavior: TooltipBehavior(
-                                enable: true,
-                              ),
-                            )),
-                      ),
-                    ]),
-                  ),
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      height: 15.0,
+                      color: CupertinoColors.systemGrey,
+                    ),
+                    Container(
+                      height: 400,
+                      child: Center(
+                          child: SfCartesianChart(
+                            plotAreaBorderWidth: 0,
+                            title: ChartTitle(text: 'Tender'),
+                            legend: Legend(
+                                isVisible: true,
+                                overflowMode: LegendItemOverflowMode.wrap,
+                                position: LegendPosition.bottom),
+                            primaryXAxis: DateTimeAxis(
+                               /* maximum: dateTimeGenerator(-30),
+                                minimum: dateTimeGenerator(-1),*/ //tester
+                                intervalType: DateTimeIntervalType.days,
+                                interval: 7,
+                                majorGridLines: const MajorGridLines(width: 0)),
+                            primaryYAxis: NumericAxis(
+                                labelFormat: '{value} m',
+                                axisLine: const AxisLine(width: 0),
+                                majorTickLines: const MajorTickLines(
+                                    color: Colors.transparent)),
+                            series: getDefaultLineSeries(),
+                            tooltipBehavior: TooltipBehavior(
+                              enable: true,
+                            ),
+                          )),
+                    ),
+                  ]),
                 ),
                 SizedBox(
                   height: 20,
@@ -608,9 +615,13 @@ class _HomeState extends State<Home> {
                       ),
                       trailing: CupertinoButton(
                           onPressed: () {
-                            showHelp(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => View3())
+                            );
                           },
-                          child: Icon(CupertinoIcons.info_circle)),
+                          child: Icon(CupertinoIcons.fullscreen)),
                     ),
                     Divider(
                       height: 1.0,
@@ -941,18 +952,39 @@ class _HomeState extends State<Home> {
                       height: 15.0,
                       color: CupertinoColors.systemGrey,
                     ),
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            showProdInfo(context);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                            child: info('Total Production ', 709645, 9.8)
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              showProdInfo(context);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                              child: info('Total Presplit ', roundDouble(presplitTotal(_chartData1), 2), 0)
+                            ),
                           ),
-                        ),
-                      ],
+                          InkWell(
+                            onTap: () {
+                              showProdInfo(context);
+                            },
+                            child: Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                                child: info('Total Production ', roundDouble(prodTotal(_chartData1), 2), 0)
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              showProdInfo(context);
+                            },
+                            child: Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                                child: info('Total Tender ', roundDouble(tenTotal(_chartData1), 2), 0)
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Divider(
                       height: 15.0,
@@ -971,26 +1003,29 @@ class _HomeState extends State<Home> {
                         primaryXAxis: CategoryAxis(
                             majorGridLines: const MajorGridLines(width: 0)),
                         series: <ChartSeries>[
-                          ColumnSeries<ChartSampleData, String>(
+                          StackedColumnSeries<BarChartData, String>(
+                            groupName: 'Production',
                               dataSource: _chartData1,
-                              xValueMapper: (ChartSampleData view1, _) =>
-                                  view1.x,
-                              yValueMapper: (ChartSampleData view1, _) =>
-                                  view1.y,
+                              xValueMapper: (BarChartData view1, _) =>
+                                  view1.month,
+                              yValueMapper: (BarChartData view1, _) =>
+                                  view1.production,
                               name: 'Production'),
-                          ColumnSeries<ChartSampleData, String>(
+                          StackedColumnSeries<BarChartData, String>(
+                            groupName: 'Tender',
                               dataSource: _chartData1,
-                              xValueMapper: (ChartSampleData view1, _) =>
-                                  view1.x,
-                              yValueMapper: (ChartSampleData view1, _) =>
-                                  view1.y3,
+                              xValueMapper: (BarChartData view1, _) =>
+                                  view1.month,
+                              yValueMapper: (BarChartData view1, _) =>
+                                  view1.tender,
                               name: 'Tender'),
-                          ColumnSeries<ChartSampleData, String>(
+                          StackedColumnSeries<BarChartData, String>(
+                            groupName: 'Production',
                               dataSource: _chartData1,
-                              xValueMapper: (ChartSampleData view1, _) =>
-                                  view1.x,
-                              yValueMapper: (ChartSampleData view1, _) =>
-                                  view1.y2,
+                              xValueMapper: (BarChartData view1, _) =>
+                                  view1.month,
+                              yValueMapper: (BarChartData view1, _) =>
+                                  view1.presplit,
                               name: 'Presplit'),
                         ],
                         tooltipBehavior: TooltipBehavior(
@@ -999,7 +1034,8 @@ class _HomeState extends State<Home> {
                       )),
                     ),
                   ],
-                ))
+                )
+                )
               ],
             ),
           ),

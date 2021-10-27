@@ -22,7 +22,7 @@ Widget info(String title, double val, double percent) {
       Align(
         alignment: Alignment.centerLeft,
         child: Text(
-          '\$$val',
+          '$val m',
           style: TextStyle(
             fontSize: 24,
           ),
