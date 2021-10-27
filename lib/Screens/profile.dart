@@ -33,19 +33,17 @@ class _ProfileState extends State<Profile> {
         ),
         child: Stack(
           children: <Widget>[
-            SizedBox(
-              height: 265,
-              child: Center(
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('Assets/default-user.png'),
-                  radius: 50.0,
-                ),
-              ),
-            ),
             Container(
-              margin: EdgeInsets.fromLTRB(15, 200, 15, 15),
+              margin: EdgeInsets.fromLTRB(15, size.height * 0.14, 15, 15),
               child: Column(
                 children: <Widget>[
+                  CircleAvatar(
+                    backgroundImage: AssetImage('Assets/default-user.png'),
+                    radius: 50.0,
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
