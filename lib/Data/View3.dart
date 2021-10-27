@@ -47,3 +47,4 @@ double tenTotal(List<BarChartData> chartData) {
 
   return total;
 }
+

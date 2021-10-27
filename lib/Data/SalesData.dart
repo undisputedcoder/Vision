@@ -43,6 +43,37 @@ final List<_ChartData> chartData = <_ChartData>[
   _ChartData(DateTime.parse("2021-01-31"), 3199, 3199),
 ];
 
+final List<_ChartData> chartDataFeb = <_ChartData>[
+  _ChartData(DateTime.parse("2021-01-01"), 4065.3, 0),
+  _ChartData(DateTime.parse("2021-01-02"), 5730.6, 0),
+  _ChartData(DateTime.parse("2021-01-03"), 5091.4, 0),
+  _ChartData(DateTime.parse("2021-01-04"), 3678.4, 0),
+  _ChartData(DateTime.parse("2021-01-05"), 3400.1, 0),
+  _ChartData(DateTime.parse("2021-01-06"), 5271.8, 0),
+  _ChartData(DateTime.parse("2021-01-07"), 5535.48, 0),
+  _ChartData(DateTime.parse("2021-01-08"), 5296.9, 0),
+  _ChartData(DateTime.parse("2021-01-09"), 4160.04, 0),
+  _ChartData(DateTime.parse("2021-01-10"), 2824.55, 0),
+  _ChartData(DateTime.parse("2021-01-11"), 3052.65, 0),
+  _ChartData(DateTime.parse("2021-01-12"), 3114.6, 0),
+  _ChartData(DateTime.parse("2021-01-13"), 4541.65, 0),
+  _ChartData(DateTime.parse("2021-01-14"), 5483.6, 0),
+  _ChartData(DateTime.parse("2021-01-15"), 3990.1, 0),
+  _ChartData(DateTime.parse("2021-01-16"), 6751.5, 0),
+  _ChartData(DateTime.parse("2021-01-17"), 6253.5, 0),
+  _ChartData(DateTime.parse("2021-01-18"), 3623.9, 0),
+  _ChartData(DateTime.parse("2021-01-19"), 3341.9, 0),
+  _ChartData(DateTime.parse("2021-01-20"), 4455, 0),
+  _ChartData(DateTime.parse("2021-01-21"), 5322.05, 0),
+  _ChartData(DateTime.parse("2021-01-22"), 4646, 0),
+  _ChartData(DateTime.parse("2021-01-23"), 2172.6, 0),
+  _ChartData(DateTime.parse("2021-01-24"), 2744.15, 0),
+  _ChartData(DateTime.parse("2021-01-25"), 3706.9, 0),
+  _ChartData(DateTime.parse("2021-01-26"), 3551.4, 0),
+  _ChartData(DateTime.parse("2021-01-27"), 4414.4, 0),
+  _ChartData(DateTime.parse("2021-01-28"), 4092.5, 0)
+];
+
 double productionTotal(List<_ChartData> chartData) {
   double total = 0;
 
@@ -97,8 +128,16 @@ List<LineSeries<_ChartData, DateTime>> getDefaultLineSeries() {
         xValueMapper: (_ChartData sales, _) => sales.date,
         yValueMapper: (_ChartData sales, _) => sales.y2,
         width: 2,
-        name: 'Tender',
-        markerSettings: const MarkerSettings(isVisible: true)
+        name: 'Current Period'
+    ),
+    LineSeries<_ChartData, DateTime>(
+        animationDuration: 2500,
+        dataSource: chartDataFeb,
+        dashArray: <double>[5,5],
+        xValueMapper: (_ChartData sales, _) => sales.date,
+        yValueMapper: (_ChartData sales, _) => sales.y,
+        width: 2,
+        name: 'Previous Period',
     ),
   ];
 }

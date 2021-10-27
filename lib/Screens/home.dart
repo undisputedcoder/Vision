@@ -259,7 +259,7 @@ class _HomeState extends State<Home> {
                           },
                           child: Padding(
                               padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                              child: info('Total Production ', _production, 20.7)
+                              child: info('Total Production ', _production)
                           ),
                         ),
                         InkWell(
@@ -268,7 +268,7 @@ class _HomeState extends State<Home> {
                           },
                           child: Padding(
                               padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                              child: info('Total Tender ', _tender, 10.2)
+                              child: info('Total Tender ', _tender)
                           ),
                         ),
                       ],
@@ -303,6 +303,9 @@ class _HomeState extends State<Home> {
                           )),
                     ),
                   ]),
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 Card(
                   child: Column(children: <Widget>[
@@ -561,9 +564,33 @@ class _HomeState extends State<Home> {
                           },
                           child: Padding(
                               padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                              child: info('Total Production ', _production, 20.7)
+                              child: info('Current Total Tender ', _production)
                           ),
                         ),
+                        InkWell(
+                          onTap: () {
+
+                          },
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                                child: Text('% change'),
+                              ),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  " \u{2191} 0%",
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.green
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                     Divider(
@@ -952,39 +979,27 @@ class _HomeState extends State<Home> {
                       height: 15.0,
                       color: CupertinoColors.systemGrey,
                     ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              showProdInfo(context);
-                            },
-                            child: Padding(
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            showProdInfo(context);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                            child: info('Total Presplit ', roundDouble(presplitTotal(_chartData1), 2))
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            showProdInfo(context);
+                          },
+                          child: Padding(
                               padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                              child: info('Total Presplit ', roundDouble(presplitTotal(_chartData1), 2), 0)
-                            ),
+                              child: ratioInfo('Ratio', roundDouble((741155.05/704251.8), 2))
                           ),
-                          InkWell(
-                            onTap: () {
-                              showProdInfo(context);
-                            },
-                            child: Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                child: info('Total Production ', roundDouble(prodTotal(_chartData1), 2), 0)
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              showProdInfo(context);
-                            },
-                            child: Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                child: info('Total Tender ', roundDouble(tenTotal(_chartData1), 2), 0)
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     Divider(
                       height: 15.0,
