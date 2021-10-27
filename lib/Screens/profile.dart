@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:apple/Screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class Profile extends StatefulWidget {
   final User user;
   const Profile({required this.user});
@@ -12,7 +11,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-
   late User _currentUser;
 
   @override
@@ -23,118 +21,96 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CupertinoPageScaffold(
+    final size = MediaQuery.of(context).size;
+
+    return Material(
+      child: CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          middle: Text('Profile'),
+          padding: EdgeInsetsDirectional.all(2.0),
+          middle: Text(
+            "Profile",
+          ),
         ),
-        child: Container(
-          child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 0.0),
+        child: Stack(
+          children: <Widget>[
+            SizedBox(
+              height: 265,
+              child: Center(
+                child: CircleAvatar(
+                  backgroundImage: AssetImage('Assets/default-user.png'),
+                  radius: 50.0,
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(15, 200, 15, 15),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: CircleAvatar(
-                      // Change to AssetImage later.
-                      backgroundImage: AssetImage(
-                          'Assets/default-user.png'),
-                      radius: 40.0,
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
                     ),
-                  ),
-                  Divider(
-                    height: 90.0,
-                    color: Colors.black,
-                  ),
-                  Text(
-                    'Name',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5.0,
-                  ),
-                  Text(
-                   // 'User 1',
-                    '${_currentUser.displayName}',
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Text(
-                    'Email',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5.0,
-                  ),
-                  Text(
-                    //'user1@hotmail.com',
-                    '${_currentUser.email}',
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Text(
-                    'Role',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5.0,
-                  ),
-                  Text(
-                    'Operator',
-                  ),
-                  SizedBox(
-                    height: 40.0,
-                  ),
-                  Center(
-                    child: Container(
-                      width: 120.0,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: CupertinoColors.opaqueSeparator
+                    child: Column(
+                      children: <Widget>[
+                        ListTile(
+                          title: Text('Name'),
+                          subtitle: Text('${_currentUser.displayName}'),
+                          leading: Icon(CupertinoIcons.person),
                         ),
-                        borderRadius: BorderRadius.circular(5)
-                      ),
-                      child: CupertinoButton(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget> [
-                            Icon(
-                              CupertinoIcons.square_arrow_right,
-                              color: CupertinoColors.destructiveRed,
-                            ),
-                            Text(" Log Out",
-                              style: TextStyle(
-                                color: CupertinoColors.destructiveRed
-                              ),
-                            ),
-                          ]
+                        ListTile(
+                          title: Text('Email'),
+                          subtitle: Text('${_currentUser.email}'),
+                          leading: Icon(CupertinoIcons.mail),
                         ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                              CupertinoPageRoute(builder: (context) {
-                                FirebaseAuth.instance.signOut();
-                                return LoginPage();
-                              }),
-                          );
-                        },
-                        padding: EdgeInsets.zero,
+                        ListTile(
+                          title: Text('Role'),
+                          subtitle: Text("null"),
+                          leading: Icon(Icons.work_outline),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: CupertinoButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            CupertinoIcons.square_arrow_right,
+                            color: CupertinoColors.systemRed,
+                          ),
+                          Text(
+                            " Log Out",
+                            style: TextStyle(color: CupertinoColors.systemRed),
+                          ),
+                        ],
                       ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) {
+                              FirebaseAuth.instance.signOut();
+                              return LoginPage();
+                            },
+                          ),
+                        );
+                      },
+                      padding: EdgeInsets.zero,
                     ),
                   ),
                 ],
               ),
-            ),
-          ),
+            )
+          ],
         ),
       ),
     );
