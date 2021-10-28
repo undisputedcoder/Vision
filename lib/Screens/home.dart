@@ -70,7 +70,7 @@ class _MainState extends State<Main> {
             BottomNavigationBarItem(
                 icon: Icon(CupertinoIcons.home), label: 'Home'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle_outlined), label: 'Profile'),
+                icon: Icon(CupertinoIcons.person), label: 'Profile'),
             BottomNavigationBarItem(
                 icon: Icon(CupertinoIcons.settings), label: 'Settings')
           ],
@@ -143,10 +143,8 @@ class _HomeState extends State<Home> {
 
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          padding: EdgeInsetsDirectional.all(2.0),
           middle: Text(
             "Analytics",
-            style: TextStyle(fontSize: 18),
           ),
         ),
         child: SafeArea(

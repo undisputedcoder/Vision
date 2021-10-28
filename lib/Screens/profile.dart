@@ -26,7 +26,6 @@ class _ProfileState extends State<Profile> {
     return Material(
       child: CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          padding: EdgeInsetsDirectional.all(2.0),
           middle: Text(
             "Profile",
           ),
