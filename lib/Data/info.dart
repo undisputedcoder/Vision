@@ -6,7 +6,7 @@ void showProdInfo(BuildContext context) {
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: Text("Production"),
-        content: Text("Production is blah blah blah"),
+        content: Text("The cost incurred from making or manufacturing components or raw materials."),
         actions: [
           CupertinoDialogAction(
             child: Text("OK"),
@@ -25,7 +25,7 @@ void showTenderInfo(BuildContext context) {
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: Text("Tender"),
-        content: Text("Tender is blah blah blah"),
+        content: Text("The total of production and pre-split."),
         actions: [
           CupertinoDialogAction(
             child: Text("OK"),
@@ -44,7 +44,7 @@ void showHelp(BuildContext context) {
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: Text("Info"),
-        content: Text("Blah blah blah"),
+        content: Text(""),
         actions: [
           CupertinoDialogAction(
             child: Text("OK"),
