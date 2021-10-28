@@ -103,7 +103,9 @@ List<LineSeries<_ChartData, DateTime>> getLineSeries() {
         yValueMapper: (_ChartData sales, _) => sales.y,
         width: 2,
         name: 'Production',
-        markerSettings: const MarkerSettings(isVisible: true)),
+        markerSettings: const MarkerSettings(isVisible: true),
+      yAxisName: 'Metres Drilled (m)'
+    ),
     LineSeries<_ChartData, DateTime>(
         animationDuration: 2500,
         dataSource: chartData,
@@ -111,7 +113,9 @@ List<LineSeries<_ChartData, DateTime>> getLineSeries() {
         name: 'Tender',
         xValueMapper: (_ChartData sales, _) => sales.date,
         yValueMapper: (_ChartData sales, _) => sales.y2,
-        markerSettings: const MarkerSettings(isVisible: true))
+        markerSettings: const MarkerSettings(isVisible: true),
+        yAxisName: 'Metres Drilled (m)'
+    )
   ];
 }
 

@@ -5,8 +5,27 @@ void showProdInfo(BuildContext context) {
   showDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
-        title: Text("Production"),
-        content: Text("The cost incurred from making or manufacturing components or raw materials."),
+        title: Text("Production & Presplit"),
+        content: Text("Metres drilled for production and presplit drilling."),
+        actions: [
+          CupertinoDialogAction(
+            child: Text("OK"),
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+      )
+  );
+}
+
+void showPresplitInfo(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: Text("Presplit"),
+        content: Text("Meters drilled for pre-split drilling."),
         actions: [
           CupertinoDialogAction(
             child: Text("OK"),
@@ -25,7 +44,7 @@ void showTenderInfo(BuildContext context) {
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: Text("Tender"),
-        content: Text("The total of production and pre-split."),
+        content: Text("Planned meters drilled for pre-split and production drilling."),
         actions: [
           CupertinoDialogAction(
             child: Text("OK"),

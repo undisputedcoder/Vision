@@ -1,4 +1,4 @@
-import 'package:apple/Data/SalesData.dart';
+import 'package:apple/Data/chart1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';

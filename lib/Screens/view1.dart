@@ -1,9 +1,6 @@
-import 'package:apple/Data/SalesData.dart';
-import 'package:apple/Data/info.dart';
-import 'package:apple/Templates/card.dart';
+import 'package:apple/Data/chart1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class View1 extends StatefulWidget {
@@ -41,7 +38,7 @@ class _View1State extends State<View1> {
         child: Center(
             child: SfCartesianChart(
               plotAreaBorderWidth: 0,
-              title: ChartTitle(text: 'Production vs Tender'),
+              title: ChartTitle(text: 'Production & Presplit vs Tender'),
               legend: Legend(
                   isVisible: true,
                   overflowMode: LegendItemOverflowMode.wrap,
@@ -59,7 +56,8 @@ class _View1State extends State<View1> {
               tooltipBehavior: TooltipBehavior(
                 enable: true,
               ),
-            )),
+            )
+        ),
       ),
     );
   }

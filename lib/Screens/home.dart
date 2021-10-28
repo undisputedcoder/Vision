@@ -1,6 +1,6 @@
 import 'package:apple/Alert/alert.dart';
-import 'package:apple/Data/View3.dart';
-import 'package:apple/Data/SalesData.dart';
+import 'package:apple/Data/chart3.dart';
+import 'package:apple/Data/chart1.dart';
 import 'package:apple/Data/info.dart';
 import 'package:apple/Screens/view1.dart';
 import 'package:apple/Screens/view2.dart';
@@ -257,7 +257,7 @@ class _HomeState extends State<Home> {
                           },
                           child: Padding(
                               padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                              child: info('Total Production ', _production)
+                              child: info('Total Production & Presplit ', _production)
                           ),
                         ),
                         InkWell(
@@ -280,7 +280,7 @@ class _HomeState extends State<Home> {
                       child: Center(
                           child: SfCartesianChart(
                             plotAreaBorderWidth: 0,
-                            title: ChartTitle(text: 'Production vs Tender'),
+                            title: ChartTitle(text: 'Production & Presplit vs Tender'),
                             legend: Legend(
                                 isVisible: true,
                                 overflowMode: LegendItemOverflowMode.wrap,
@@ -290,7 +290,10 @@ class _HomeState extends State<Home> {
                                 interval: 7,
                                 majorGridLines: const MajorGridLines(width: 0)),
                             primaryYAxis: NumericAxis(
-                                labelFormat: '{value} m',
+                                title: AxisTitle(
+                                    text: 'Metres drilled (m)'
+                                ),
+                                numberFormat: NumberFormat.compact(),
                                 axisLine: const AxisLine(width: 0),
                                 majorTickLines: const MajorTickLines(
                                     color: Colors.transparent)),
@@ -606,13 +609,14 @@ class _HomeState extends State<Home> {
                                 overflowMode: LegendItemOverflowMode.wrap,
                                 position: LegendPosition.bottom),
                             primaryXAxis: DateTimeAxis(
-                               /* maximum: dateTimeGenerator(-30),
-                                minimum: dateTimeGenerator(-1),*/ //tester
                                 intervalType: DateTimeIntervalType.days,
                                 interval: 7,
                                 majorGridLines: const MajorGridLines(width: 0)),
                             primaryYAxis: NumericAxis(
-                                labelFormat: '{value} m',
+                                title: AxisTitle(
+                                    text: 'Metres drilled (m)'
+                                ),
+                              numberFormat: NumberFormat.compact(),
                                 axisLine: const AxisLine(width: 0),
                                 majorTickLines: const MajorTickLines(
                                     color: Colors.transparent)),
@@ -632,7 +636,7 @@ class _HomeState extends State<Home> {
                   children: [
                     ListTile(
                       leading: Text(
-                        "Overview",
+                        "Tender Overview",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -749,7 +753,7 @@ class _HomeState extends State<Home> {
                         children: [
                           InkWell(
                             onTap: () {
-                              showProdInfo(context);
+                              showPresplitInfo(context);
                             },
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
@@ -758,7 +762,7 @@ class _HomeState extends State<Home> {
                           ),
                           InkWell(
                             onTap: () {
-                              showProdInfo(context);
+
                             },
                             child: Padding(
                                 padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
@@ -776,7 +780,7 @@ class _HomeState extends State<Home> {
                           ),
                           InkWell(
                             onTap: () {
-                              showProdInfo(context);
+                              showTenderInfo(context);
                             },
                             child: Padding(
                                 padding: const EdgeInsets.fromLTRB(10, 5, 5, 0),
@@ -795,13 +799,21 @@ class _HomeState extends State<Home> {
                       child: Center(
                           child: SfCartesianChart(
                         plotAreaBorderWidth: 0,
-                        title: ChartTitle(text: 'Title'),
+                        title: ChartTitle(text: 'Production & Presplit vs Tender'),
                         legend: Legend(
                           isVisible: true,
                           position: LegendPosition.bottom,
                         ),
                         primaryXAxis: CategoryAxis(
                             majorGridLines: const MajorGridLines(width: 0)),
+                            primaryYAxis: NumericAxis(
+                                title: AxisTitle(
+                                  text: 'Metres drilled (m)'
+                                ),
+                                axisLine: const AxisLine(width: 0),
+                                numberFormat: NumberFormat.compact(),
+                                majorTickLines: const MajorTickLines(
+                                    color: Colors.transparent)),
                         series: <ChartSeries>[
                           StackedColumnSeries<BarChartData, String>(
                             groupName: 'Production',
