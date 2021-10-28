@@ -129,6 +129,36 @@ class _HomeState extends State<Home> {
     return result;
   }
 
+  String monthConverter(double month){
+    String result = '';
+    if(month==0){
+      result = "Jan";
+    }else if(month==1){
+      result = "Feb";
+    }else if(month==2){
+      result = "Mar";
+    }else if(month==3){
+      result = "April";
+    }else if(month==4){
+      result = "May";
+    }else if(month==5){
+      result = "Jun";
+    }else if(month==6){
+      result = "Jul";
+    }else if(month==7){
+      result = "Aug";
+    }else if(month==8){
+      result = "Sep";
+    }else if(month==9){
+      result = "Oct";
+    }else if(month==10){
+      result = "Nov";
+    }else if(month==11){
+      result = "Dec";
+    }
+    return result;
+  }
+
   //*******Minimum & Maximum day for Graph 1******//
   DateTime minGraphOne = DateTime.utc(2021, 1, 1);
   DateTime maxGraphOne = DateTime.utc(2021, 1, 31);
@@ -138,6 +168,11 @@ class _HomeState extends State<Home> {
   DateTime minGraphTwo = DateTime.utc(2021, 1, 1);
   DateTime maxGraphTwo = DateTime.utc(2021, 1, 31);
   double graphTwoInterval = 7;
+
+  //*******Minimum & Maximum months for Graph 3*****//
+  double minGraphThree = 0;
+  double maxGraphThree = 5;
+  DateTime pickedMonth = DateTime.utc(2021,1,1);
 
   String comparigToText = "vs 01 Jan - 31 Jan";
 
@@ -167,6 +202,9 @@ class _HomeState extends State<Home> {
     DateTime maxPrePeriod = minGraphTwo.add(Duration(days: -1));
     String maxPrePeriodFormatted = DateFormat('EEEE, dd MMM').format(maxPrePeriod);
     String maxPrePeriodFormattedShort = DateFormat('dd MMM').format(maxPrePeriod);
+
+    String minMonth = monthConverter(minGraphThree);
+    String maxMonth = monthConverter(maxGraphThree);
 
     bool _lights = false;
 
@@ -593,14 +631,27 @@ class _HomeState extends State<Home> {
                                                         fontWeight: FontWeight.w500
                                                     )
                                                 ),
-                                                trailing: CupertinoSwitch(
+                                                trailing: CupertinoButton(
+                                                  child: Text('test'),
+                                                  onPressed: (){
+                                                    setState(() {
+                                                      graphTwoInterval = 7;
+                                                      minPrePeriod = minGraphTwo.add(Duration(days: -365));
+                                                      maxPrePeriod = maxGraphTwo.add(Duration(days: -365));
+                                                      minPrePeriodFormatted = DateFormat('y dd MMM').format(minPrePeriod);
+                                                      maxPrePeriodFormatted = DateFormat('y dd MMM').format(maxPrePeriod);
+                                                      comparigToText = "vs $minPrePeriodFormatted - $maxPrePeriodFormatted";
+                                                    });
+                                                  },
+                                                ),
+                                                /*CupertinoSwitch(
                                                   onChanged: (bool value) {
                                                     setState(() {
                                                       _lights = value;
                                                     });
                                                   },
                                                   value: _lights,
-                                                ),
+                                                ),*/
                                               ),
                                               SizedBox(
                                                 height: 5,
@@ -616,7 +667,7 @@ class _HomeState extends State<Home> {
                                                 child: ListTile(
                                                   title: Text("Preceding period"),
                                                   subtitle:
-                                                  Text("$thirtyDaysFormatted"),
+                                                  Text("$minPrePeriodFormatted - $maxPrePeriodFormatted"),
                                                 ),
                                               ),
                                               Divider(
@@ -745,23 +796,23 @@ class _HomeState extends State<Home> {
                                             InkWell(
                                               onTap: () async {
                                                 final picked = await showDatePicker(
-                                                    context: context,
-                                                    initialDate: DateTime.now(),
-                                                    firstDate: DateTime(2021),
-                                                    lastDate: DateTime(2022));
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime(2021),
+                                                  lastDate: DateTime(2022),
+                                                );
 
                                                 if (picked != null) {
                                                   setState(() {
-                                                    current = picked;
-                                                    currentFormatted =
-                                                        DateFormat('EEEE, dd MMM')
-                                                            .format(current);
+                                                    DateTime pickedMonth = picked;
+                                                    minGraphThree = pickedMonth.month.toDouble() - 1;
+                                                    minMonth = monthConverter(minGraphThree);
                                                   });
                                                 }
                                               },
                                               child: ListTile(
                                                 title: Text("Start Month"),
-                                                subtitle: Text("$currentFormatted"),
+                                                subtitle: Text("$minMonth"),
                                               ),
                                             ),
                                             Divider(
@@ -769,17 +820,26 @@ class _HomeState extends State<Home> {
                                               color: CupertinoColors.systemGrey,
                                             ),
                                             InkWell(
-                                              onTap: () {
-                                                showDatePicker(
-                                                    context: context,
-                                                    initialDate: DateTime.now(),
-                                                    firstDate: DateTime(2021),
-                                                    lastDate: DateTime(2022));
+                                              onTap: () async {
+                                                final picked = await showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime(2021),
+                                                  lastDate: DateTime(2022),
+                                                );
+
+                                                if (picked != null) {
+                                                  setState(() {
+                                                    DateTime pickedMonth = picked;
+                                                    maxGraphThree = pickedMonth.month.toDouble() - 1;
+                                                    maxMonth = monthConverter(maxGraphThree);
+                                                  });
+                                                }
                                               },
                                               child: ListTile(
                                                 title: Text("End month"),
                                                 subtitle:
-                                                Text("$thirtyDaysFormatted"),
+                                                Text("$maxMonth"),
                                               ),
                                             ),
                                             Divider(
@@ -803,7 +863,7 @@ class _HomeState extends State<Home> {
                           CupertinoIcons.calendar,
                           color: CupertinoColors.systemBlue,
                         ),
-                        title: Text("January - June" ),
+                        title: Text("$minMonth - $maxMonth" ),
                       ),
                     ),
                     Divider(
@@ -872,6 +932,8 @@ class _HomeState extends State<Home> {
                           position: LegendPosition.bottom,
                         ),
                         primaryXAxis: CategoryAxis(
+                            maximum: maxGraphThree,
+                            minimum: minGraphThree,
                             majorGridLines: const MajorGridLines(width: 0)
                         ),
                             primaryYAxis: NumericAxis(
