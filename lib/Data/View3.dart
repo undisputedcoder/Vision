@@ -48,3 +48,14 @@ double tenTotal(List<BarChartData> chartData) {
   return total;
 }
 
+double total(List<BarChartData> chartData) {
+  double total = 0;
+  double prod = 0;
+  double presplit = 0;
+
+  prod = prodTotal(chartData);
+  presplit = presplitTotal(chartData);
+  total = prod + presplit;
+
+  return total;
+}

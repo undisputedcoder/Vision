@@ -32,7 +32,7 @@ Widget info(String title, double val) {
   );
 }
 
-Widget ratioInfo(String title, double val) {
+Widget percentInfo(String title, double val) {
   return Column(
     children: [
       Align(
@@ -53,7 +53,7 @@ Widget ratioInfo(String title, double val) {
       Align(
         alignment: Alignment.centerLeft,
         child: Text(
-          '$val:1',
+          '$val %',
           style: TextStyle(
             fontSize: 24,
           ),
