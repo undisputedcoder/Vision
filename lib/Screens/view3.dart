@@ -1,4 +1,4 @@
-import 'package:apple/Data/View3.dart';
+import 'package:apple/Data/chart3.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -29,7 +29,12 @@ class _View3State extends State<View3> {
         child: Center(
             child: SfCartesianChart(
               plotAreaBorderWidth: 0,
-              title: ChartTitle(text: 'Title'),
+              title: ChartTitle(
+                  text: 'Production & Presplit Breakdown vs Tender',
+                textStyle: TextStyle(
+                  fontSize: 13
+                )
+              ),
               legend: Legend(
                 isVisible: true,
                 position: LegendPosition.bottom,

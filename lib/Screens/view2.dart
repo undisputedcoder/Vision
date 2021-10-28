@@ -1,4 +1,4 @@
-import 'package:apple/Data/SalesData.dart';
+import 'package:apple/Data/chart1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -23,7 +23,7 @@ class _View2State extends State<View2> {
         child: Center(
             child: SfCartesianChart(
               plotAreaBorderWidth: 0,
-              title: ChartTitle(text: 'Tender'),
+              title: ChartTitle(text: 'Production & Presplit vs Tender'),
               legend: Legend(
                   isVisible: true,
                   overflowMode: LegendItemOverflowMode.wrap,
