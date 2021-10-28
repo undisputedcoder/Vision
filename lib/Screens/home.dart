@@ -548,8 +548,8 @@ class _HomeState extends State<Home> {
                           CupertinoIcons.calendar,
                           color: CupertinoColors.systemBlue,
                         ),
-                        title: Text(
-                            "$currentFormattedShort - $thirtyDaysFormattedShort"),
+                        title: Text("$currentFormattedShort"),
+                        subtitle: Text('vs $thirtyDaysFormattedShort'),
                       ),
                     ),
                     Divider(
@@ -971,8 +971,8 @@ class _HomeState extends State<Home> {
                           CupertinoIcons.calendar,
                           color: CupertinoColors.systemBlue,
                         ),
-                        title: Text(
-                            "$currentFormattedShort - $thirtyDaysFormattedShort"),
+                        title: Text("$currentFormattedShort"),
+                        subtitle: Text('vs $thirtyDaysFormattedShort'),
                       ),
                     ),
                     Divider(
