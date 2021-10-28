@@ -87,7 +87,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  DateTime current = DateTime.now();
+  //DateTime current = DateTime.now(); //uncomment later
+  DateTime current = DateTime.utc(2021, 1, 31); //Tester - delete later
   double _production = roundDouble(productionTotal(chartData), 2);
   double _tender = roundDouble(tenderTotal(chartData), 2);
   late List<BarChartData> _chartData1;
@@ -128,6 +129,18 @@ class _HomeState extends State<Home> {
     return result;
   }
 
+  //*******Minimum & Maximum day for Graph 1******//
+  DateTime minGraphOne = DateTime.utc(2021, 1, 1);
+  DateTime maxGraphOne = DateTime.utc(2021, 1, 31);
+  double graphOneInterval = 7;
+
+  //*******Minimum & Maximum day for Graph 2******//
+  DateTime minGraphTwo = DateTime.utc(2021, 1, 1);
+  DateTime maxGraphTwo = DateTime.utc(2021, 1, 31);
+  double graphTwoInterval = 7;
+
+  String comparigToText = "vs 01 Jan - 31 Jan";
+
   @override
   Widget build(BuildContext context) {
     //*******CURRENT DATE*************//
@@ -138,6 +151,22 @@ class _HomeState extends State<Home> {
     DateTime thirtyDays = current.add(Duration(days: 30));
     String thirtyDaysFormatted = DateFormat('EEEE, dd MMM').format(thirtyDays);
     String thirtyDaysFormattedShort = DateFormat('dd MMM').format(thirtyDays);
+
+    String minGraphOneFormatted = DateFormat('EEEE, dd MMM').format(minGraphOne);
+    String minGraphOneFormattedShort = DateFormat('dd MMM').format(minGraphOne);
+    String maxGraphOneFormatted = DateFormat('EEEE, dd MMM').format(maxGraphOne);
+    String maxGraphOneFormattedShort = DateFormat('dd MMM').format(maxGraphOne);
+
+    String minGraphTwoFormattedShort = DateFormat('dd MMM').format(minGraphTwo);
+    String maxGraphTwoFormattedShort = DateFormat('dd MMM').format(maxGraphTwo);
+
+    //******Minimum & Maximum day for preceding period for Graph 2*****//
+    DateTime minPrePeriod = minGraphTwo.add(Duration(days: -8));
+    String minPrePeriodFormatted = DateFormat('EEEE, dd MMM').format(minPrePeriod);
+    String minPrePeriodFormattedShort = DateFormat('dd MMM').format(minPrePeriod);
+    DateTime maxPrePeriod = minGraphTwo.add(Duration(days: -1));
+    String maxPrePeriodFormatted = DateFormat('EEEE, dd MMM').format(maxPrePeriod);
+    String maxPrePeriodFormattedShort = DateFormat('dd MMM').format(maxPrePeriod);
 
     bool _lights = false;
 
@@ -207,30 +236,39 @@ class _HomeState extends State<Home> {
 
                                         if (picked != null) {
                                           setState(() {
-                                            current = picked;
-                                            currentFormatted =
+                                            minGraphOne = picked;
+                                            minGraphOneFormatted =
                                                 DateFormat('EEEE, dd MMM')
-                                                    .format(current);
+                                                    .format(minGraphOne);
                                           });
                                         }
                                       },
                                       child: ListTile(
                                         title: Text("Start Date"),
-                                        subtitle: Text("$currentFormatted"),
+                                        subtitle: Text("$minGraphOneFormatted"),
                                       ),
                                     ),
                                     InkWell(
-                                      onTap: () {
-                                        showDatePicker(
+                                      onTap: () async {
+                                        final picked = await showDatePicker(
                                             context: context,
                                             initialDate: DateTime.now(),
                                             firstDate: DateTime(2021),
                                             lastDate: DateTime(2022));
+
+                                        if (picked != null) {
+                                          setState(() {
+                                            maxGraphOne = picked;
+                                            maxGraphOneFormatted =
+                                                DateFormat('EEEE, dd MMM')
+                                                    .format(maxGraphOne);
+                                          });
+                                        }
                                       },
                                       child: ListTile(
                                         title: Text("End Date"),
                                         subtitle:
-                                        Text("$thirtyDaysFormatted"),
+                                        Text("$maxGraphOneFormatted"),
                                       ),
                                     ),
                                   ],
@@ -244,7 +282,7 @@ class _HomeState extends State<Home> {
                           color: CupertinoColors.systemBlue,
                         ),
                         title: Text(
-                            "$currentFormattedShort - $thirtyDaysFormattedShort"),
+                            "$minGraphOneFormattedShort - $maxGraphOneFormattedShort"),
                       ),
                     ),
                     Divider(
@@ -290,6 +328,8 @@ class _HomeState extends State<Home> {
                             primaryXAxis: DateTimeAxis(
                                 intervalType: DateTimeIntervalType.days,
                                 interval: 7,
+                                maximum: maxGraphOne,
+                                minimum: minGraphOne,
                                 majorGridLines: const MajorGridLines(width: 0)),
                             primaryYAxis: NumericAxis(
                                 labelFormat: '{value} m',
@@ -378,14 +418,31 @@ class _HomeState extends State<Home> {
                                                         fontWeight: FontWeight.w500
                                                     )
                                                 ),
-                                                trailing: CupertinoSwitch(
+                                                trailing: CupertinoButton(
+                                                  child: Text('test'),
+                                                  onPressed: (){
+                                                    setState(() {
+                                                      minGraphTwo = dateTimeGenerator(-7);
+                                                      maxGraphTwo = dateTimeGenerator(-1);
+                                                      graphTwoInterval = 1;
+                                                      minGraphTwoFormattedShort = DateFormat('dd MMM').format(minGraphTwo);
+                                                      maxGraphTwoFormattedShort = DateFormat('dd MMM').format(maxGraphTwo);
+                                                      minPrePeriod = dateTimeGenerator(-14);
+                                                      maxPrePeriod = dateTimeGenerator(-8);
+                                                      minPrePeriodFormattedShort = DateFormat('dd MMM').format(minPrePeriod);
+                                                      maxPrePeriodFormattedShort = DateFormat('dd MMM').format(maxPrePeriod);
+                                                      comparigToText = "vs $minPrePeriodFormattedShort - $maxPrePeriodFormattedShort";
+                                                    });
+                                                  },
+                                                ),
+                                                /*CupertinoSwitch(
                                                   value: _lights,
                                                   onChanged: (bool value) {
                                                     setState(() {
                                                       _lights = value;
                                                     });
                                                   },
-                                                ),
+                                                ),*/
                                               ),
                                               SizedBox(
                                                 height: 5,
@@ -424,14 +481,31 @@ class _HomeState extends State<Home> {
                                                         fontWeight: FontWeight.w500
                                                     )
                                                 ),
-                                                trailing: CupertinoSwitch(
+                                                trailing: CupertinoButton(
+                                                  child: Text('test'),
+                                                  onPressed: (){
+                                                    setState(() {
+                                                      minGraphTwo = dateTimeGenerator(-30);
+                                                      maxGraphTwo = dateTimeGenerator(-1);
+                                                      graphTwoInterval = 7;
+                                                      minGraphTwoFormattedShort = DateFormat('dd MMM').format(minGraphTwo);
+                                                      maxGraphTwoFormattedShort = DateFormat('dd MMM').format(maxGraphTwo);
+                                                      minPrePeriod = dateTimeGenerator(-60);
+                                                      maxPrePeriod = dateTimeGenerator(-31);
+                                                      minPrePeriodFormattedShort = DateFormat('dd MMM').format(minPrePeriod);
+                                                      maxPrePeriodFormattedShort = DateFormat('dd MMM').format(maxPrePeriod);
+                                                      comparigToText = "vs $minPrePeriodFormattedShort - $maxPrePeriodFormattedShort";
+                                                    });
+                                                  },
+                                                ),
+                                                /*CupertinoSwitch(
                                                   onChanged: (bool value) {
                                                     setState(() {
                                                       _lights = value;
                                                     });
                                                   },
                                                   value: _lights,
-                                                ),
+                                                ),*/
                                               ),
                                               SizedBox(
                                                 height: 5,
@@ -460,16 +534,16 @@ class _HomeState extends State<Home> {
 
                                                   if (picked != null) {
                                                     setState(() {
-                                                      current = picked;
-                                                      currentFormatted =
+                                                      minGraphTwo = picked;
+                                                      minGraphTwoFormattedShort =
                                                           DateFormat('EEEE, dd MMM')
-                                                              .format(current);
+                                                              .format(minGraphTwo);
                                                     });
                                                   }
                                                 },
                                                 child: ListTile(
                                                   title: Text("Start Date"),
-                                                  subtitle: Text("$currentFormatted"),
+                                                  subtitle: Text("$minGraphTwoFormattedShort"),
                                                 ),
                                               ),
                                               Divider(
@@ -477,17 +551,26 @@ class _HomeState extends State<Home> {
                                                 color: CupertinoColors.systemGrey,
                                               ),
                                               InkWell(
-                                                onTap: () {
-                                                  showDatePicker(
+                                                onTap: () async {
+                                                  final picked = await showDatePicker(
                                                       context: context,
                                                       initialDate: DateTime.now(),
                                                       firstDate: DateTime(2021),
                                                       lastDate: DateTime(2022));
+
+                                                  if (picked != null) {
+                                                    setState(() {
+                                                      maxGraphTwo = picked;
+                                                      maxGraphTwoFormattedShort =
+                                                          DateFormat('EEEE, dd MMM')
+                                                              .format(maxGraphTwo);
+                                                    });
+                                                  }
                                                 },
                                                 child: ListTile(
                                                   title: Text("End Date"),
                                                   subtitle:
-                                                  Text("$thirtyDaysFormatted"),
+                                                  Text("$maxGraphTwoFormattedShort"),
                                                 ),
                                               ),
                                               Divider(
@@ -548,8 +631,8 @@ class _HomeState extends State<Home> {
                           CupertinoIcons.calendar,
                           color: CupertinoColors.systemBlue,
                         ),
-                        title: Text("$currentFormattedShort"),
-                        subtitle: Text('vs $thirtyDaysFormattedShort'),
+                        title: Text("$minGraphTwoFormattedShort - $maxGraphTwoFormattedShort"),
+                        subtitle: Text('$comparigToText'),
                       ),
                     ),
                     Divider(
@@ -608,10 +691,11 @@ class _HomeState extends State<Home> {
                                 overflowMode: LegendItemOverflowMode.wrap,
                                 position: LegendPosition.bottom),
                             primaryXAxis: DateTimeAxis(
-                               /* maximum: dateTimeGenerator(-30),
-                                minimum: dateTimeGenerator(-1),*/ //tester
+                                maximum: maxGraphTwo,
+                                minimum: minGraphTwo,
                                 intervalType: DateTimeIntervalType.days,
-                                interval: 7,
+                                //interval: 7,
+                                interval: graphTwoInterval,
                                 majorGridLines: const MajorGridLines(width: 0)),
                             primaryYAxis: NumericAxis(
                                 labelFormat: '{value} m',
