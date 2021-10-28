@@ -77,11 +77,6 @@ class _SettingState extends State<Setting> {
           },
           currentSelection: current,
         ),
-        const CSHeader('About Vision'),
-        CSButton(CSButtonType.DEFAULT, "Version", () {
-          Navigator.push(
-              context, CupertinoPageRoute(builder: (context) => Version()));
-        }),
       ]),
     );
   }

@@ -645,42 +645,14 @@ class _HomeState extends State<Home> {
                       height: 5.0,
                       color: CupertinoColors.systemGrey,
                     ),
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            showProdInfo(context);
-                          },
-                          child: Padding(
-                              padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                              child: info('Current Total Tender ', _production)
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-
-                          },
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                child: Text('% change'),
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  " \u{2191} 0%",
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.green
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
+                    InkWell(
+                      onTap: () {
+                        showProdInfo(context);
+                      },
+                      child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
+                          child: info('Current Production & Presplit ', _production)
+                      ),
                     ),
                     Divider(
                       height: 15.0,

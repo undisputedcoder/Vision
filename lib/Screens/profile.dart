@@ -52,7 +52,7 @@ class _ProfileState extends State<Profile> {
                       children: <Widget>[
                         ListTile(
                           title: Text('Name'),
-                          subtitle: Text('${_currentUser.displayName}'),
+                          subtitle: Text('Admin'),
                           leading: Icon(CupertinoIcons.person),
                         ),
                         ListTile(
@@ -62,7 +62,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         ListTile(
                           title: Text('Role'),
-                          subtitle: Text("null"),
+                          subtitle: Text("Management"),
                           leading: Icon(Icons.work_outline),
                         ),
                       ],
